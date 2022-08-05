@@ -7,15 +7,17 @@
  *
  * @format
  */
+
 import React from 'react';
-import {Text, View} from 'react-native';
+
+import {Amplify} from 'aws-amplify';
+import awsconfig from './src/aws-exports';
+import Navigation from './src/views/Navigation';
+
+Amplify.configure(awsconfig);
 
 const App = () => {
-  return (
-    <View>
-      <Text>Hello</Text>
-    </View>
-  );
+  return <Navigation />;
 };
 
 export default App;
