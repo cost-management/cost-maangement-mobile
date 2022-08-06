@@ -1,14 +1,15 @@
 import React, {FC} from 'react';
 import {Button, TextInput, View} from 'react-native';
 import useInput from '../hooks/input';
-import {useNavigation} from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {Auth} from 'aws-amplify';
+import {StackParams} from './Navigation';
 
 const SignUp: FC = () => {
   const email = useInput();
   const password = useInput();
 
-  const {navigate} = useNavigation();
+  const {navigate} = useNavigation<NavigationProp<StackParams, 'signUp'>>();
 
   const signupHandler = async () => {
     try {

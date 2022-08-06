@@ -1,14 +1,20 @@
 import React, {FC} from 'react';
 import {Button, TextInput, View} from 'react-native';
 import useInput from '../hooks/input';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {Auth} from 'aws-amplify';
+import {StackParams} from './Navigation';
 
 const Confirm: FC = () => {
   const code = useInput();
 
-  const {navigate} = useNavigation();
-  const {params} = useRoute();
+  const {navigate} = useNavigation<NavigationProp<StackParams, 'confirm'>>();
+  const {params} = useRoute<RouteProp<StackParams, 'confirm'>>();
 
   const confirmHandler = async () => {
     try {
