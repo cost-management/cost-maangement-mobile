@@ -7,6 +7,7 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import {useState} from 'react';
 import {Auth} from 'aws-amplify';
+import {ActivityIndicator, View} from 'react-native';
 
 export type StackParams = {
   main: undefined;
@@ -22,7 +23,7 @@ export type StackParams = {
 const Navigation: FC = () => {
   const Stack = createNativeStackNavigator<StackParams>();
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(undefined);
 
   const checkUser = async () => {
     try {
@@ -36,6 +37,15 @@ const Navigation: FC = () => {
   useEffect(() => {
     checkUser();
   }, []);
+
+  if (user === undefined) {
+    return (
+      <View>
+        <ActivityIndicator />
+      </View>
+    );
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
