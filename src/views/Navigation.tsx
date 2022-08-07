@@ -8,8 +8,19 @@ import SignUp from './SignUp';
 import {useState} from 'react';
 import {Auth} from 'aws-amplify';
 
+export type StackParams = {
+  main: undefined;
+  signIn: {
+    email: string;
+  };
+  signUp: undefined;
+  confirm: {
+    email: string;
+  };
+};
+
 const Navigation: FC = () => {
-  const Stack = createNativeStackNavigator();
+  const Stack = createNativeStackNavigator<StackParams>();
 
   const [user, setUser] = useState(null);
 

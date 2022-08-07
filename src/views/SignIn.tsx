@@ -2,23 +2,29 @@ import {Auth} from 'aws-amplify';
 import React, {FC} from 'react';
 import {Button, TextInput, View} from 'react-native';
 import useInput from '../hooks/input';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {GoogleSignin} from 'react-native-google-signin';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
+// import {GoogleSignin} from 'react-native-google-signin';
+import {StackParams} from './Navigation';
 interface SignInProps {
   setUser: any;
 }
 
 const SignIn: FC<SignInProps> = ({setUser}) => {
-  const {params} = useRoute();
+  const {params} = useRoute<RouteProp<StackParams, 'signIn'>>();
   console.log(params);
   const email = useInput(params?.email);
   const password = useInput();
-  const {navigate} = useNavigation();
-  GoogleSignin.configure({
-    webClientId:
-      '557365716832-cr1k0r9l8sodd2aibo60kgpjqprq5e7i.apps.googleusercontent.com',
-    scopes: ['openid', 'email', 'profile'],
-  });
+  const {navigate} = useNavigation<NavigationProp<StackParams, 'signIn'>>();
+  // GoogleSignin.configure({
+  //   webClientId:
+  //     '557365716832-cr1k0r9l8sodd2aibo60kgpjqprq5e7i.apps.googleusercontent.com',
+  //   scopes: ['openid', 'email', 'profile'],
+  // });
   const signInHandler = async () => {
     try {
       const {user} = await Auth.signIn(email.value, password.value);
