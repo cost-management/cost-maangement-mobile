@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Button, Text, View} from 'react-native';
+import {Button, View} from 'react-native';
 import {Auth} from 'aws-amplify';
 
 interface MainProps {
@@ -18,7 +18,6 @@ const Main: FC<MainProps> = ({setUser}) => {
 
   return (
     <View>
-      <Text>Hello</Text>
       <Button title="SignOut" onPress={signOutHandler} />
     </View>
   );

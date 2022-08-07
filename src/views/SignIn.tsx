@@ -10,7 +10,6 @@ interface SignInProps {
 
 const SignIn: FC<SignInProps> = ({setUser}) => {
   const {params} = useRoute();
-  console.log(params);
   const email = useInput(params?.email);
   const password = useInput();
   const {navigate} = useNavigation();
