@@ -15,7 +15,6 @@ const Main: FC<MainProps> = ({setUser}) => {
       console.log('error signing out: ', error);
     }
   };
-
   return (
     <View>
       <Text>Hello</Text>
