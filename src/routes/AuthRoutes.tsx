@@ -58,10 +58,7 @@ const AuthRoutes: FC = () => {
             <Stack.Screen name="app" component={TabRoutes} />
           ) : (
             <>
-              <Stack.Screen
-                name="signIn"
-                component={() => <SignIn setUser={setUser} />}
-              />
+              <Stack.Screen name="signIn" component={SignIn} />
               <Stack.Screen name="signUp" component={SignUp} />
               <Stack.Screen name="confirm" component={Confirm} />
             </>
