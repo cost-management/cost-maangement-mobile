@@ -3,7 +3,7 @@ import {Button, TextInput, View} from 'react-native';
 import useInput from '../hooks/input';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {Auth} from 'aws-amplify';
-import {StackParams} from './Navigation';
+import {StackParams} from '../routes/AuthRoutes';
 
 const SignUp: FC = () => {
   const email = useInput();

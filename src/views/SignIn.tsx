@@ -1,5 +1,5 @@
 import {Auth} from 'aws-amplify';
-import React, {FC} from 'react';
+import React, {FC, useContext} from 'react';
 import {Button, TextInput, View} from 'react-native';
 import useInput from '../hooks/input';
 import {
@@ -9,14 +9,13 @@ import {
   useRoute,
 } from '@react-navigation/native';
 // import {GoogleSignin} from 'react-native-google-signin';
-import {StackParams} from './Navigation';
-interface SignInProps {
-  setUser: any;
-}
+import {StackParams} from '../routes/AuthRoutes';
+import {UserContext} from '../contexts/UserProvider';
+import {ICognitoUser} from '../models/Auth';
 
-const SignIn: FC<SignInProps> = ({setUser}) => {
+const SignIn: FC = () => {
   const {params} = useRoute<RouteProp<StackParams, 'signIn'>>();
-  console.log(params);
+  const {setUser} = useContext(UserContext);
   const email = useInput(params?.email);
   const password = useInput();
   const {navigate} = useNavigation<NavigationProp<StackParams, 'signIn'>>();
@@ -27,8 +26,8 @@ const SignIn: FC<SignInProps> = ({setUser}) => {
   // });
   const signInHandler = async () => {
     try {
-      const {user} = await Auth.signIn(email.value, password.value);
-      setUser({hello: 'hello'});
+      const user: ICognitoUser = await Auth.signIn(email.value, password.value);
+      setUser(user);
     } catch (error) {
       console.log('error signing in', error);
     }
