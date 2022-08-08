@@ -1,7 +1,8 @@
 import React, {createContext, FC, ReactNode} from 'react';
+import {ICognitoUser} from '../models/Auth';
 interface UserContextValue {
-  user: any;
-  setUser: (value: any) => void;
+  user: ICognitoUser;
+  setUser: (value: ICognitoUser | null) => void;
 }
 
 interface UserProviderProps {

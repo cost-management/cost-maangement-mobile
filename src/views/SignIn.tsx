@@ -11,6 +11,7 @@ import {
 // import {GoogleSignin} from 'react-native-google-signin';
 import {StackParams} from '../routes/AuthRoutes';
 import {UserContext} from '../contexts/UserProvider';
+import {ICognitoUser} from '../models/Auth';
 
 const SignIn: FC = () => {
   const {params} = useRoute<RouteProp<StackParams, 'signIn'>>();
@@ -25,8 +26,8 @@ const SignIn: FC = () => {
   // });
   const signInHandler = async () => {
     try {
-      const {user} = await Auth.signIn(email.value, password.value);
-      setUser({hello: 'hello'});
+      const user: ICognitoUser = await Auth.signIn(email.value, password.value);
+      setUser(user);
     } catch (error) {
       console.log('error signing in', error);
     }

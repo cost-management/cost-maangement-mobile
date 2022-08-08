@@ -9,6 +9,7 @@ import {Auth} from 'aws-amplify';
 import {ActivityIndicator, View} from 'react-native';
 import TabRoutes from './TabRoutes';
 import UserProvider from '../contexts/UserProvider';
+import {ICognitoUser} from '../models/Auth';
 
 export type StackParams = {
   app: undefined;
@@ -28,7 +29,9 @@ const AuthRoutes: FC = () => {
 
   const checkUser = async () => {
     try {
-      const authUser = await Auth.currentAuthenticatedUser({bypassCache: true});
+      const authUser: ICognitoUser = await Auth.currentAuthenticatedUser({
+        bypassCache: true,
+      });
       setUser(authUser);
     } catch (e) {
       setUser(null);
