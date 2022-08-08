@@ -12,12 +12,12 @@ import React from 'react';
 
 import {Amplify} from 'aws-amplify';
 import awsconfig from './src/aws-exports';
-import Navigation from './src/views/Navigation';
+import AuthRoutes from './src/routes/AuthRoutes';
 
 Amplify.configure(awsconfig);
 
 const App = () => {
-  return <Navigation />;
+  return <AuthRoutes />;
 };
 
 export default App;

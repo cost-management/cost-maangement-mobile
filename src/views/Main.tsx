@@ -1,12 +1,10 @@
-import React, {FC} from 'react';
+import React, {FC, useContext} from 'react';
 import {Button, Text, View} from 'react-native';
 import {Auth} from 'aws-amplify';
+import {UserContext} from '../contexts/UserProvider';
 
-interface MainProps {
-  setUser: any;
-}
-
-const Main: FC<MainProps> = ({setUser}) => {
+const Main: FC = () => {
+  const {setUser} = useContext(UserContext);
   const signOutHandler = async () => {
     try {
       await Auth.signOut();
