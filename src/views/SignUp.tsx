@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {Auth} from 'aws-amplify';
-import {StackParams} from './Navigation';
 import FormSignUp from '../components/FormSignUp';
+import {StackParams} from '../routes/AuthRoutes';
 
 const SignUp: FC = () => {
   const {navigate} = useNavigation<NavigationProp<StackParams, 'signUp'>>();

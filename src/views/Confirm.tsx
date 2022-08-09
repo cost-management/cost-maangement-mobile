@@ -8,7 +8,7 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import {Auth} from 'aws-amplify';
-import {StackParams} from './Navigation';
+import {StackParams} from '../routes/AuthRoutes';
 
 const Confirm: FC = () => {
   const code = useInput();
