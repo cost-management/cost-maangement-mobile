@@ -6,7 +6,15 @@ export const FolderAPI = createApi({
   }),
   endpoints: build => ({
     getAllFolders: build.query({
-      query: () => ({url: ''}),
+      query: id => ({url: 'folders', headers: {id}}),
+    }),
+    addFolder: build.mutation({
+      query: (body, id) => ({
+        url: 'folders',
+        method: 'POST',
+        body,
+        headers: {id},
+      }),
     }),
   }),
 });
