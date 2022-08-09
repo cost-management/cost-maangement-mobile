@@ -13,7 +13,6 @@ const Main: FC = () => {
       console.log('error signing out: ', error);
     }
   };
-
   return (
     <View>
       <Text>Hello</Text>

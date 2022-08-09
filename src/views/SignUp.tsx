@@ -1,40 +1,25 @@
 import React, {FC} from 'react';
-import {Button, TextInput, View} from 'react-native';
-import useInput from '../hooks/input';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {Auth} from 'aws-amplify';
+import FormSignUp from '../components/FormSignUp';
 import {StackParams} from '../routes/AuthRoutes';
 
 const SignUp: FC = () => {
-  const email = useInput();
-  const password = useInput();
-
   const {navigate} = useNavigation<NavigationProp<StackParams, 'signUp'>>();
 
-  const signupHandler = async () => {
+  const signUpHandler = async (email: string, password: string) => {
     try {
-      const {user} = await Auth.signUp({
-        username: email.value,
-        password: password.value,
-        autoSignIn: {
-          // optional - enables auto sign in after user is confirmed
-          enabled: true,
-        },
+      await Auth.signUp({
+        username: email,
+        password: password,
       });
-      console.log(user);
-      navigate('confirm', {email: email.value});
+      navigate('confirm', {email: email});
     } catch (error) {
       console.log('error signing up:', error);
     }
   };
 
-  return (
-    <View>
-      <TextInput {...email} placeholder="Input your email" />
-      <TextInput {...password} placeholder="Input your password" />
-      <Button title="SignUp" onPress={signupHandler} />
-    </View>
-  );
+  return <FormSignUp signUpHandler={signUpHandler} />;
 };
 
 export default SignUp;
