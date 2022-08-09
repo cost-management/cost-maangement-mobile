@@ -4,17 +4,20 @@ export const FolderAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://g2kk6o985d.execute-api.eu-central-1.amazonaws.com/test/',
   }),
+  tagTypes: ['folders'],
   endpoints: build => ({
     getAllFolders: build.query({
       query: id => ({url: 'folders', headers: {id}}),
+      providesTags: [{type: 'folders'}],
     }),
     addFolder: build.mutation({
-      query: (body, id) => ({
+      query: ({body, id}) => ({
         url: 'folders',
         method: 'POST',
         body,
         headers: {id},
       }),
+      invalidatesTags: [{type: 'folders'}],
     }),
   }),
 });

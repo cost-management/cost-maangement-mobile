@@ -40,7 +40,7 @@ const Main: FC<MainProps> = ({setUser}) => {
     const response = await addFolder({
       body: {
         folder: {
-          id: userId,
+          id: uuidv4(),
           owner_id: userId,
           title: 'test_folder',
           folder_type: 'CARD',
