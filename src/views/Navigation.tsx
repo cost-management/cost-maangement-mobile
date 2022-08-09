@@ -16,6 +16,7 @@ const Navigation: FC = () => {
   const checkUser = async () => {
     try {
       const authUser = await Auth.currentAuthenticatedUser({bypassCache: true});
+      console.log('hello');
       setUser(authUser);
     } catch (e) {
       setUser(null);
