@@ -11,12 +11,25 @@ export const FolderAPI = createApi({
       providesTags: [{type: 'folders'}],
     }),
     addFolder: build.mutation({
-      query: ({body, id}) => ({
-        url: 'folders',
-        method: 'POST',
-        body,
-        headers: {id},
-      }),
+      query: ({body, id}) => {
+        return {
+          url: 'folders',
+          method: 'POST',
+          body,
+          headers: {id},
+        };
+      },
+      invalidatesTags: [{type: 'folders'}],
+    }),
+    deleteFolder: build.mutation({
+      query: ({id, folderId}) => {
+        return {
+          url: 'folders',
+          method: 'DELETE',
+          body: {id: folderId},
+          headers: {id},
+        };
+      },
       invalidatesTags: [{type: 'folders'}],
     }),
   }),
