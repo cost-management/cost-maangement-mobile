@@ -32,13 +32,13 @@ const Navigation: FC = () => {
         {user ? (
           <Stack.Screen
             name="main"
-            component={() => <Main setUser={setUser} />}
+            component={() => <Main  />}
           />
         ) : (
           <>
             <Stack.Screen
               name="signIn"
-              component={() => <SignIn setUser={setUser} />}
+              component={() => <SignIn />}
             />
             <Stack.Screen name="signUp" component={SignUp} />
             <Stack.Screen name="confirm" component={Confirm} />
