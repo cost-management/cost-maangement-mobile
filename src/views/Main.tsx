@@ -1,12 +1,12 @@
-import React, {FC, useEffect, useState} from 'react';
-import {Button, View} from 'react-native';
+
+import React, {FC, useContext} from 'react';
+import {Button, Text, View} from 'react-native';
 import {Auth} from 'aws-amplify';
+import {UserContext} from '../contexts/UserProvider';
+import CardContainer from '../components/cardContainer/CardContainer';
 
-interface MainProps {
-  setUser: any;
-}
-
-const Main: FC<MainProps> = ({setUser}) => {
+const Main: FC = () => {
+  const {setUser} = useContext(UserContext);
   const signOutHandler = async () => {
     try {
       await Auth.signOut();
@@ -15,10 +15,10 @@ const Main: FC<MainProps> = ({setUser}) => {
       console.log('error signing out: ', error);
     }
   };
-
   return (
-    <View>
+    <View style={{flex: 1}}>
       <Button title="SignOut" onPress={signOutHandler} />
+      <CardContainer />
     </View>
   );
 };
