@@ -1,13 +1,14 @@
 import {Auth} from 'aws-amplify';
 import {ICognitoUser} from '../models/Auth';
-import React, {FC} from 'react';
+import React, {FC, useContext} from 'react';
 
 import FormSignIn from '../components/FormSignIn';
-interface SignInProps {
-  setUser: any;
-}
+import { UserContext } from '../contexts/UserProvider';
 
-const SignIn: FC<SignInProps> = ({setUser}) => {
+const SignIn: FC = () => {
+
+  const {setUser} = useContext(UserContext)
+
   const signInHandler = async (email: string, password: string) => {
     try {
       const user : ICognitoUser = await Auth.signIn(email, password);

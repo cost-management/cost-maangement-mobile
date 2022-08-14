@@ -1,3 +1,4 @@
+
 import React, {FC, useContext} from 'react';
 import {Button, Text, View} from 'react-native';
 import {Auth} from 'aws-amplify';
@@ -16,8 +17,7 @@ const Main: FC = () => {
   };
   return (
     <View style={{flex: 1}}>
-      {/* <Text>Hello</Text>
-      <Button title="SignOut" onPress={signOutHandler} /> */}
+      <Button title="SignOut" onPress={signOutHandler} />
       <CardContainer />
     </View>
   );

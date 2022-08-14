@@ -12,12 +12,18 @@ import React from 'react';
 
 import {Amplify} from 'aws-amplify';
 import awsconfig from './src/aws-exports';
-import AuthRoutes from './src/routes/AuthRoutes';
+import Navigation from './src/views/Navigation';
+import {Provider} from 'react-redux';
+import {store} from './src/store/store';
 
 Amplify.configure(awsconfig);
 
 const App = () => {
-  return <AuthRoutes />;
+  return (
+    <Provider store={store}>
+      <Navigation />
+    </Provider>
+  );
 };
 
 export default App;
