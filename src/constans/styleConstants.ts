@@ -1,4 +1,6 @@
 import {Dimensions} from 'react-native';
 
-export const WIDTH_SCREEN = Dimensions.get('screen').width;
-export const HEIGHT_SCREEN = Dimensions.get('screen').height;
+export const SCREEN_WIDTH = Dimensions.get('screen').width;
+export const SCREEN_HEIGHT = Dimensions.get('screen').height;
+export const CARD_WIDTH = Dimensions.get('screen').width * 0.8;
+export const CARD_HEIGHT = 200;

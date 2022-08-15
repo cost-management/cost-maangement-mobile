@@ -16,7 +16,10 @@ const CircleButton: FC<CircleButtonProps> = ({
   return (
     <TouchableOpacity
       onPress={() => buttonHandler()}
-      style={[style.container, {height: radius, width: radius}]}>
+      style={[
+        style.container,
+        {height: radius, width: radius, borderRadius: radius},
+      ]}>
       <Text>{text}</Text>
     </TouchableOpacity>
   );
