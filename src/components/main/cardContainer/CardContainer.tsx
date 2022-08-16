@@ -1,25 +1,20 @@
-import React, {FC, useState, useEffect, useRef, ReactDOM} from 'react';
-import {
-  Button,
-  View,
-  StyleSheet,
-  ScrollViewProps,
-  ScrollView,
-} from 'react-native';
+import React, {FC, useState} from 'react';
+import {View, Modal} from 'react-native';
 import Card from '../card/Card';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {style} from './style';
 import CircleButton from '../../ui/circleButton/CircleButton';
 import {CARD_HEIGHT} from '../../../constans/styleConstants';
-import {withDelay, withSpring} from 'react-native-reanimated';
-import ReactNode from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
+import CreateCardModal from '../createCardModal/CreateCardModal';
+import useModal from '../../../hooks/modal';
 
 const CardContainer: FC = () => {
-  const scrollRef = useRef<ScrollView>();
+  const {toogleModal, isToogleModal} = useModal();
+
   const initialCard = [
     {text: 'card0', id: Date.now().toString()},
     {text: 'card1', id: Date.now().toString() + 1},
@@ -62,8 +57,15 @@ const CardContainer: FC = () => {
         </Animated.ScrollView>
       </Animated.View>
       <View style={style.button}>
-        <CircleButton radius={60} text="+" buttonHandler={() => {}} />
+        <CircleButton
+          radius={60}
+          text="+"
+          buttonHandler={() => toogleModal()}
+        />
       </View>
+      <Modal animationType="slide" visible={isToogleModal}>
+        <CreateCardModal toogleModal={toogleModal} />
+      </Modal>
     </GestureHandlerRootView>
   );
 };
