@@ -1,26 +1,26 @@
-
-import React, {FC, useContext} from 'react';
-import {Button, Text, View} from 'react-native';
-import {Auth} from 'aws-amplify';
-import {UserContext} from '../contexts/UserProvider';
-import CardContainer from '../components/cardContainer/CardContainer';
+import React, {FC} from 'react';
+import {View, StyleSheet} from 'react-native';
+import CardContainer from '../components/main/cardContainer/CardContainer';
+import MainHeader from '../components/main/header/MainHeader';
 
 const Main: FC = () => {
-  const {setUser} = useContext(UserContext);
-  const signOutHandler = async () => {
-    try {
-      await Auth.signOut();
-      setUser(null);
-    } catch (error) {
-      console.log('error signing out: ', error);
-    }
-  };
   return (
     <View style={{flex: 1}}>
-      <Button title="SignOut" onPress={signOutHandler} />
+      <MainHeader />
       <CardContainer />
     </View>
   );
 };
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  scrollView: {
+    backgroundColor: 'pink',
+    marginHorizontal: 20,
+  },
+  text: {
+    fontSize: 42,
+  },
+});
 export default Main;

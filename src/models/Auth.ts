@@ -39,6 +39,7 @@ export interface ICognitoUser {
     name: string;
     phone_number: string;
     phone_number_verified: boolean;
+    sub: string;
   };
   authenticationFlowType: string;
   client: {
