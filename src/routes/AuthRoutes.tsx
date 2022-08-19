@@ -10,6 +10,9 @@ import {ActivityIndicator, View} from 'react-native';
 import TabRoutes from './TabRoutes';
 import UserProvider from '../contexts/UserProvider';
 import {ICognitoUser} from '../models/Auth';
+import {useAppDispatch} from '../hooks/redux';
+import {refreshFolder} from '../store/slices/folderSlice';
+import {FolderAPI} from '../services/FolderService';
 
 export type StackParams = {
   app: undefined;
@@ -26,6 +29,7 @@ const AuthRoutes: FC = () => {
   const Stack = createNativeStackNavigator<StackParams>();
 
   const [user, setUser] = useState<any>(undefined);
+  const dispatch = useAppDispatch();
 
   const checkUser = async () => {
     try {
@@ -33,6 +37,8 @@ const AuthRoutes: FC = () => {
         bypassCache: true,
       });
       setUser(authUser);
+      const {data} = FolderAPI.useGetAllFoldersQuery(authUser.attributes?.sub!);
+      dispatch(refreshFolder(data));
     } catch (e) {
       setUser(null);
     }

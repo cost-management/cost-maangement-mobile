@@ -1,20 +1,48 @@
 import {Picker} from '@react-native-picker/picker';
 import {Formik} from 'formik';
-import React, {FC} from 'react';
-import {Button, Text, View} from 'react-native';
+import React, {FC, useContext} from 'react';
+import {Button, View} from 'react-native';
 import {FolderType, IFolder, Currency} from '../../../models/Folder';
 import Field from '../../ui/Field';
+import {useAppDispatch} from '../../../hooks/redux';
+import {addFolder} from '../../../store/slices/folderSlice';
+//@ts-ignore
+import {v4 as uuidv4} from 'uuid';
+import {UserContext} from '../../../contexts/UserProvider';
+import {FolderAPI} from '../../../services/FolderService';
 
 interface CreateCardModalProps {
   toogleModal: () => void;
 }
 
 const CreateCardModal: FC<CreateCardModalProps> = ({toogleModal}) => {
-  const submitHandler = () => toogleModal();
+  const dispatch = useAppDispatch();
+  const {user} = useContext(UserContext);
+  const [postFolder] = FolderAPI.useAddFolderMutation();
+  const submitHandler = async ({
+    currency,
+    title,
+    folder_type,
+  }: Omit<IFolder, 'id' | 'owner_id'>) => {
+    const folder = {
+      title,
+      currency,
+      folder_type,
+      id: uuidv4(),
+      owner_id: user.attributes?.sub!,
+    };
+    dispatch(addFolder(folder));
+    const response = await postFolder({
+      body: folder,
+      id: user.attributes?.sub!,
+    });
+    console.log(response);
+    toogleModal();
+  };
 
   const initialValue: Omit<IFolder, 'id' | 'owner_id'> = {
     title: '',
-    currency: Currency.uan,
+    currency: Currency.uah,
     folder_type: FolderType.cash,
   };
 
@@ -37,9 +65,10 @@ const CreateCardModal: FC<CreateCardModalProps> = ({toogleModal}) => {
             <Picker
               selectedValue={values.currency}
               onValueChange={handleChange('currency')}>
-              <Picker.Item value={Currency.uan} label={Currency.uan} />
+              <Picker.Item value={Currency.uah} label={Currency.uah} />
               <Picker.Item value={Currency.usd} label={Currency.usd} />
             </Picker>
+            <Button title="Exit" onPress={() => toogleModal()} />
             <Button title="Submit" onPress={handleSubmit} />
           </View>
         )}
