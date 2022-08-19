@@ -37,8 +37,6 @@ const AuthRoutes: FC = () => {
         bypassCache: true,
       });
       setUser(authUser);
-      const {data} = FolderAPI.useGetAllFoldersQuery(authUser.attributes?.sub!);
-      dispatch(refreshFolder(data));
     } catch (e) {
       setUser(null);
     }
