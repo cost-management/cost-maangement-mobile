@@ -9,7 +9,7 @@ interface Style {
 export const style = StyleSheet.create<Style>({
   container: {
     width: SCREEN_WIDTH,
-    backgroundColor: 'red',
+    backgroundColor: 'green',
     alignItems: 'center',
     flex: 1,
     position: 'relative',

@@ -20,7 +20,7 @@ const MainHeader: FC = () => {
     }
   };
 
-  const graphHandler = () => {};
+  const statisticHandler = () => navigate('statistic');
   const allTransactionsHandler = () => navigate('allTransactions');
 
   return (
@@ -28,7 +28,7 @@ const MainHeader: FC = () => {
       <TouchableOpacity style={style.costs} onPress={allTransactionsHandler} />
       <View style={style.buttonsContainer}>
         <CircleButton text="-" buttonHandler={signOutHandler} />
-        <CircleButton text="i" buttonHandler={graphHandler} />
+        <CircleButton text="i" buttonHandler={statisticHandler} />
       </View>
     </View>
   );
