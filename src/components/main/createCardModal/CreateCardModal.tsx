@@ -32,11 +32,11 @@ const CreateCardModal: FC<CreateCardModalProps> = ({toogleModal}) => {
       owner_id: user.attributes?.sub!,
     };
     dispatch(addFolder(folder));
-    const response = await postFolder({
-      body: folder,
-      id: user.attributes?.sub!,
-    });
-    console.log(response);
+    // const response = await postFolder({
+    //   body: folder,
+    //   id: user.attributes?.sub!,
+    // });
+    // console.log(response);
     toogleModal();
   };
 
