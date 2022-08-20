@@ -1,8 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {FolderAPI} from '../services/FolderService';
+import folderSlice from './slices/folderSlice';
 
 const rootReducer = {
   [FolderAPI.reducerPath]: FolderAPI.reducer,
+  folders: folderSlice,
 };
 
 export const store = configureStore({

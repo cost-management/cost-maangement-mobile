@@ -2,9 +2,9 @@ import React, {FC} from 'react';
 import {Button, Text, View} from 'react-native';
 import {Formik} from 'formik';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {StackParams} from '../views/Navigation';
 import {SignInSchema} from '../utils/auth/validation';
 import Field from './ui/Field';
+import {StackParams} from '../routes/AuthRoutes';
 
 interface FormSignInProps {
   handlerSubmit: (email: string, password: string) => void;
