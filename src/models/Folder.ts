@@ -14,4 +14,5 @@ export interface IFolder {
   title: string;
   folder_type: FolderType;
   currency: Currency;
+  balance: string;
 }

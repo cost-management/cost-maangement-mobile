@@ -1,9 +1,10 @@
 import React, {FC} from 'react';
-import {TextInput} from 'react-native';
+import {KeyboardTypeOptions, TextInput} from 'react-native';
 interface FieldProps {
   value: string;
   onChangeText: (text: string) => void;
   placeholder: string;
+  keyboardType?: KeyboardTypeOptions;
 }
 const Field: FC<FieldProps> = props => {
   return <TextInput {...props} />;

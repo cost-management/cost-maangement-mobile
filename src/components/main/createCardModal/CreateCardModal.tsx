@@ -23,11 +23,13 @@ const CreateCardModal: FC<CreateCardModalProps> = ({toogleModal}) => {
     currency,
     title,
     folder_type,
+    balance,
   }: Omit<IFolder, 'id' | 'owner_id'>) => {
     const folder = {
       title,
       currency,
       folder_type,
+      balance,
       id: uuidv4(),
       owner_id: user.attributes?.sub!,
     };
@@ -44,6 +46,7 @@ const CreateCardModal: FC<CreateCardModalProps> = ({toogleModal}) => {
     title: '',
     currency: Currency.uah,
     folder_type: FolderType.cash,
+    balance: '',
   };
 
   return (
@@ -62,6 +65,12 @@ const CreateCardModal: FC<CreateCardModalProps> = ({toogleModal}) => {
               <Picker.Item value={FolderType.card} label={FolderType.card} />
               <Picker.Item value={FolderType.cash} label={FolderType.cash} />
             </Picker>
+            <Field
+              value={values.balance}
+              onChangeText={handleChange('balance')}
+              placeholder="Баланс"
+              keyboardType="number-pad"
+            />
             <Picker
               selectedValue={values.currency}
               onValueChange={handleChange('currency')}>
