@@ -1,12 +1,20 @@
 import React, {FC} from 'react';
-import {Text, View} from 'react-native';
-import {IFolder} from '../../../models/Folder';
+import {Text, TouchableOpacity, View} from 'react-native';
+import Animated, {SharedValue, useAnimatedStyle} from 'react-native-reanimated';
+import style from './style';
 
-const SmallCard: FC<IFolder> = ({title}) => {
+interface SmallCardProps {
+  styles?: object;
+  x: SharedValue<number>;
+}
+
+const SmallCard: FC<SmallCardProps> = ({styles, x}) => {
+  const rStyle = useAnimatedStyle(() => ({transform: [{translateX: x.value}]}));
+
   return (
-    <View>
-      <Text>{title}</Text>
-    </View>
+    <Animated.View style={[style.container, styles, rStyle]}>
+      <Text>Card</Text>
+    </Animated.View>
   );
 };
 
