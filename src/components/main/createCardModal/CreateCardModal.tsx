@@ -1,8 +1,8 @@
 import {Picker} from '@react-native-picker/picker';
 import {Formik} from 'formik';
 import React, {FC, useContext} from 'react';
-import {Button, View} from 'react-native';
-import {FolderType, IFolder, Currency} from '../../../models/Folder';
+import {Button, Text, View} from 'react-native';
+import {FolderType, IFolder, Currency, Skins} from '../../../models/Folder';
 import Field from '../../ui/Field';
 import {useAppDispatch} from '../../../hooks/redux';
 import {addFolder} from '../../../store/slices/folderSlice';
@@ -10,7 +10,8 @@ import {addFolder} from '../../../store/slices/folderSlice';
 import {v4 as uuidv4} from 'uuid';
 import {UserContext} from '../../../contexts/UserProvider';
 import {FolderAPI} from '../../../services/FolderService';
-
+import CardSkinChanger from '../cardSkin/CardSkinChanger';
+import {useSharedValue} from 'react-native-reanimated';
 interface CreateCardModalProps {
   toogleModal: () => void;
 }
@@ -24,6 +25,7 @@ const CreateCardModal: FC<CreateCardModalProps> = ({toogleModal}) => {
     title,
     folder_type,
     balance,
+    skin,
   }: Omit<IFolder, 'id' | 'owner_id'>) => {
     const folder = {
       title,
@@ -32,6 +34,7 @@ const CreateCardModal: FC<CreateCardModalProps> = ({toogleModal}) => {
       balance,
       id: uuidv4(),
       owner_id: user.attributes?.sub!,
+      skin,
     };
     dispatch(addFolder(folder));
     // const response = await postFolder({
@@ -47,12 +50,14 @@ const CreateCardModal: FC<CreateCardModalProps> = ({toogleModal}) => {
     currency: Currency.uah,
     folder_type: FolderType.cash,
     balance: '',
+    skin: Skins.green,
   };
 
+  const x = useSharedValue(-288);
   return (
     <View>
       <Formik initialValues={initialValue} onSubmit={submitHandler}>
-        {({handleSubmit, handleChange, values}) => (
+        {({handleSubmit, handleChange, values, setFieldValue}) => (
           <View>
             <Field
               value={values.title}
@@ -77,7 +82,8 @@ const CreateCardModal: FC<CreateCardModalProps> = ({toogleModal}) => {
               <Picker.Item value={Currency.uah} label={Currency.uah} />
               <Picker.Item value={Currency.usd} label={Currency.usd} />
             </Picker>
-            <Button title="Exit" onPress={() => toogleModal()} />
+            <CardSkinChanger x={x} setValue={setFieldValue} />
+            <Button title="Exit" onPress={toogleModal} />
             <Button title="Submit" onPress={handleSubmit} />
           </View>
         )}

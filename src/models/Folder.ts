@@ -8,6 +8,12 @@ export enum FolderType {
   cash = 'CASH',
 }
 
+export enum Skins {
+  blue = 'blue',
+  green = 'green',
+  red = 'red',
+}
+
 export interface IFolder {
   id: string;
   owner_id: string;
@@ -15,4 +21,5 @@ export interface IFolder {
   folder_type: FolderType;
   currency: Currency;
   balance: string;
+  skin?: Skins;
 }

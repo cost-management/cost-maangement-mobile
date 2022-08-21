@@ -6,11 +6,7 @@ import {MainRoutesParams} from '../routes/MainRoutes';
 
 const Folder: FC = () => {
   const {params} = useRoute<RouteProp<MainRoutesParams>>();
-  return (
-    <View>
-      <SmallCard {...params?.folder!} />
-    </View>
-  );
+  return <View></View>;
 };
 
 export default Folder;
