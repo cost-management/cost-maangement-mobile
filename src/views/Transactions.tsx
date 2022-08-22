@@ -5,11 +5,11 @@ import Transaction from '../components/transactions/transaction/Transaction';
 import useModal from '../hooks/modal';
 import {
   SCREEN_WIDTH,
-  SCREEN_HEIGHT,
   TRANSACTION_CONTAINER_HORIZONTAL_PADDING,
 } from '../constans/styleConstants';
 import DoubleButton from '../components/ui/doubleButton/DoubleButton';
 import {TRANSACTION_WIDTH} from '../constans/styleConstants';
+import {useAppSelector} from '../hooks/redux';
 import {
   TRANSACTION_HEIGHT,
   TRANSACTION_MARGIN,
@@ -17,31 +17,18 @@ import {
 
 const Transactions: FC = () => {
   const {toogleModal, isToogleModal} = useModal();
-  const arr1 = [
-    'Продукти',
-    'АЗС',
-    'Медецина',
-    'Продукти',
-    'АЗС',
-    'Медецина',
-    'Продукти',
-    'АЗС',
-    'Медецина',
-    'Продукти',
-    'АЗС',
-    'Медецина',
-    'Продукти',
-    'АЗС',
-  ];
-  const arr2 = ['Зарплата', 'АЗС'];
-  const [state, setState] = useState(arr1);
+  const {incomeCategory, costCategory} = useAppSelector(
+    state => state.categories,
+  );
+
+  const [categories, setCategories] = useState(costCategory);
 
   return (
     <View style={style.container}>
       <Text style={style.title}>Transactions</Text>
       <DoubleButton
-        leftButtonHanlder={() => setState(arr1)}
-        rightButtonHandler={() => setState(arr2)}
+        leftButtonHanlder={() => setCategories(costCategory)}
+        rightButtonHandler={() => setCategories(incomeCategory)}
       />
       <ScrollView
         style={{
@@ -56,12 +43,12 @@ const Transactions: FC = () => {
           style.containerTransactions,
           {
             height:
-              Math.ceil(state.length / 3) * TRANSACTION_HEIGHT +
-              TRANSACTION_MARGIN * 2 * Math.ceil(state.length / 3),
+              Math.ceil(categories.length / 3) * TRANSACTION_HEIGHT +
+              TRANSACTION_MARGIN * 2 * Math.ceil(categories.length / 3),
           },
         ]}>
-        {state.map(ar => (
-          <Transaction title={ar} transactionHandler={toogleModal} />
+        {categories.map(category => (
+          <Transaction title={category} transactionHandler={toogleModal} />
         ))}
       </ScrollView>
       <AddTransactionModal
