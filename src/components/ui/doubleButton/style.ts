@@ -11,7 +11,7 @@ interface Style {
 const style = StyleSheet.create<Style>({
   container: {
     width: SCREEN_WIDTH - 68,
-    height: 69,
+    height: 70,
     borderRadius: 20,
     flexDirection: 'row',
   },

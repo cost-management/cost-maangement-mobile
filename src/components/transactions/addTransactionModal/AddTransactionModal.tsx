@@ -11,16 +11,22 @@ import DoubleButton from '../../ui/doubleButton/DoubleButton';
 import {TransactionsRoutesParams} from '../../../routes/TransactionsRoutes';
 import {CategoryType} from '../../../views/Transactions';
 import {Picker} from '@react-native-picker/picker';
-import {useAppSelector} from '../../../hooks/redux';
+import {useAppSelector, useAppDispatch} from '../../../hooks/redux';
 import SmallCategory from '../../ui/smallCategories/SmallCategory';
+import Keyboad from '../../ui/keyboard/Keyboard';
+import style from './style';
+import {toogleModal} from '../../../store/slices/categorySlice';
+import {SCREEN_WIDTH} from '../../../constans/styleConstants';
 
 interface InitialValues {
   category: string;
   folder: string;
   value: string;
+  selected: boolean;
 }
 
 const AddTransactionModal: FC = () => {
+  const dispatch = useAppDispatch();
   const {navigate} = useNavigation<NavigationProp<TransactionsRoutesParams>>();
   const {params} = useRoute<RouteProp<TransactionsRoutesParams>>();
   const folders = useAppSelector(state => state.folders.folders);
@@ -38,31 +44,39 @@ const AddTransactionModal: FC = () => {
     category: params?.category!,
     folder: '',
     value: '',
+    selected: false,
   };
 
   return (
-    <View>
-      <Button
-        title="Close Modal"
-        onPress={() => navigate('transactionsView')}
-      />
-      <DoubleButton
-        leftButtonHanlder={() => {
-          setCategoryType('cost');
-          setCategories(costCategory);
-        }}
-        rightButtonHandler={() => {
-          setCategoryType('income');
-          setCategories(incomeCategory);
-        }}
-      />
+    <View style={style.container}>
       <Formik
         onSubmit={() => console.log('sumbit')}
         initialValues={initialValue}>
         {({handleChange, setFieldValue, values}) => (
-          <View>
+          <View style={style.form}>
+            <DoubleButton
+              styles={{
+                container: {
+                  position: 'absolute',
+                  top: -35,
+                },
+              }}
+              leftButtonHanlder={() => {
+                setCategoryType('cost');
+                setCategories(costCategory);
+              }}
+              rightButtonHandler={() => {
+                setCategoryType('income');
+                setCategories(incomeCategory);
+              }}
+            />
             {folders.length !== 0 && (
               <Picker
+                style={{
+                  width: 200,
+                  alignItems: 'center',
+                  marginTop: 40,
+                }}
                 selectedValue={folders[0]?.title}
                 onValueChange={handleChange('folder')}>
                 {folders.map(folder => (
@@ -70,8 +84,10 @@ const AddTransactionModal: FC = () => {
                 ))}
               </Picker>
             )}
-            <Text>{values.category}</Text>
-            <ScrollView horizontal={true}>
+            <ScrollView
+              horizontal={true}
+              style={{width: SCREEN_WIDTH, marginBottom: 10}}
+              contentContainerStyle={{height: 48}}>
               {categories.map(category => (
                 <SmallCategory
                   title={category}
@@ -79,6 +95,33 @@ const AddTransactionModal: FC = () => {
                 />
               ))}
             </ScrollView>
+            <Keyboad value={values.value} setValue={setFieldValue} />
+            <DoubleButton
+              leftButtonText="*"
+              rightButtonText=""
+              styles={{
+                leftButton: {
+                  width: SCREEN_WIDTH / 2 - 40,
+                  height: 50,
+                },
+                rightButton: {
+                  width: SCREEN_WIDTH / 2 - 40,
+                  height: 50,
+                },
+                container: {
+                  width: SCREEN_WIDTH - 80,
+                  height: 50,
+                  marginTop: 10,
+                },
+              }}
+              leftButtonHanlder={() =>
+                setFieldValue('selected', !values.selected)
+              }
+              rightButtonHandler={() => {
+                dispatch(toogleModal());
+                navigate('transactionsView');
+              }}
+            />
           </View>
         )}
       </Formik>

@@ -19,7 +19,8 @@ const TransactionsRoutes: FC = () => {
       <Stack.Group>
         <Stack.Screen name="transactionsView" component={Transactions} />
       </Stack.Group>
-      <Stack.Group screenOptions={{presentation: 'modal'}}>
+      <Stack.Group
+        screenOptions={{presentation: 'modal', animation: 'slide_from_bottom'}}>
         <Stack.Screen name="createModal" component={AddTransactionModal} />
       </Stack.Group>
     </Stack.Navigator>

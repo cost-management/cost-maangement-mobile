@@ -9,13 +9,14 @@ import {
 } from '../constans/styleConstants';
 import DoubleButton from '../components/ui/doubleButton/DoubleButton';
 import {TRANSACTION_WIDTH} from '../constans/styleConstants';
-import {useAppSelector} from '../hooks/redux';
+import {useAppDispatch, useAppSelector} from '../hooks/redux';
 import {
   TRANSACTION_HEIGHT,
   TRANSACTION_MARGIN,
 } from '../constans/styleConstants';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {TransactionsRoutesParams} from '../routes/TransactionsRoutes';
+import {toogleModal} from '../store/slices/categorySlice';
 
 export type CategoryType = 'income' | 'cost';
 
@@ -25,7 +26,7 @@ const Transactions: FC = () => {
   );
   const [categories, setCategories] = useState(costCategory);
   const [categoryType, setCategoryType] = useState<CategoryType>('cost');
-
+  const dispatch = useAppDispatch();
   const {navigate} = useNavigation<NavigationProp<TransactionsRoutesParams>>();
 
   return (
@@ -61,9 +62,10 @@ const Transactions: FC = () => {
         {categories.map(category => (
           <Transaction
             title={category}
-            transactionHandler={() =>
-              navigate('createModal', {category, categoryType})
-            }
+            transactionHandler={() => {
+              dispatch(toogleModal());
+              navigate('createModal', {category, categoryType});
+            }}
           />
         ))}
       </ScrollView>
