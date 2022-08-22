@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Modal, Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import StatisticModal from '../components/main/statisticModal/StatisticModal';
 import useModal from '../hooks/modal';
 
