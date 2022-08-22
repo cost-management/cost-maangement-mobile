@@ -14,21 +14,32 @@ import {
   TRANSACTION_HEIGHT,
   TRANSACTION_MARGIN,
 } from '../constans/styleConstants';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {TransactionsRoutesParams} from '../routes/TransactionsRoutes';
+
+export type CategoryType = 'income' | 'cost';
 
 const Transactions: FC = () => {
-  const {toogleModal, isToogleModal} = useModal();
   const {incomeCategory, costCategory} = useAppSelector(
     state => state.categories,
   );
-
   const [categories, setCategories] = useState(costCategory);
+  const [categoryType, setCategoryType] = useState<CategoryType>('cost');
+
+  const {navigate} = useNavigation<NavigationProp<TransactionsRoutesParams>>();
 
   return (
     <View style={style.container}>
       <Text style={style.title}>Transactions</Text>
       <DoubleButton
-        leftButtonHanlder={() => setCategories(costCategory)}
-        rightButtonHandler={() => setCategories(incomeCategory)}
+        leftButtonHanlder={() => {
+          setCategories(costCategory);
+          setCategoryType('cost');
+        }}
+        rightButtonHandler={() => {
+          setCategories(incomeCategory);
+          setCategoryType('income');
+        }}
       />
       <ScrollView
         style={{
@@ -48,13 +59,14 @@ const Transactions: FC = () => {
           },
         ]}>
         {categories.map(category => (
-          <Transaction title={category} transactionHandler={toogleModal} />
+          <Transaction
+            title={category}
+            transactionHandler={() =>
+              navigate('createModal', {category, categoryType})
+            }
+          />
         ))}
       </ScrollView>
-      <AddTransactionModal
-        toogleModal={toogleModal}
-        isToogleModal={isToogleModal}
-      />
     </View>
   );
 };
