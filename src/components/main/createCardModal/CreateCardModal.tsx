@@ -12,13 +12,14 @@ import {UserContext} from '../../../contexts/UserProvider';
 import {FolderAPI} from '../../../services/FolderService';
 import CardSkinChanger from '../cardSkin/CardSkinChanger';
 import {useSharedValue} from 'react-native-reanimated';
-interface CreateCardModalProps {
-  toogleModal: () => void;
-}
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {MainRoutesParams} from '../../../routes/MainRoutes';
+import {toogleModal} from '../../../store/slices/categorySlice';
 
-const CreateCardModal: FC<CreateCardModalProps> = ({toogleModal}) => {
+const CreateCardModal: FC = () => {
   const dispatch = useAppDispatch();
   const {user} = useContext(UserContext);
+  const {navigate} = useNavigation<NavigationProp<MainRoutesParams>>();
   const [postFolder] = FolderAPI.useAddFolderMutation();
   const submitHandler = async ({
     currency,
@@ -42,7 +43,8 @@ const CreateCardModal: FC<CreateCardModalProps> = ({toogleModal}) => {
     //   id: user.attributes?.sub!,
     // });
     // console.log(response);
-    toogleModal();
+    dispatch(toogleModal());
+    navigate('mainPage');
   };
 
   const initialValue: Omit<IFolder, 'id' | 'owner_id'> = {
@@ -83,7 +85,13 @@ const CreateCardModal: FC<CreateCardModalProps> = ({toogleModal}) => {
               <Picker.Item value={Currency.usd} label={Currency.usd} />
             </Picker>
             <CardSkinChanger x={x} setValue={setFieldValue} />
-            <Button title="Exit" onPress={toogleModal} />
+            <Button
+              title="Exit"
+              onPress={() => {
+                dispatch(toogleModal());
+                navigate('mainPage');
+              }}
+            />
             <Button title="Submit" onPress={handleSubmit} />
           </View>
         )}
