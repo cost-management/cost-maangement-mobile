@@ -15,11 +15,11 @@ const TabRoutes: FC = () => {
         headerShown: false,
         tabBarStyle: {
           position: 'absolute',
-          bottom: 20,
+          bottom: 10,
           left: 30,
           right: 30,
           borderRadius: 15,
-          height: 70,
+          height: 50,
           backgroundColor: 'rgba(182, 182, 182, 1)',
           display: isOpenModal ? 'none' : 'flex',
         },
