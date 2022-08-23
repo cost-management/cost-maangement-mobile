@@ -6,12 +6,14 @@ interface CircleButtonProps {
   buttonHandler: Function;
   text: string;
   radius?: number;
+  styles?: object;
 }
 
 const CircleButton: FC<CircleButtonProps> = ({
   text,
   buttonHandler,
   radius = 45,
+  styles,
 }) => {
   return (
     <TouchableOpacity
@@ -19,6 +21,7 @@ const CircleButton: FC<CircleButtonProps> = ({
       style={[
         style.container,
         {height: radius, width: radius, borderRadius: radius},
+        styles,
       ]}>
       <Text>{text}</Text>
     </TouchableOpacity>
