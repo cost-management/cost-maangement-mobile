@@ -1,4 +1,3 @@
-import {Picker} from '@react-native-picker/picker';
 import {Formik} from 'formik';
 import React, {FC, useContext} from 'react';
 import {Button, Text, View} from 'react-native';
@@ -15,6 +14,8 @@ import {useSharedValue} from 'react-native-reanimated';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {MainRoutesParams} from '../../../routes/MainRoutes';
 import {toogleModal} from '../../../store/slices/categorySlice';
+import style from './style';
+import Picker from '../../ui/picker/Picker';
 
 const CreateCardModal: FC = () => {
   const dispatch = useAppDispatch();
@@ -57,46 +58,46 @@ const CreateCardModal: FC = () => {
 
   const x = useSharedValue(-288);
   return (
-    <View>
-      <Formik initialValues={initialValue} onSubmit={submitHandler}>
-        {({handleSubmit, handleChange, values, setFieldValue}) => (
-          <View>
-            <Field
-              value={values.title}
-              onChangeText={handleChange('title')}
-              placeholder="Назва папки"
-            />
-            <Picker
-              selectedValue={values.folder_type}
-              onValueChange={handleChange('folder_type')}>
-              <Picker.Item value={FolderType.card} label={FolderType.card} />
-              <Picker.Item value={FolderType.cash} label={FolderType.cash} />
-            </Picker>
-            <Field
-              value={values.balance}
-              onChangeText={handleChange('balance')}
-              placeholder="Баланс"
-              keyboardType="number-pad"
-            />
-            <Picker
-              selectedValue={values.currency}
-              onValueChange={handleChange('currency')}>
-              <Picker.Item value={Currency.uah} label={Currency.uah} />
-              <Picker.Item value={Currency.usd} label={Currency.usd} />
-            </Picker>
-            <CardSkinChanger x={x} setValue={setFieldValue} />
-            <Button
-              title="Exit"
-              onPress={() => {
-                dispatch(toogleModal());
-                navigate('mainPage');
-              }}
-            />
-            <Button title="Submit" onPress={handleSubmit} />
-          </View>
-        )}
-      </Formik>
-    </View>
+    <Formik initialValues={initialValue} onSubmit={submitHandler}>
+      {({handleSubmit, handleChange, values, setFieldValue}) => (
+        <View style={style.container}>
+          <Field
+            style={style.title}
+            value={values.title}
+            onChangeText={handleChange('title')}
+            placeholder="Назва папки"
+          />
+          <Picker
+            currentValue={values.folder_type}
+            items={[FolderType.card, FolderType.cash]}
+            itemHandler={setFieldValue}
+            valueType="folder_type"
+          />
+          <Field
+            style={style.balance}
+            value={values.balance}
+            onChangeText={handleChange('balance')}
+            placeholder="Баланс"
+            keyboardType="number-pad"
+          />
+          <Picker
+            currentValue={values.currency}
+            items={[Currency.uah, Currency.usd]}
+            itemHandler={setFieldValue}
+            valueType="currency"
+          />
+          <CardSkinChanger x={x} setValue={setFieldValue} />
+          <Button
+            title="Exit"
+            onPress={() => {
+              dispatch(toogleModal());
+              navigate('mainPage');
+            }}
+          />
+          <Button title="Submit" onPress={handleSubmit} />
+        </View>
+      )}
+    </Formik>
   );
 };
 
