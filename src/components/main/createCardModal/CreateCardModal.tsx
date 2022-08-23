@@ -1,6 +1,6 @@
 import {Formik} from 'formik';
 import React, {FC, useContext} from 'react';
-import {Button, Text, View} from 'react-native';
+import {Button, Text, View, TouchableOpacity} from 'react-native';
 import {FolderType, IFolder, Currency, Skins} from '../../../models/Folder';
 import Field from '../../ui/Field';
 import {useAppDispatch} from '../../../hooks/redux';
@@ -16,6 +16,7 @@ import {MainRoutesParams} from '../../../routes/MainRoutes';
 import {toogleModal} from '../../../store/slices/categorySlice';
 import style from './style';
 import Picker from '../../ui/picker/Picker';
+import CloseButton from '../../ui/closeButton/CloseButton';
 
 const CreateCardModal: FC = () => {
   const dispatch = useAppDispatch();
@@ -56,7 +57,7 @@ const CreateCardModal: FC = () => {
     skin: Skins.green,
   };
 
-  const x = useSharedValue(-288);
+  const x = useSharedValue(0);
   return (
     <Formik initialValues={initialValue} onSubmit={submitHandler}>
       {({handleSubmit, handleChange, values, setFieldValue}) => (
@@ -86,15 +87,18 @@ const CreateCardModal: FC = () => {
             itemHandler={setFieldValue}
             valueType="currency"
           />
+          <View style={style.line} />
           <CardSkinChanger x={x} setValue={setFieldValue} />
-          <Button
-            title="Exit"
-            onPress={() => {
+          <TouchableOpacity onPress={handleSubmit} style={style.submitButton}>
+            <Text>Створити</Text>
+          </TouchableOpacity>
+          <CloseButton
+            styles={style.closeButton}
+            buttonHandler={() => {
               dispatch(toogleModal());
               navigate('mainPage');
             }}
           />
-          <Button title="Submit" onPress={handleSubmit} />
         </View>
       )}
     </Formik>
