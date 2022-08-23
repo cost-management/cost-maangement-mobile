@@ -4,7 +4,6 @@ import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../constans/styleConstants';
 interface Style {
   container: object;
   title: object;
-  picketContainer: object;
   balance: object;
 }
 
@@ -26,12 +25,6 @@ const style = StyleSheet.create<Style>({
     backgroundColor: '#C7C7C7',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
-  },
-  picketContainer: {
-    width: '100%',
-    height: 30,
-    backgroundColor: '#F0F0F0',
     borderRadius: 10,
   },
   balance: {

@@ -16,7 +16,7 @@ interface Style {
 const style = StyleSheet.create<Style>({
   mainContainer: {
     borderRadius: 10,
-    marginVertical: 50,
+    marginVertical: 20,
     width: SCREEN_WIDTH - 60,
     maxHeight: 200,
   },
