@@ -1,32 +1,89 @@
-import React, {FC} from 'react';
-import {View, TouchableWithoutFeedback, TextInput} from 'react-native';
+import React, {FC, useState} from 'react';
+import {
+  View,
+  TouchableWithoutFeedback,
+  TextInput,
+  Button,
+  Text,
+} from 'react-native';
 import style from './style';
-import {useAppDispatch} from '../../../hooks/redux';
+import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
 import {toogleModal} from '../../../store/slices/categorySlice';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {SettingsRoutesParams} from '../../../routes/SettingsRoutes';
 import DoubleButton from '../../ui/doubleButton/DoubleButton';
 import {Formik} from 'formik';
+import Picker from '../../ui/picker/Picker';
+import {FolderRole} from '../../../models/Folder';
 
 interface InitialValues {
   email: string;
   folder: string;
   folder_id: string;
+  role: FolderRole;
 }
+
+type IncomeOperations = 'get' | 'post';
 
 const InviteModal: FC = () => {
   const dispatch = useAppDispatch();
   const {navigate} = useNavigation<NavigationProp<SettingsRoutesParams>>();
+  const [incomeOperations, setincomeOperations] =
+    useState<IncomeOperations>('post');
+
+  const {folders} = useAppSelector(state => state.folders);
+
+  const foldersName = folders.map(folder => folder.title);
 
   const initialValues: InitialValues = {
     email: '',
-    folder: '',
+    folder: foldersName[0] || '',
     folder_id: '',
+    role: FolderRole.owner,
   };
 
   const noModalHandler = () => {
     dispatch(toogleModal());
     navigate('settingsView');
+  };
+
+  const addInvite = () => {
+    return (
+      <Formik initialValues={initialValues} onSubmit={() => {}}>
+        {({values, handleChange, setFieldValue, handleSubmit}) => (
+          <View>
+            <TextInput
+              value={values.email}
+              onChangeText={handleChange('email')}
+              placeholder="Email"
+              textAlign="center"
+            />
+            <Picker
+              currentValue={values.folder}
+              valueType="folder"
+              itemHandler={setFieldValue}
+              items={foldersName}
+            />
+            <Picker
+              currentValue={values.role}
+              valueType="role"
+              itemHandler={setFieldValue}
+              items={[FolderRole.owner, FolderRole.admin, FolderRole.user]}
+            />
+            <Button title="Submit" onPress={handleSubmit} />
+          </View>
+        )}
+      </Formik>
+    );
+  };
+
+  const getInvite = () => {
+    return (
+      <View>
+        <Text></Text>
+        <Button title="Accept" onPress={() => console.log('accept')} />
+      </View>
+    );
   };
 
   return (
@@ -40,21 +97,10 @@ const InviteModal: FC = () => {
                 leftButton: style.leftButton,
                 rightButton: style.rightButton,
               }}
-              leftButtonHanlder={() => console.log('hellp')}
-              rightButtonHandler={() => console.log('helloo')}
+              leftButtonHanlder={() => setincomeOperations('get')}
+              rightButtonHandler={() => setincomeOperations('post')}
             />
-            <Formik initialValues={initialValues} onSubmit={() => {}}>
-              {({values, handleChange}) => (
-                <View>
-                  <TextInput
-                    value={values.email}
-                    onChangeText={handleChange('email')}
-                    placeholder="Email"
-                    textAlign="center"
-                  />
-                </View>
-              )}
-            </Formik>
+            {incomeOperations === 'get' ? getInvite() : addInvite()}
           </View>
         </TouchableWithoutFeedback>
       </View>

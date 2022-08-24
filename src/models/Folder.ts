@@ -3,6 +3,12 @@ export enum Currency {
   usd = 'USD',
 }
 
+export enum FolderRole {
+  admin = 'admin',
+  user = 'user',
+  owner = 'owner',
+}
+
 export enum FolderType {
   card = 'CARD',
   cash = 'CASH',
