@@ -1,9 +1,9 @@
 import {StyleSheet} from 'react-native';
-import {TRANSACTION_MARGIN} from '../../../constans/styleConstants';
+import {TRANSACTION_MARGIN} from '../../../constants/styleConstants';
 import {
   TRANSACTION_WIDTH,
   TRANSACTION_HEIGHT,
-} from '../../../constans/styleConstants';
+} from '../../../constants/styleConstants';
 
 interface Style {
   container: object;

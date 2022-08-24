@@ -16,7 +16,7 @@ import SmallCategory from '../../ui/smallCategories/SmallCategory';
 import Keyboad from '../../ui/keyboard/Keyboard';
 import style from './style';
 import {toogleModal} from '../../../store/slices/categorySlice';
-import {SCREEN_WIDTH} from '../../../constans/styleConstants';
+import {SCREEN_WIDTH} from '../../../constants/styleConstants';
 
 interface InitialValues {
   category: string;

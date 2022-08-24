@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {SCREEN_WIDTH} from '../../../constans/styleConstants';
+import {SCREEN_WIDTH} from '../../../constants/styleConstants';
 
 interface Style {
   container: object;

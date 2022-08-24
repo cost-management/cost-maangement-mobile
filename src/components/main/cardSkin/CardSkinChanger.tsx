@@ -15,7 +15,7 @@ import Animated, {
 import {
   SMALL_CARD_WIDHT,
   SMALL_CARD_HEIGHT,
-} from '../../../constans/styleConstants';
+} from '../../../constants/styleConstants';
 
 interface CardScinChangerProps {
   x: SharedValue<number>;

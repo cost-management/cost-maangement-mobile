@@ -6,14 +6,14 @@ import useModal from '../hooks/modal';
 import {
   SCREEN_WIDTH,
   TRANSACTION_CONTAINER_HORIZONTAL_PADDING,
-} from '../constans/styleConstants';
+} from '../constants/styleConstants';
 import DoubleButton from '../components/ui/doubleButton/DoubleButton';
-import {TRANSACTION_WIDTH} from '../constans/styleConstants';
+import {TRANSACTION_WIDTH} from '../constants/styleConstants';
 import {useAppDispatch, useAppSelector} from '../hooks/redux';
 import {
   TRANSACTION_HEIGHT,
   TRANSACTION_MARGIN,
-} from '../constans/styleConstants';
+} from '../constants/styleConstants';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {TransactionsRoutesParams} from '../routes/TransactionsRoutes';
 import {toogleModal} from '../store/slices/categorySlice';
