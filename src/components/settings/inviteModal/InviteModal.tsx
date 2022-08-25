@@ -23,6 +23,7 @@ import Animated, {
   withTiming,
   runOnJS,
 } from 'react-native-reanimated';
+import {deleteInvite} from '../../../store/slices/inviteSlice';
 
 interface InitialValues {
   email: string;
@@ -76,7 +77,7 @@ const InviteModal: FC = () => {
   };
 
   const patchInvite = async () => {
-    const response = acceptInvite({
+    const response = await acceptInvite({
       id: user.attributes?.sub,
       folder: {
         invited_customer_id: user.attributes?.sub,
@@ -85,6 +86,7 @@ const InviteModal: FC = () => {
       },
     });
     console.log(response);
+    dispatch(deleteInvite(data[0].id));
   };
 
   const extraFunction = (changer: any, id: any) => {
@@ -113,7 +115,7 @@ const InviteModal: FC = () => {
               currentValue={values.role}
               valueType="role"
               itemHandler={setFieldValue}
-              items={(FolderRole.user, [FolderRole.admin])}
+              items={[FolderRole.user, FolderRole.admin]}
             />
             <Button title="Submit" onPress={handleSubmit} />
           </View>

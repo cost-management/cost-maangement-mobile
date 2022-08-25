@@ -31,23 +31,22 @@ const CreateCardModal: FC = () => {
     skin,
   }) => {
     const [units, nanos] = balance.split('.');
-
     const folder = {
       title,
       currency,
       folder_type,
-      nanos: parseInt(nanos, 10),
+      nanos: parseInt(nanos, 10) || 0,
       units: parseInt(units, 10),
       id: uuidv4(),
       owner_id: user.attributes?.sub!,
       skin,
     };
     dispatch(addFolder(folder));
-    // const response = await postFolder({
-    //   body: folder,
-    //   id: user.attributes?.sub!,
-    // });
-    // console.log(response);
+    const response = await postFolder({
+      body: folder,
+      id: user.attributes?.sub!,
+    });
+    console.log(response);
     dispatch(toogleModal());
     navigate('mainPage');
   };

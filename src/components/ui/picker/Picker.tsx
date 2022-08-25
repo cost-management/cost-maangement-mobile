@@ -72,7 +72,9 @@ const Picker: FC<PickerProps> = ({
                 onPress={() => {
                   itemHandler(valueType, item);
                   buttonHanlder();
-                  extra(itemHandler, id);
+                  if (extra) {
+                    extra(itemHandler, id);
+                  }
                 }}
                 style={[
                   style.item,

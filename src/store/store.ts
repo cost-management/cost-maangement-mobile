@@ -3,12 +3,14 @@ import {FolderAPI} from '../services/FolderService';
 import categorySlice from './slices/categorySlice';
 import folderSlice from './slices/folderSlice';
 import {InviteAPI} from '../services/InviteService';
+import inviteSlice from './slices/inviteSlice';
 
 const rootReducer = {
   [FolderAPI.reducerPath]: FolderAPI.reducer,
   [InviteAPI.reducerPath]: InviteAPI.reducer,
   folders: folderSlice,
   categories: categorySlice,
+  invites: inviteSlice,
 };
 
 export const store = configureStore({
