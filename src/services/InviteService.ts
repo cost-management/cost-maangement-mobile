@@ -31,6 +31,7 @@ export const InviteAPI = createApi({
           headers: {id},
         };
       },
+      invalidatesTags: [{type: 'invites'}],
     }),
   }),
 });

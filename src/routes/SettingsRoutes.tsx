@@ -16,7 +16,7 @@ const SettingsRoutes: FC = () => {
       <Stack.Group>
         <Stack.Screen name="settingsView" component={Settings} />
       </Stack.Group>
-      <Stack.Group screenOptions={{presentation: 'transparentModal'}}>
+      <Stack.Group screenOptions={{presentation: 'modal', animation: 'fade'}}>
         <Stack.Screen name="inviteModal" component={InviteModal} />
       </Stack.Group>
     </Stack.Navigator>

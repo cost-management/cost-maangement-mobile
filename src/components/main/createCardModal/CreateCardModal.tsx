@@ -27,25 +27,27 @@ const CreateCardModal: FC = () => {
     currency,
     title,
     folder_type,
-    units,
+    balance,
     skin,
-  }: Omit<IFolder, 'id' | 'owner_id'>) => {
+  }) => {
+    const [units, nanos] = balance.split('.');
+
     const folder = {
       title,
       currency,
       folder_type,
-      nanos: parseInt('0', 10),
+      nanos: parseInt(nanos, 10),
       units: parseInt(units, 10),
       id: uuidv4(),
       owner_id: user.attributes?.sub!,
       skin,
     };
     dispatch(addFolder(folder));
-    const response = await postFolder({
-      body: folder,
-      id: user.attributes?.sub!,
-    });
-    console.log(response);
+    // const response = await postFolder({
+    //   body: folder,
+    //   id: user.attributes?.sub!,
+    // });
+    // console.log(response);
     dispatch(toogleModal());
     navigate('mainPage');
   };
@@ -54,7 +56,7 @@ const CreateCardModal: FC = () => {
     title: '',
     currency: Currency.uah,
     folder_type: FolderType.cash,
-    units: '',
+    balance: '',
     skin: Skins.green,
   };
 
@@ -77,8 +79,8 @@ const CreateCardModal: FC = () => {
           />
           <Field
             style={style.balance}
-            value={values.units}
-            onChangeText={handleChange('units')}
+            value={values.balance}
+            onChangeText={handleChange('balance')}
             placeholder="Баланс"
             keyboardType="number-pad"
           />
@@ -89,7 +91,6 @@ const CreateCardModal: FC = () => {
             valueType="currency"
           />
           <View style={style.line} />
-          <Text>{values.skin}</Text>
           <CardSkinChanger x={x} setValue={setFieldValue} />
           <TouchableOpacity onPress={handleSubmit} style={style.submitButton}>
             <Text>Створити</Text>

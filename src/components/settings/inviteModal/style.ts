@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {SCREEN_WIDTH} from '../../../constants/styleConstants';
+import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../../../constants/styleConstants';
 
 interface Style {
   container: object;
@@ -11,18 +11,15 @@ interface Style {
 
 const style = StyleSheet.create<Style>({
   container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+    justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    paddingTop: 20,
   },
   modalContainer: {
     width: SCREEN_WIDTH - 60,
-    height: 400,
     borderRadius: 30,
     backgroundColor: '#D9D9D9',
     alignItems: 'center',

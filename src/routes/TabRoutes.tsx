@@ -30,7 +30,9 @@ const TabRoutes: FC = () => {
       }}>
       <Tab.Screen name="main" component={MainRoutes} />
       <Tab.Screen name="transactions" component={TransactionsRoutes} />
-      <Tab.Screen name="settings" component={SettingsRoutes} />
+      <Tab.Group>
+        <Tab.Screen name="settings" component={SettingsRoutes} />
+      </Tab.Group>
     </Tab.Navigator>
   );
 };

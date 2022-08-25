@@ -52,7 +52,12 @@ const Picker: FC<PickerProps> = ({
           <Text>{currentValue}</Text>
         </View>
         <View style={style.pickerContainer}>
-          <TouchableOpacity style={style.picker} onPress={buttonHanlder}>
+          <TouchableOpacity
+            style={[
+              style.picker,
+              {display: items.length > 1 ? 'flex' : 'none'},
+            ]}
+            onPress={buttonHanlder}>
             <Text>-</Text>
           </TouchableOpacity>
         </View>

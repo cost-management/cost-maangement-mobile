@@ -17,6 +17,12 @@ import Picker from '../../ui/picker/Picker';
 import {FolderRole} from '../../../models/Folder';
 import {UserContext} from '../../../contexts/UserProvider';
 import {InviteAPI} from '../../../services/InviteService';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  runOnJS,
+} from 'react-native-reanimated';
 
 interface InitialValues {
   email: string;
@@ -41,11 +47,15 @@ const InviteModal: FC = () => {
   const foldersName = folders.map(folder => folder.title);
   const foldersId = folders.map(folder => folder.id);
 
+  const height = useSharedValue(400);
+
+  const rStyle = useAnimatedStyle(() => ({height: height.value}));
+
   const initialValues: InitialValues = {
     email: '',
     folder: foldersName[0] || '',
     folder_id: foldersId[0],
-    role: FolderRole.owner,
+    role: FolderRole.user,
   };
 
   const noModalHandler = () => {
@@ -92,7 +102,6 @@ const InviteModal: FC = () => {
               placeholder="Email"
               textAlign="center"
             />
-            <Text>{values.folder_id}</Text>
             <Picker
               currentValue={values.folder}
               valueType="folder"
@@ -104,7 +113,7 @@ const InviteModal: FC = () => {
               currentValue={values.role}
               valueType="role"
               itemHandler={setFieldValue}
-              items={[FolderRole.owner, FolderRole.admin, FolderRole.user]}
+              items={(FolderRole.user, [FolderRole.admin])}
             />
             <Button title="Submit" onPress={handleSubmit} />
           </View>
@@ -114,7 +123,13 @@ const InviteModal: FC = () => {
   };
 
   const getInvite = () => {
-    console.log(data);
+    if (data.length === 0) {
+      return (
+        <View>
+          <Text>Нет інвайтов</Text>
+        </View>
+      );
+    }
     return (
       <View>
         <Text>{data[0]?.email}</Text>
@@ -127,18 +142,25 @@ const InviteModal: FC = () => {
     <TouchableWithoutFeedback onPress={noModalHandler}>
       <View style={style.container}>
         <TouchableWithoutFeedback>
-          <View style={style.modalContainer}>
+          <Animated.View style={[style.modalContainer, rStyle]}>
             <DoubleButton
               styles={{
                 container: style.doubleButtonContainer,
                 leftButton: style.leftButton,
                 rightButton: style.rightButton,
               }}
-              leftButtonHanlder={() => setincomeOperations('get')}
-              rightButtonHandler={() => setincomeOperations('post')}
+              leftButtonHanlder={() => {
+                setincomeOperations('get');
+                height.value = withTiming(150);
+              }}
+              rightButtonHandler={() => {
+                height.value = withTiming(400, {}, () =>
+                  runOnJS(setincomeOperations)('post'),
+                );
+              }}
             />
             {incomeOperations === 'get' ? getInvite() : addInvite()}
-          </View>
+          </Animated.View>
         </TouchableWithoutFeedback>
       </View>
     </TouchableWithoutFeedback>
