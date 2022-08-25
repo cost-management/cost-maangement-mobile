@@ -12,6 +12,7 @@ export const FolderAPI = createApi({
     }),
     addFolder: build.mutation({
       query: ({body, id}) => {
+        console.log(body);
         return {
           url: 'folders',
           method: 'POST',

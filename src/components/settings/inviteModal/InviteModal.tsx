@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useContext, useState} from 'react';
 import {
   View,
   TouchableWithoutFeedback,
@@ -15,6 +15,8 @@ import DoubleButton from '../../ui/doubleButton/DoubleButton';
 import {Formik} from 'formik';
 import Picker from '../../ui/picker/Picker';
 import {FolderRole} from '../../../models/Folder';
+import {UserContext} from '../../../contexts/UserProvider';
+import {InviteAPI} from '../../../services/InviteService';
 
 interface InitialValues {
   email: string;
@@ -27,18 +29,22 @@ type IncomeOperations = 'get' | 'post';
 
 const InviteModal: FC = () => {
   const dispatch = useAppDispatch();
+  const {user} = useContext(UserContext);
   const {navigate} = useNavigation<NavigationProp<SettingsRoutesParams>>();
   const [incomeOperations, setincomeOperations] =
     useState<IncomeOperations>('post');
-
+  const {data} = InviteAPI.useGetInvitesQuery(user.attributes?.sub!);
+  const [addInvites] = InviteAPI.useAddInviteMutation();
+  const [acceptInvite] = InviteAPI.useAcceptinviteMutation();
   const {folders} = useAppSelector(state => state.folders);
 
   const foldersName = folders.map(folder => folder.title);
+  const foldersId = folders.map(folder => folder.id);
 
   const initialValues: InitialValues = {
     email: '',
     folder: foldersName[0] || '',
-    folder_id: '',
+    folder_id: foldersId[0],
     role: FolderRole.owner,
   };
 
@@ -47,9 +53,37 @@ const InviteModal: FC = () => {
     navigate('settingsView');
   };
 
+  const submit = async (values: InitialValues) => {
+    const response = await addInvites({
+      id: user.attributes?.sub,
+      folder: {
+        invited_customer_email: values.email,
+        folder_id: values.folder_id,
+        customer_role: values.role,
+      },
+    });
+    console.log(response);
+  };
+
+  const patchInvite = async () => {
+    const response = acceptInvite({
+      id: user.attributes?.sub,
+      folder: {
+        invited_customer_id: user.attributes?.sub,
+        folder_id: data[0].id,
+        customer_role: data[0].customer_role,
+      },
+    });
+    console.log(response);
+  };
+
+  const extraFunction = (changer: any, id: any) => {
+    changer('folder_id', foldersId[id]);
+  };
+
   const addInvite = () => {
     return (
-      <Formik initialValues={initialValues} onSubmit={() => {}}>
+      <Formik initialValues={initialValues} onSubmit={submit}>
         {({values, handleChange, setFieldValue, handleSubmit}) => (
           <View>
             <TextInput
@@ -58,11 +92,13 @@ const InviteModal: FC = () => {
               placeholder="Email"
               textAlign="center"
             />
+            <Text>{values.folder_id}</Text>
             <Picker
               currentValue={values.folder}
               valueType="folder"
               itemHandler={setFieldValue}
               items={foldersName}
+              extra={extraFunction}
             />
             <Picker
               currentValue={values.role}
@@ -78,10 +114,11 @@ const InviteModal: FC = () => {
   };
 
   const getInvite = () => {
+    console.log(data);
     return (
       <View>
-        <Text></Text>
-        <Button title="Accept" onPress={() => console.log('accept')} />
+        <Text>{data[0]?.email}</Text>
+        <Button title="Accept" onPress={patchInvite} />
       </View>
     );
   };

@@ -4,9 +4,9 @@ export enum Currency {
 }
 
 export enum FolderRole {
-  admin = 'admin',
-  user = 'user',
-  owner = 'owner',
+  admin = 'ADMIN',
+  user = 'USER',
+  owner = 'OWNER',
 }
 
 export enum FolderType {
@@ -15,9 +15,9 @@ export enum FolderType {
 }
 
 export enum Skins {
-  blue = 'blue',
-  green = 'green',
-  red = 'red',
+  blue = 'BLUE',
+  green = 'GREEN',
+  red = 'RED',
 }
 
 export interface IFolder {
@@ -26,6 +26,7 @@ export interface IFolder {
   title: string;
   folder_type: FolderType;
   currency: Currency;
-  balance: string;
+  nanos: string;
+  units: string;
   skin?: Skins;
 }

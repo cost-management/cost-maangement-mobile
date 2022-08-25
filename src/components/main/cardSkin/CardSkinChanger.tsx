@@ -47,16 +47,16 @@ const CardSkinChanger: FC<CardScinChangerProps> = ({x, setValue}) => {
       console.log(x.value);
       if (x.value > SMALL_CARD_WIDHT / 2) {
         x.value = withSpring(SMALL_CARD_WIDHT);
-        runOnJS(setValue)('skin', 'blue');
+        runOnJS(setValue)('skin', 'BLUE');
       } else if (x.value < -SMALL_CARD_WIDHT / 2) {
         x.value = withSpring(-SMALL_CARD_WIDHT);
-        runOnJS(setValue)('skin', 'green');
+        runOnJS(setValue)('skin', 'GREEN');
       } else if (
         x.value > -SMALL_CARD_WIDHT / 2 &&
         x.value < SMALL_CARD_WIDHT / 2
       ) {
         x.value = withSpring(0);
-        runOnJS(setValue)('skin', 'red');
+        runOnJS(setValue)('skin', 'RED');
       }
     },
   });
