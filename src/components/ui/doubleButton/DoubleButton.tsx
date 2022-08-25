@@ -9,6 +9,7 @@ interface DoubleButtonProps {
     container?: object;
     leftButton?: object;
     rightButton?: object;
+    title?: object;
   };
   leftButtonText?: string;
   rightButtonText?: string;
@@ -26,12 +27,12 @@ const DoubleButton: FC<DoubleButtonProps> = ({
       <TouchableOpacity
         style={[style.leftButton, styles?.leftButton]}
         onPress={leftButtonHanlder}>
-        <Text style={style.title}>{leftButtonText}</Text>
+        <Text style={[style.title, styles?.title]}>{leftButtonText}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[style.rightButton, styles?.rightButton]}
         onPress={rightButtonHandler}>
-        <Text style={style.title}>{rightButtonText}</Text>
+        <Text style={[style.title, styles?.title]}>{rightButtonText}</Text>
       </TouchableOpacity>
     </View>
   );

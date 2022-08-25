@@ -4,38 +4,30 @@ import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../../../constants/styleConstants';
 interface Style {
   container: object;
   modalContainer: object;
-  leftButton?: object;
-  rightButton?: object;
-  doubleButtonContainer: object;
+  email: object;
 }
 
 const style = StyleSheet.create<Style>({
   container: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
     paddingTop: 20,
   },
   modalContainer: {
-    width: SCREEN_WIDTH - 60,
+    width: SCREEN_WIDTH,
     borderRadius: 30,
     backgroundColor: '#D9D9D9',
     alignItems: 'center',
-    paddingTop: 10,
+    paddingVertical: 60,
   },
-  doubleButtonContainer: {
-    width: 200,
+  email: {
+    width: SCREEN_WIDTH - 60,
     height: 50,
-  },
-  leftButton: {
-    width: 100,
-    height: 50,
-  },
-  rightButton: {
-    width: 100,
-    height: 50,
+    backgroundColor: 'rgba(182, 182, 182, 1)',
+    borderRadius: 10,
   },
 });
 

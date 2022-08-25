@@ -36,7 +36,7 @@ const CreateCardModal: FC = () => {
       currency,
       folder_type,
       nanos: parseInt(nanos, 10) || 0,
-      units: parseInt(units, 10),
+      units: parseInt(units, 10) || 0,
       id: uuidv4(),
       owner_id: user.attributes?.sub!,
       skin,

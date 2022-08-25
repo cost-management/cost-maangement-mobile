@@ -7,6 +7,11 @@ export enum FolderRole {
   admin = 'ADMIN',
   user = 'USER',
 }
+export enum FolderRoleWithOwner {
+  admin = 'ADMIN',
+  user = 'USER',
+  owner = 'OWNER',
+}
 
 export enum FolderType {
   card = 'CARD',

@@ -1,4 +1,10 @@
-import {Currency, FolderType, Skins, FolderRole} from './Folder';
+import {
+  Currency,
+  FolderType,
+  Skins,
+  FolderRole,
+  FolderRoleWithOwner,
+} from './Folder';
 export interface GetInvite {
   created_at: string;
   currency: Currency;
@@ -7,6 +13,7 @@ export interface GetInvite {
   id: string;
   title: string;
   skin: Skins;
+  customer_role: FolderRole;
 }
 
 export interface PostInvite {
