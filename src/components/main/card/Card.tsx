@@ -1,14 +1,24 @@
 import React, {FC} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {style} from './style';
+import {IFolder} from '../../../models/Folder';
 
-interface CardProps {}
+interface CardProps {
+  folder: IFolder;
+}
 
-const Card: FC<CardProps> = () => {
+const Card: FC<CardProps> = ({folder}) => {
   return (
-    <TouchableOpacity style={style.container}>
-      <Text style={style.title}>Monobank</Text>
-      <Text style={style.subTitle}>Vitalik14022001@gmail.com</Text>
+    <TouchableOpacity
+      style={[
+        style.container,
+        {backgroundColor: folder.skin.toLocaleLowerCase()},
+      ]}>
+      <Text style={style.title}>{folder.title}</Text>
+      <Text style={style.subTitle}>
+        {folder.units}
+        {folder.nanos && `.${folder.nanos}`}
+      </Text>
     </TouchableOpacity>
   );
 };

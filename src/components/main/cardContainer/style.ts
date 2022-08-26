@@ -1,21 +1,28 @@
 import {StyleSheet} from 'react-native';
+import {PADDING} from '../../../constants/styleConstants';
 import {SCREEN_WIDTH} from '../../../constants/styleConstants';
 
 interface Style {
   container: object;
   button: object;
+  scorllView: object;
 }
 
 export const style = StyleSheet.create<Style>({
   container: {
     width: SCREEN_WIDTH,
-    backgroundColor: 'green',
     alignItems: 'center',
     flex: 1,
     position: 'relative',
+    paddingBottom: 100,
   },
   button: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 70,
+  },
+  scorllView: {
+    width: SCREEN_WIDTH,
+    flexWrap: 'wrap',
+    paddingHorizontal: PADDING,
   },
 });

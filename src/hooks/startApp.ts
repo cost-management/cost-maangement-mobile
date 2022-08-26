@@ -4,7 +4,6 @@ import {getInvite} from '../store/slices/inviteSlice';
 import {useAppDispatch} from './redux';
 import {FolderAPI} from '../services/FolderService';
 import {refreshFolder} from '../store/slices/folderSlice';
-import {GetFolder} from '../models/Folder';
 const useStartApp = () => {
   const dispatch = useAppDispatch();
   const [getInviteQuery] = InviteAPI.useLazyGetInvitesQuery();
