@@ -31,7 +31,7 @@ const AuthRoutes: FC = () => {
   const Stack = createNativeStackNavigator<StackParams>();
 
   const {user, setUser, checkUser} = useUser();
-  const {getInvites} = useStartApp();
+  const {getInvites, getFolders} = useStartApp();
   useEffect(() => {
     checkUser();
   }, []);
@@ -39,6 +39,7 @@ const AuthRoutes: FC = () => {
   useEffect(() => {
     if (user != undefined) {
       getInvites(user.attributes?.sub!);
+      getFolders(user.attributes?.sub!);
     }
   }, [user]);
 

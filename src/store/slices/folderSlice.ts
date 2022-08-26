@@ -1,8 +1,8 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {IFolder} from '../../models/Folder';
+import {IFolder, GetFolder} from '../../models/Folder';
 
 interface IFolderState {
-  folders: IFolder[];
+  folders: GetFolder[];
 }
 
 const initialState: IFolderState = {
@@ -16,7 +16,10 @@ const folderSlice = createSlice({
     addFolder: (state: IFolderState, action: PayloadAction<any>) => {
       state.folders = [...state.folders, action.payload];
     },
-    refreshFolder: (state: IFolderState, action: PayloadAction<any[]>) => {
+    refreshFolder: (
+      state: IFolderState,
+      action: PayloadAction<GetFolder[]>,
+    ) => {
       state.folders = action.payload;
     },
   },

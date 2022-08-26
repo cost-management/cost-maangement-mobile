@@ -1,9 +1,7 @@
 import React, {FC, useState} from 'react';
-import {View, Modal, Text, TouchableOpacity} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import {style} from './style';
 import CircleButton from '../../ui/circleButton/CircleButton';
-import CreateCardModal from '../createCardModal/CreateCardModal';
-import useModal from '../../../hooks/modal';
 import {useAppSelector, useAppDispatch} from '../../../hooks/redux';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {MainRoutesParams} from '../../../routes/MainRoutes';
@@ -22,7 +20,6 @@ const CardContainer: FC = () => {
 
   return (
     <View>
-      <Card />
       <View style={style.button}>
         <CircleButton radius={60} text="+" buttonHandler={addHandler} />
       </View>

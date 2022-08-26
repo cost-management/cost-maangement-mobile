@@ -33,3 +33,20 @@ export interface IFolder {
   balance: string;
   skin?: Skins;
 }
+
+export interface FolderCustomerMetaData {
+  customer_id: string;
+  customer_role: FolderRole;
+}
+
+export interface GetFolder {
+  created_at: string;
+  currency: Currency;
+  folder_customer_metadata: FolderCustomerMetaData;
+  folder_type: FolderType;
+  id: string;
+  nanos: number;
+  skin: Skins;
+  title: string;
+  units: string;
+}

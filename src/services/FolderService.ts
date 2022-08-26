@@ -1,4 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/dist/query/react';
+import {GetFolder} from '../models/Folder';
 export const FolderAPI = createApi({
   reducerPath: 'folderAPI',
   baseQuery: fetchBaseQuery({
@@ -6,7 +7,7 @@ export const FolderAPI = createApi({
   }),
   tagTypes: ['folders'],
   endpoints: build => ({
-    getAllFolders: build.query({
+    getAllFolders: build.query<GetFolder[], string>({
       query: id => ({url: 'folders', headers: {id}}),
       providesTags: [{type: 'folders'}],
     }),
