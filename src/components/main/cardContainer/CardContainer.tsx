@@ -8,6 +8,7 @@ import {useAppSelector, useAppDispatch} from '../../../hooks/redux';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {MainRoutesParams} from '../../../routes/MainRoutes';
 import {toogleModal} from '../../../store/slices/categorySlice';
+import Card from '../card/Card';
 
 const CardContainer: FC = () => {
   const folders = useAppSelector(state => state.folders.folders);
@@ -21,11 +22,7 @@ const CardContainer: FC = () => {
 
   return (
     <View>
-      {folders.map(folder => (
-        <TouchableOpacity onPress={() => navigate('folder', {folder})}>
-          <Text>{folder.title}</Text>
-        </TouchableOpacity>
-      ))}
+      <Card />
       <View style={style.button}>
         <CircleButton radius={60} text="+" buttonHandler={addHandler} />
       </View>
