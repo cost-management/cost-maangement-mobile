@@ -14,11 +14,11 @@ export const style = StyleSheet.create<Style>({
     alignItems: 'center',
     flex: 1,
     position: 'relative',
-    paddingBottom: 100,
+    paddingBottom: 105,
   },
   button: {
     position: 'absolute',
-    bottom: 70,
+    bottom: 85,
   },
   scorllView: {
     width: SCREEN_WIDTH,

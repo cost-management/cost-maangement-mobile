@@ -23,7 +23,7 @@ export const FolderAPI = createApi({
       },
       invalidatesTags: [{type: 'folders'}],
     }),
-    deleteFolder: build.mutation({
+    deleteFolder: build.mutation<{id: string}, {id: string; folderId: string}>({
       query: ({id, folderId}) => {
         return {
           url: 'folders',
