@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import {
   SMALL_CARD_WIDHT,
   SMALL_CARD_HEIGHT,
-} from '../../../constans/styleConstants';
+} from '../../../constants/styleConstants';
 interface Style {
   container: object;
 }

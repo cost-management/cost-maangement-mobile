@@ -13,6 +13,7 @@ interface PickerProps {
   items: string[];
   itemHandler: (field: string, value: any) => void;
   valueType: string;
+  extra?: any;
 }
 
 const AnimateTouchableOpacity =
@@ -23,6 +24,7 @@ const Picker: FC<PickerProps> = ({
   items,
   valueType,
   itemHandler,
+  extra,
 }) => {
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
 
@@ -50,7 +52,12 @@ const Picker: FC<PickerProps> = ({
           <Text>{currentValue}</Text>
         </View>
         <View style={style.pickerContainer}>
-          <TouchableOpacity style={style.picker} onPress={buttonHanlder}>
+          <TouchableOpacity
+            style={[
+              style.picker,
+              {display: items.length > 1 ? 'flex' : 'none'},
+            ]}
+            onPress={buttonHanlder}>
             <Text>-</Text>
           </TouchableOpacity>
         </View>
@@ -60,11 +67,14 @@ const Picker: FC<PickerProps> = ({
           <ScrollView
             style={style.scrollViewContainer}
             contentContainerStyle={{height: items.length * 40}}>
-            {items.map(item => (
+            {items.map((item, id) => (
               <AnimateTouchableOpacity
                 onPress={() => {
                   itemHandler(valueType, item);
                   buttonHanlder();
+                  if (extra) {
+                    extra(itemHandler, id);
+                  }
                 }}
                 style={[
                   style.item,

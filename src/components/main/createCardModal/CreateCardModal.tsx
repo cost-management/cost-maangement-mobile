@@ -29,27 +29,29 @@ const CreateCardModal: FC = () => {
     folder_type,
     balance,
     skin,
-  }: Omit<IFolder, 'id' | 'owner_id'>) => {
+  }) => {
+    const [units, nanos] = balance.split('.');
     const folder = {
       title,
       currency,
       folder_type,
-      balance,
+      nanos: parseInt(nanos, 10) || 0,
+      units: parseInt(units, 10) || 0,
       id: uuidv4(),
       owner_id: user.attributes?.sub!,
       skin,
     };
     dispatch(addFolder(folder));
-    // const response = await postFolder({
-    //   body: folder,
-    //   id: user.attributes?.sub!,
-    // });
-    // console.log(response);
+    const response = await postFolder({
+      body: folder,
+      id: user.attributes?.sub!,
+    });
+    console.log(response);
     dispatch(toogleModal());
     navigate('mainPage');
   };
 
-  const initialValue: Omit<IFolder, 'id' | 'owner_id'> = {
+  const initialValue: Omit<IFolder, 'id' | 'owner_id' | 'nanos'> = {
     title: '',
     currency: Currency.uah,
     folder_type: FolderType.cash,

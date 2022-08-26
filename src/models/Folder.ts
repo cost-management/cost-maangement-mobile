@@ -3,15 +3,25 @@ export enum Currency {
   usd = 'USD',
 }
 
+export enum FolderRole {
+  admin = 'ADMIN',
+  user = 'USER',
+}
+export enum FolderRoleWithOwner {
+  admin = 'ADMIN',
+  user = 'USER',
+  owner = 'OWNER',
+}
+
 export enum FolderType {
   card = 'CARD',
   cash = 'CASH',
 }
 
 export enum Skins {
-  blue = 'blue',
-  green = 'green',
-  red = 'red',
+  blue = 'BLUE',
+  green = 'GREEN',
+  red = 'RED',
 }
 
 export interface IFolder {

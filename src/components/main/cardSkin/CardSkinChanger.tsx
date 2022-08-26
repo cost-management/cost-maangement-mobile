@@ -15,7 +15,7 @@ import Animated, {
 import {
   SMALL_CARD_WIDHT,
   SMALL_CARD_HEIGHT,
-} from '../../../constans/styleConstants';
+} from '../../../constants/styleConstants';
 
 interface CardScinChangerProps {
   x: SharedValue<number>;
@@ -23,9 +23,9 @@ interface CardScinChangerProps {
 }
 
 const arr = [
-  {backgroundColor: Skins.blue},
-  {backgroundColor: Skins.green},
-  {backgroundColor: Skins.red},
+  {backgroundColor: Skins.blue.toLowerCase()},
+  {backgroundColor: Skins.green.toLowerCase()},
+  {backgroundColor: Skins.red.toLowerCase()},
 ];
 
 type Context = {
@@ -44,19 +44,18 @@ const CardSkinChanger: FC<CardScinChangerProps> = ({x, setValue}) => {
       x.value = ctx.startValue + event.translationX;
     },
     onEnd: () => {
-      console.log(x.value);
       if (x.value > SMALL_CARD_WIDHT / 2) {
         x.value = withSpring(SMALL_CARD_WIDHT);
-        runOnJS(setValue)('skin', 'blue');
+        runOnJS(setValue)('skin', Skins.blue);
       } else if (x.value < -SMALL_CARD_WIDHT / 2) {
         x.value = withSpring(-SMALL_CARD_WIDHT);
-        runOnJS(setValue)('skin', 'green');
+        runOnJS(setValue)('skin', Skins.red);
       } else if (
         x.value > -SMALL_CARD_WIDHT / 2 &&
         x.value < SMALL_CARD_WIDHT / 2
       ) {
         x.value = withSpring(0);
-        runOnJS(setValue)('skin', 'red');
+        runOnJS(setValue)('skin', Skins.green);
       }
     },
   });

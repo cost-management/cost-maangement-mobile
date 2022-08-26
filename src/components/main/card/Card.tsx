@@ -12,7 +12,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {style} from './style';
-import {CARD_HEIGHT, SCREEN_WIDTH} from '../../../constans/styleConstants';
+import {CARD_HEIGHT, SCREEN_WIDTH} from '../../../constants/styleConstants';
 import {useDerivedValue} from 'react-native-reanimated';
 
 interface CardProps {

@@ -13,6 +13,8 @@ import {ICognitoUser} from '../models/Auth';
 import {useAppDispatch} from '../hooks/redux';
 import {refreshFolder} from '../store/slices/folderSlice';
 import {FolderAPI} from '../services/FolderService';
+import useUser from '../hooks/user';
+import useStartApp from '../hooks/startApp';
 
 export type StackParams = {
   app: undefined;
@@ -28,23 +30,17 @@ export type StackParams = {
 const AuthRoutes: FC = () => {
   const Stack = createNativeStackNavigator<StackParams>();
 
-  const [user, setUser] = useState<any>(undefined);
-  const dispatch = useAppDispatch();
-
-  const checkUser = async () => {
-    try {
-      const authUser: ICognitoUser = await Auth.currentAuthenticatedUser({
-        bypassCache: true,
-      });
-      setUser(authUser);
-    } catch (e) {
-      setUser(null);
-    }
-  };
-
+  const {user, setUser, checkUser} = useUser();
+  const {getInvites} = useStartApp();
   useEffect(() => {
     checkUser();
   }, []);
+
+  useEffect(() => {
+    if (user != undefined) {
+      getInvites(user.attributes?.sub!);
+    }
+  }, [user]);
 
   if (user === undefined) {
     return (

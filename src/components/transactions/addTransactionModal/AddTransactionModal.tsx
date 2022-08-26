@@ -5,7 +5,7 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import {Formik} from 'formik';
-import React, {FC, useState} from 'react';
+import React, {FC, useRef, useState} from 'react';
 import {Button, ScrollView, Text, View} from 'react-native';
 import DoubleButton from '../../ui/doubleButton/DoubleButton';
 import {TransactionsRoutesParams} from '../../../routes/TransactionsRoutes';
@@ -16,7 +16,7 @@ import SmallCategory from '../../ui/smallCategories/SmallCategory';
 import Keyboad from '../../ui/keyboard/Keyboard';
 import style from './style';
 import {toogleModal} from '../../../store/slices/categorySlice';
-import {SCREEN_WIDTH} from '../../../constans/styleConstants';
+import {SCREEN_WIDTH} from '../../../constants/styleConstants';
 
 interface InitialValues {
   category: string;
@@ -29,6 +29,9 @@ const AddTransactionModal: FC = () => {
   const dispatch = useAppDispatch();
   const {navigate} = useNavigation<NavigationProp<TransactionsRoutesParams>>();
   const {params} = useRoute<RouteProp<TransactionsRoutesParams>>();
+
+  const scroll = useRef<ScrollView>(null);
+
   const folders = useAppSelector(state => state.folders.folders);
   const {incomeCategory, costCategory} = useAppSelector(
     state => state.categories,
@@ -64,10 +67,12 @@ const AddTransactionModal: FC = () => {
               leftButtonHanlder={() => {
                 setCategoryType('cost');
                 setCategories(costCategory);
+                scroll.current?.scrollTo(0);
               }}
               rightButtonHandler={() => {
                 setCategoryType('income');
                 setCategories(incomeCategory);
+                scroll.current?.scrollTo(0);
               }}
             />
             {folders.length !== 0 && (
@@ -85,9 +90,15 @@ const AddTransactionModal: FC = () => {
               </Picker>
             )}
             <ScrollView
+              ref={scroll}
               horizontal={true}
-              style={{width: SCREEN_WIDTH, marginBottom: 10}}
-              contentContainerStyle={{height: 48}}>
+              style={{
+                width: SCREEN_WIDTH,
+                marginBottom: 10,
+              }}
+              contentContainerStyle={{
+                height: 48,
+              }}>
               {categories.map(category => (
                 <SmallCategory
                   title={category}

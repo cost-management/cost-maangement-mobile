@@ -5,10 +5,11 @@ import Settings from '../views/Settings';
 import MainRoutes from './MainRoutes';
 import TransactionsRoutes from './TransactionsRoutes';
 import {useAppSelector} from '../hooks/redux';
+import SettingsRoutes from './SettingsRoutes';
 const Tab = createBottomTabNavigator();
 const TabRoutes: FC = () => {
   const isOpenModal = useAppSelector(state => state.categories.openModal);
-
+  const {invites} = useAppSelector(state => state.invites);
   return (
     <Tab.Navigator
       screenOptions={{
@@ -29,7 +30,13 @@ const TabRoutes: FC = () => {
       }}>
       <Tab.Screen name="main" component={MainRoutes} />
       <Tab.Screen name="transactions" component={TransactionsRoutes} />
-      <Tab.Screen name="settings" component={Settings} />
+      <Tab.Screen
+        name="settings"
+        component={SettingsRoutes}
+        options={{
+          tabBarBadge: invites.length === 0 ? undefined : invites.length,
+        }}
+      />
     </Tab.Navigator>
   );
 };
