@@ -1,5 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/dist/query/react';
 import {PatchInvite, PostInvite} from '../models/Invite';
+import {IFolder} from '../models/Folder';
 export const InviteAPI = createApi({
   reducerPath: 'inviteAPI',
   baseQuery: fetchBaseQuery({
@@ -23,18 +24,16 @@ export const InviteAPI = createApi({
       },
       invalidatesTags: [{type: 'invites'}],
     }),
-    acceptinvite: build.mutation<{id: string}, {id: string; body: PatchInvite}>(
-      {
-        query: ({id, body}) => {
-          return {
-            url: 'invites',
-            method: 'PATCH',
-            body,
-            headers: {id},
-          };
-        },
-        invalidatesTags: [{type: 'invites'}],
+    acceptinvite: build.mutation<IFolder[], {id: string; body: PatchInvite}>({
+      query: ({id, body}) => {
+        return {
+          url: 'invites',
+          method: 'PATCH',
+          body,
+          headers: {id},
+        };
       },
-    ),
+      invalidatesTags: [{type: 'invites'}],
+    }),
   }),
 });
