@@ -6,6 +6,7 @@ export enum Currency {
 export enum FolderRole {
   admin = 'ADMIN',
   user = 'USER',
+  owner = 'OWNER',
 }
 export enum FolderRoleWithOwner {
   admin = 'ADMIN',
@@ -25,11 +26,29 @@ export enum Skins {
 }
 
 export interface IFolder {
+  created_at: string;
+  currency: Currency;
+  folder_customer_metadata: FolderCustomerMetaData[];
+  folder_type: FolderType;
   id: string;
-  owner_id: string;
+  nanos: number;
+  skin: Skins;
+  title: string;
+  units: string;
+}
+
+export interface FolderCustomerMetaData {
+  customer_id: string;
+  customer_role: FolderRole;
+}
+
+export interface PostFolder {
+  id: string;
   title: string;
   folder_type: FolderType;
   currency: Currency;
-  balance: string;
-  skin?: Skins;
+  skin: Skins;
+  units: number;
+  nanos: number;
+  owner_id: string;
 }

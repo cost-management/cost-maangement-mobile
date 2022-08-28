@@ -1,7 +1,13 @@
 import {Formik} from 'formik';
 import React, {FC, useContext} from 'react';
 import {Button, Text, View, TouchableOpacity} from 'react-native';
-import {FolderType, IFolder, Currency, Skins} from '../../../models/Folder';
+import {
+  FolderType,
+  IFolder,
+  Currency,
+  Skins,
+  PostFolder,
+} from '../../../models/Folder';
 import Field from '../../ui/Field';
 import {useAppDispatch} from '../../../hooks/redux';
 import {addFolder} from '../../../store/slices/folderSlice';
@@ -17,12 +23,20 @@ import {toogleModal} from '../../../store/slices/categorySlice';
 import style from './style';
 import Picker from '../../ui/picker/Picker';
 import CloseButton from '../../ui/closeButton/CloseButton';
+import {FolderRole} from '../../../models/Folder';
+
+type InitialValues =
+  | Omit<
+      IFolder,
+      'id' | 'owner_id' | 'nanos' | 'folder_customer_metadata' | 'craeted_at'
+    >
+  | {balance: string};
 
 const CreateCardModal: FC = () => {
   const dispatch = useAppDispatch();
   const {user} = useContext(UserContext);
   const {navigate} = useNavigation<NavigationProp<MainRoutesParams>>();
-  const [postFolder] = FolderAPI.useAddFolderMutation();
+  const [postFolderMutation] = FolderAPI.useAddFolderMutation();
   const submitHandler = async ({
     currency,
     title,
@@ -31,19 +45,33 @@ const CreateCardModal: FC = () => {
     skin,
   }) => {
     const [units, nanos] = balance.split('.');
-    const folder = {
+    const id = uuidv4();
+    const postFolder: PostFolder = {
       title,
       currency,
       folder_type,
       nanos: parseInt(nanos, 10) || 0,
       units: parseInt(units, 10) || 0,
-      id: uuidv4(),
+      id,
       owner_id: user.attributes?.sub!,
       skin,
     };
+    const folder: IFolder = {
+      title,
+      currency,
+      folder_type,
+      nanos: nanos || '0',
+      units: units || '0',
+      created_at: Date.now().toString(),
+      id,
+      skin,
+      folder_customer_metadata: [
+        {customer_id: user.attributes?.sub!, customer_role: FolderRole.owner},
+      ],
+    };
     dispatch(addFolder(folder));
-    const response = await postFolder({
-      body: folder,
+    const response = await postFolderMutation({
+      body: postFolder,
       id: user.attributes?.sub!,
     });
     console.log(response);
@@ -51,7 +79,7 @@ const CreateCardModal: FC = () => {
     navigate('mainPage');
   };
 
-  const initialValue: Omit<IFolder, 'id' | 'owner_id' | 'nanos'> = {
+  const initialValue: InitialValues = {
     title: '',
     currency: Currency.uah,
     folder_type: FolderType.cash,

@@ -1,4 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/dist/query/react';
+import {IFolder, PostFolder} from '../models/Folder';
 export const FolderAPI = createApi({
   reducerPath: 'folderAPI',
   baseQuery: fetchBaseQuery({
@@ -6,11 +7,11 @@ export const FolderAPI = createApi({
   }),
   tagTypes: ['folders'],
   endpoints: build => ({
-    getAllFolders: build.query({
+    getAllFolders: build.query<IFolder[], string>({
       query: id => ({url: 'folders', headers: {id}}),
       providesTags: [{type: 'folders'}],
     }),
-    addFolder: build.mutation({
+    addFolder: build.mutation<{id: string}, {id: string; body: PostFolder}>({
       query: ({body, id}) => {
         console.log(body);
         return {
@@ -22,7 +23,7 @@ export const FolderAPI = createApi({
       },
       invalidatesTags: [{type: 'folders'}],
     }),
-    deleteFolder: build.mutation({
+    deleteFolder: build.mutation<{id: string}, {id: string; folderId: string}>({
       query: ({id, folderId}) => {
         return {
           url: 'folders',

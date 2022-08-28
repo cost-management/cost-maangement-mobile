@@ -13,15 +13,20 @@ const folderSlice = createSlice({
   name: 'folder',
   initialState,
   reducers: {
-    addFolder: (state: IFolderState, action: PayloadAction<any>) => {
+    addFolder: (state: IFolderState, action: PayloadAction<IFolder>) => {
       state.folders = [...state.folders, action.payload];
     },
-    refreshFolder: (state: IFolderState, action: PayloadAction<any[]>) => {
+    refreshFolder: (state: IFolderState, action: PayloadAction<IFolder[]>) => {
       state.folders = action.payload;
+    },
+    deleteFolder: (state: IFolderState, action: PayloadAction<string>) => {
+      state.folders = state.folders.filter(
+        folder => folder.id !== action.payload,
+      );
     },
   },
 });
 
-export const {addFolder, refreshFolder} = folderSlice.actions;
+export const {addFolder, refreshFolder, deleteFolder} = folderSlice.actions;
 
 export default folderSlice.reducer;
