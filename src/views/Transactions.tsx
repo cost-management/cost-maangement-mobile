@@ -1,22 +1,10 @@
 import React, {FC, useState} from 'react';
-import {View, Text, Button, StyleSheet, ScrollView} from 'react-native';
-import AddTransactionModal from '../components/transactions/addTransactionModal/AddTransactionModal';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Transaction from '../components/transactions/transaction/Transaction';
-import useModal from '../hooks/modal';
-import {
-  SCREEN_WIDTH,
-  TRANSACTION_CONTAINER_HORIZONTAL_PADDING,
-} from '../constants/styleConstants';
+import {SCREEN_WIDTH, TRANSACTION_MARGIN} from '../constants/styleConstants';
 import DoubleButton from '../components/ui/doubleButton/DoubleButton';
-import {
-  TRANSACTION_WIDTH,
-  PADDING_HORIZONTAL,
-} from '../constants/styleConstants';
+import {PADDING_HORIZONTAL} from '../constants/styleConstants';
 import {useAppDispatch, useAppSelector} from '../hooks/redux';
-import {
-  TRANSACTION_HEIGHT,
-  TRANSACTION_MARGIN,
-} from '../constants/styleConstants';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {TransactionsRoutesParams} from '../routes/TransactionsRoutes';
 import {toogleModal} from '../store/slices/categorySlice';
@@ -32,7 +20,6 @@ const Transactions: FC = () => {
   const [categoryType, setCategoryType] = useState<CategoryType>('cost');
   const dispatch = useAppDispatch();
   const {navigate} = useNavigation<NavigationProp<TransactionsRoutesParams>>();
-
   return (
     <View style={style.container}>
       <Text style={style.title}>Transactions</Text>
