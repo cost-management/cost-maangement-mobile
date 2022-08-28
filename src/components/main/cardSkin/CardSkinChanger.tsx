@@ -6,7 +6,15 @@ import {
   PanGestureHandlerGestureEvent,
 } from 'react-native-gesture-handler';
 import {Skins} from '../../../models/Folder';
-import {CARD_WIDTH, CARD_HEIGHT} from '../../../constants/styleConstants';
+import style from './style';
+import {
+  SCREEN_WIDTH,
+  PADDING_HORIZONTAL,
+} from '../../../constants/styleConstants';
+import {
+  SMALL_CARD_WIDTH,
+  SMALL_CARD_HEIGHT,
+} from '../../../constants/styleConstants';
 import Animated, {
   useAnimatedGestureHandler,
   withSpring,
@@ -41,13 +49,16 @@ const CardSkinChanger: FC<CardScinChangerProps> = ({x, setValue}) => {
       x.value = ctx.startValue + event.translationX;
     },
     onEnd: () => {
-      if (x.value > CARD_WIDTH / 2) {
-        x.value = withSpring(CARD_WIDTH);
+      if (x.value > SMALL_CARD_WIDTH / 2) {
+        x.value = withSpring(SMALL_CARD_WIDTH + 40);
         runOnJS(setValue)('skin', Skins.blue);
-      } else if (x.value < -CARD_WIDTH / 2) {
-        x.value = withSpring(-CARD_WIDTH);
+      } else if (x.value < -SMALL_CARD_WIDTH / 2) {
+        x.value = withSpring(-SMALL_CARD_WIDTH - 40);
         runOnJS(setValue)('skin', Skins.red);
-      } else if (x.value > -CARD_WIDTH / 2 && x.value < CARD_WIDTH / 2) {
+      } else if (
+        x.value > -SMALL_CARD_WIDTH / 2 &&
+        x.value < SMALL_CARD_WIDTH / 2
+      ) {
         x.value = withSpring(0);
         runOnJS(setValue)('skin', Skins.green);
       }
@@ -57,7 +68,7 @@ const CardSkinChanger: FC<CardScinChangerProps> = ({x, setValue}) => {
   return (
     <GestureHandlerRootView>
       <PanGestureHandler onGestureEvent={onGesture}>
-        <Animated.View style={{height: CARD_HEIGHT, flexDirection: 'row'}}>
+        <Animated.View style={style.container}>
           {arr.map(ar => (
             <SmallCard styles={ar} x={x} />
           ))}
