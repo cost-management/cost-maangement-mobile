@@ -1,5 +1,10 @@
 import {StyleSheet} from 'react-native';
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../constants/styleConstants';
+import {MODAL_TRANSLATE_Y} from '../../../constants/styleConstants';
+import {
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+  PADDING_HORIZONTAL,
+} from '../../../constants/styleConstants';
 
 interface Style {
   container: object;
@@ -18,8 +23,8 @@ const style = StyleSheet.create<Style>({
     backgroundColor: '#D7D7D7',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    transform: [{translateY: 50}],
-    paddingHorizontal: 30,
+    transform: [{translateY: MODAL_TRANSLATE_Y}],
+    paddingHorizontal: PADDING_HORIZONTAL,
   },
   title: {
     marginTop: 20,
