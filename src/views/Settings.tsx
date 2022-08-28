@@ -3,7 +3,11 @@ import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import SettingsCategoryContainer from '../components/settings/settingsCategoryContainer/SettingsCategoryContainer';
 import SettingsHeader from '../components/settings/settingsHeader/SettignsHeader';
 import useSettings from '../constants/settings';
-import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../constants/styleConstants';
+import {
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  PADDING_BOTTOM,
+} from '../constants/styleConstants';
 
 const Settings: FC = () => {
   const {inviteSettings} = useSettings();
@@ -24,6 +28,7 @@ const style = StyleSheet.create({
     height: SCREEN_HEIGHT,
     backgroundColor: '#E2E2E2',
     paddingTop: 40,
+    paddingBottom: PADDING_BOTTOM,
   },
 });
 
