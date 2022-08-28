@@ -1,7 +1,5 @@
 import {StyleSheet} from 'react-native';
 import {
-  CARD_WIDTH,
-  CARD_HEIGHT,
   SMALL_CARD_WIDHT,
   SMALL_CARD_HEIGHT,
 } from '../../../constants/styleConstants';
@@ -18,7 +16,6 @@ export const style = StyleSheet.create<Style>({
     height: SMALL_CARD_HEIGHT,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'red',
     borderRadius: 14,
     margin: 5,
   },
