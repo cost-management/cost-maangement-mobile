@@ -51,7 +51,7 @@ const style = StyleSheet.create<Style>({
     height: 50,
   },
   picker: {
-    marginTop: 40,
+    marginTop: 60,
   },
   doubleButton: {
     position: 'absolute',

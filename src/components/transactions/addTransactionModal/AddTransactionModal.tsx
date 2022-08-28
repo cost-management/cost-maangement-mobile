@@ -69,6 +69,7 @@ const AddTransactionModal: FC = () => {
               }}
             />
             <Picker
+              styles={style.picker}
               items={folders}
               currentValue={values.folder}
               itemHandler={setFieldValue}

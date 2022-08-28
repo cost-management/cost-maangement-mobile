@@ -1,5 +1,12 @@
 import React, {FC, useState} from 'react';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -14,6 +21,7 @@ interface PickerProps {
   itemHandler: (field: string, value: any) => void;
   valueType: string;
   extra?: any;
+  styles?: StyleProp<ViewStyle>;
 }
 
 const AnimateTouchableOpacity =
@@ -25,6 +33,7 @@ const Picker: FC<PickerProps> = ({
   valueType,
   itemHandler,
   extra,
+  styles,
 }) => {
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
 
@@ -46,7 +55,7 @@ const Picker: FC<PickerProps> = ({
     }
   };
   return (
-    <Animated.View style={[style.mainContainer, rContainerStyle]}>
+    <Animated.View style={[style.mainContainer, rContainerStyle, styles]}>
       <View style={style.container}>
         <View style={style.currentValue}>
           <Text>{currentValue}</Text>
