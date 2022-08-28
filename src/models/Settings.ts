@@ -1,4 +1,4 @@
-export interface Setting {
+export interface ISetting {
   title: string;
   settingHandler: () => void;
 }

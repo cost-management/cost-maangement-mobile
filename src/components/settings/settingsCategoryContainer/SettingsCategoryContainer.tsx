@@ -2,10 +2,10 @@ import React, {FC} from 'react';
 import {View} from 'react-native';
 import Setting from '../setting/Setting';
 import style from './style';
-import {setting} from '../../../models/Settings';
+import {ISetting} from '../../../models/Settings';
 
 interface SettingsCategoryContainerProps {
-  settings: setting[];
+  settings: ISetting[];
 }
 
 const SettingsCategoryContainer: FC<SettingsCategoryContainerProps> = ({
