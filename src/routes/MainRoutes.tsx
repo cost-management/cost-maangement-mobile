@@ -5,8 +5,8 @@ import Folder from '../views/Folder';
 import Main from '../views/Main';
 import {IFolder} from '../models/Folder';
 import Statistics from '../views/Statistics';
-import {Screen} from 'react-native-screens';
 import CreateCardModal from '../components/main/createCardModal/CreateCardModal';
+import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../constants/styleConstants';
 
 export type MainRoutesParams = {
   mainPage: undefined;

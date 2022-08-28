@@ -1,6 +1,6 @@
 import {Formik} from 'formik';
 import React, {FC, useContext} from 'react';
-import {Button, Text, View, TouchableOpacity} from 'react-native';
+import {Text, View, TouchableOpacity} from 'react-native';
 import {
   FolderType,
   IFolder,

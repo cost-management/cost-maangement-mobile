@@ -7,10 +7,7 @@ import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {MainRoutesParams} from '../../../routes/MainRoutes';
 import {toogleModal} from '../../../store/slices/categorySlice';
 import Card from '../card/Card';
-import {
-  SCREEN_WIDTH,
-  SMALL_CARD_HEIGHT,
-} from '../../../constants/styleConstants';
+import {SMALL_CARD_HEIGHT} from '../../../constants/styleConstants';
 
 const CardContainer: FC = () => {
   const {folders} = useAppSelector(state => state.folders);

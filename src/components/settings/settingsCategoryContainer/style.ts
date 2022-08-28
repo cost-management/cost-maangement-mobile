@@ -1,5 +1,8 @@
 import {StyleSheet} from 'react-native';
-import {SCREEN_WIDTH} from '../../../constants/styleConstants';
+import {
+  SCREEN_WIDTH,
+  PADDING_HORIZONTAL,
+} from '../../../constants/styleConstants';
 
 interface Style {
   container: object;
@@ -8,7 +11,7 @@ interface Style {
 const style = StyleSheet.create<Style>({
   container: {
     width: SCREEN_WIDTH,
-    paddingHorizontal: 30,
+    paddingHorizontal: PADDING_HORIZONTAL,
     backgroundColor: '#F8F8F8',
     marginBottom: 16,
   },
