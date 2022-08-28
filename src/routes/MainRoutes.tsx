@@ -7,6 +7,7 @@ import {IFolder} from '../models/Folder';
 import Statistics from '../views/Statistics';
 import {Screen} from 'react-native-screens';
 import CreateCardModal from '../components/main/createCardModal/CreateCardModal';
+import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../constants/styleConstants';
 
 export type MainRoutesParams = {
   mainPage: undefined;
@@ -17,6 +18,7 @@ export type MainRoutesParams = {
 };
 const Stack = createNativeStackNavigator<MainRoutesParams>();
 const MainRoutes: FC = () => {
+  console.log(SCREEN_HEIGHT);
   return (
     <Stack.Navigator
       screenOptions={({route}) => ({
