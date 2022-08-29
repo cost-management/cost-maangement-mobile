@@ -22,30 +22,35 @@ const Transactions: FC = () => {
   const {navigate} = useNavigation<NavigationProp<TransactionsRoutesParams>>();
   return (
     <View style={style.container}>
-      <Text style={style.title}>Transactions</Text>
-      <DoubleButton
-        leftButtonHanlder={() => {
-          setCategories(costCategory);
-          setCategoryType('cost');
-        }}
-        rightButtonHandler={() => {
-          setCategories(incomeCategory);
-          setCategoryType('income');
-        }}
-      />
-      <ScrollView style={style.scrollView}>
-        <View style={style.containerTransactions}>
-          {categories.map(category => (
-            <Transaction
-              title={category}
-              transactionHandler={() => {
-                dispatch(toogleModal());
-                navigate('createModal', {category, categoryType});
-              }}
-            />
-          ))}
-        </View>
-      </ScrollView>
+      <View style={style.headerContainer}>
+        <Text style={style.title}>Transactions</Text>
+      </View>
+      <View style={style.bodyContainer}>
+        <ScrollView style={style.scrollView}>
+          <View style={style.containerTransactions}>
+            {categories.map(category => (
+              <Transaction
+                title={category}
+                transactionHandler={() => {
+                  dispatch(toogleModal());
+                  navigate('createModal', {category, categoryType});
+                }}
+              />
+            ))}
+          </View>
+        </ScrollView>
+        <DoubleButton
+          styles={{container: style.button}}
+          leftButtonHanlder={() => {
+            setCategories(costCategory);
+            setCategoryType('cost');
+          }}
+          rightButtonHandler={() => {
+            setCategories(incomeCategory);
+            setCategoryType('income');
+          }}
+        />
+      </View>
     </View>
   );
 };
@@ -55,6 +60,7 @@ const style = StyleSheet.create({
     width: SCREEN_WIDTH - PADDING_HORIZONTAL * 2,
     flexDirection: 'row',
     flexWrap: 'wrap',
+    backgroundColor: '#D9D9D9',
   },
   container: {
     width: SCREEN_WIDTH,
@@ -68,8 +74,31 @@ const style = StyleSheet.create({
     marginBottom: 50,
   },
   scrollView: {
-    maxHeight: SCREEN_HEIGHT * 0.5,
-    marginTop: 20,
+    marginTop: 40,
+    maxHeight:
+      SCREEN_HEIGHT -
+      150 -
+      PADDING_BOTTOM -
+      40 -
+      20 -
+      TRANSACTION_MARGIN * 2 -
+      (20 + TRANSACTION_MARGIN),
+  },
+  headerContainer: {
+    height: 150,
+  },
+  bodyContainer: {
+    backgroundColor: '#D9D9D9',
+    width: SCREEN_WIDTH,
+    alignItems: 'center',
+    height: SCREEN_HEIGHT - 200,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    paddingTop: 20,
+  },
+  button: {
+    position: 'absolute',
+    top: -35,
   },
 });
 
