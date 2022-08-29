@@ -1,43 +1,38 @@
 import {StyleSheet} from 'react-native';
 import {PADDING_HORIZONTAL} from '../../../constants/styleConstants';
 import {
-  SCREEN_HEIGHT,
   SCREEN_WIDTH,
+  SCREEN_HEIGHT,
   BORDER_LARGE_RADIUS,
 } from '../../../constants/styleConstants';
 
 interface Style {
-  containerContent: object;
   container: object;
-  signUpContainer: object;
-  signUpTitle: object;
+  contentContainer: object;
   input: object;
+  signInContainer: object;
 }
 
 const style = StyleSheet.create<Style>({
-  containerContent: {
-    height: SCREEN_HEIGHT,
+  container: {
     width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
     paddingTop: '30%',
   },
-  container: {
-    backgroundColor: '#D9D9D9',
+  contentContainer: {
     width: '100%',
+    flex: 1,
+    backgroundColor: '#D9D9D9',
     borderTopLeftRadius: BORDER_LARGE_RADIUS,
     borderTopRightRadius: BORDER_LARGE_RADIUS,
-    paddingHorizontal: PADDING_HORIZONTAL,
-    flex: 1,
     paddingTop: 80,
-  },
-  signUpContainer: {
-    marginTop: 30,
-    flexDirection: 'row',
-  },
-  signUpTitle: {
-    color: 'red',
+    paddingHorizontal: PADDING_HORIZONTAL,
   },
   input: {
     paddingLeft: 0,
+  },
+  signInContainer: {
+    marginTop: 30,
   },
 });
 

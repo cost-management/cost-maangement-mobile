@@ -1,8 +1,14 @@
 import {Formik} from 'formik';
 import React, {FC} from 'react';
-import {Button, Text, View} from 'react-native';
-import Field from '../../ui/Field';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {SignUpSchema} from '../../../utils/auth/validation';
+import style from './style';
+import AuthHeader from '../header/AuthHeader';
+import InputContainer from '../inputContainer/InputContainer';
+import SubmitButton from '../buttonSubmit/SubmitButton';
+import {useNavigation, NavigationProp} from '@react-navigation/native';
+import {SignUpParams} from '@aws-amplify/auth';
+import {StackParams} from '../../../routes/AuthRoutes';
 
 interface InitialValues {
   email: string;
@@ -15,40 +21,62 @@ interface FormSignUpProps {
 }
 
 const FormSignUp: FC<FormSignUpProps> = ({signUpHandler}) => {
+  const {navigate} = useNavigation<NavigationProp<StackParams>>();
   const initialValues: InitialValues = {
     email: '',
     password: '',
     repeatPassword: '',
   };
+
+  const signInHandler = () => navigate('signIn');
+
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={values => signUpHandler(values.email, values.password)}
-      validationSchema={SignUpSchema}>
-      {({values, handleChange, handleSubmit, errors}) => (
-        <View>
-          <Field
-            value={values.email}
-            onChangeText={handleChange('email')}
-            placeholder="Input your email"
-          />
-          <Text>{errors.email}</Text>
-          <Field
-            value={values.password}
-            onChangeText={handleChange('password')}
-            placeholder="Input your password"
-          />
-          <Text>{errors.password}</Text>
-          <Field
-            value={values.repeatPassword}
-            onChangeText={handleChange('repeatPassword')}
-            placeholder="Repeat your password"
-          />
-          <Text>{errors.repeatPassword}</Text>
-          <Button title="SignUp" onPress={handleSubmit} />
-        </View>
-      )}
-    </Formik>
+    <View style={style.container}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={values => signUpHandler(values.email, values.password)}
+        validationSchema={SignUpSchema}>
+        {({values, handleChange, handleSubmit, errors}) => (
+          <View style={style.contentContainer}>
+            <AuthHeader title="Реєстрація" />
+            <InputContainer
+              title="Email"
+              input={{
+                value: values.email,
+                placeholder: 'Введіть свій Email',
+                onChangeText: handleChange('email'),
+                style: style.input,
+              }}
+            />
+            <InputContainer
+              title="Пароль"
+              input={{
+                value: values.password,
+                placeholder: 'Введіть свій пароль',
+                onChangeText: handleChange('password'),
+                style: style.input,
+              }}
+            />
+            <InputContainer
+              title="Повторний пароль"
+              input={{
+                value: values.repeatPassword,
+                placeholder: 'Повторіть свій пароль',
+                onChangeText: handleChange('repeatPassword'),
+                style: style.input,
+              }}
+            />
+            <SubmitButton title="Зареєструватися" submit={signUpHandler} />
+
+            <TouchableOpacity
+              style={style.signInContainer}
+              onPress={signInHandler}>
+              <Text>Вже є акаунт?</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </Formik>
+    </View>
   );
 };
 

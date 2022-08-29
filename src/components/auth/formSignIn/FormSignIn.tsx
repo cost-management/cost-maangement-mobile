@@ -8,6 +8,7 @@ import {StackParams} from '../../../routes/AuthRoutes';
 import style from './style';
 import InputContainer from '../inputContainer/InputContainer';
 import AuthHeader from '../header/AuthHeader';
+import SubmitButton from '../buttonSubmit/SubmitButton';
 
 interface FormSignInProps {
   handlerSubmit: (email: string, password: string) => void;
@@ -45,9 +46,7 @@ const FormSignIn: FC<FormSignInProps> = ({handlerSubmit}) => {
             <TouchableOpacity>
               <Text>Забули пароль?</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={style.submitButtom}>
-              <Text style={style.submitTitle}>Увійти</Text>
-            </TouchableOpacity>
+            <SubmitButton title="Увійти" submit={handlerSubmit} />
             <View style={style.signUpContainer}>
               <Text>Нема акаунту, </Text>
               <TouchableOpacity onPress={signUpHandler}>

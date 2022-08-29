@@ -18,9 +18,7 @@ import useStartApp from '../hooks/startApp';
 
 export type StackParams = {
   app: undefined;
-  signIn: {
-    email: string;
-  };
+  signIn: undefined;
   signUp: undefined;
   confirm: {
     email: string;
