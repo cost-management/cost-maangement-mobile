@@ -15,3 +15,5 @@ export const TRANSACTION_WIDTH =
 export const TRANSACTION_HEIGHT = TRANSACTION_WIDTH;
 export const PADDING_BOTTOM = 70;
 export const MODAL_TRANSLATE_Y = 0.07 * SCREEN_HEIGHT;
+export const BORDER_LARGE_RADIUS = 30;
+export const BORDER_SMALL_RADIUS = 10;

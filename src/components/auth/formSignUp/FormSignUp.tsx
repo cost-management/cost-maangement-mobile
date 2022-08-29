@@ -1,8 +1,8 @@
 import {Formik} from 'formik';
 import React, {FC} from 'react';
 import {Button, Text, View} from 'react-native';
-import Field from './ui/Field';
-import {SignUpSchema} from '../utils/auth/validation';
+import Field from '../../ui/Field';
+import {SignUpSchema} from '../../../utils/auth/validation';
 
 interface InitialValues {
   email: string;

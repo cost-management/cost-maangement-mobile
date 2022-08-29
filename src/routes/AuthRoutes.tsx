@@ -56,7 +56,7 @@ const AuthRoutes: FC = () => {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={({route}) => ({
-            headerShown: route.name === 'app' ? false : true,
+            headerShown: false,
           })}>
           {user ? (
             <Stack.Screen name="app" component={TabRoutes} />
