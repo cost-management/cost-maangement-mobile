@@ -1,13 +1,5 @@
 import React, {FC, useContext} from 'react';
-import {
-  View,
-  TouchableWithoutFeedback,
-  TextInput,
-  Button,
-  Text,
-  Platform,
-  KeyboardAvoidingView,
-} from 'react-native';
+import {View, TouchableWithoutFeedback, TextInput, Button} from 'react-native';
 import style from './style';
 import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
 import {toogleModal} from '../../../store/slices/categorySlice';
@@ -58,7 +50,7 @@ const InviteModal: FC = () => {
 
   const submit = async (values: InitialValues) => {
     if (values.email !== user.attributes?.email) {
-      const response = await addInvites({
+      const {response} = await addInvites({
         id: user.attributes?.sub!,
         body: {
           invited_customer_email: values.email,

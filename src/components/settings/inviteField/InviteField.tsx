@@ -7,6 +7,8 @@ import {InviteAPI} from '../../../services/InviteService';
 import {UserContext} from '../../../contexts/UserProvider';
 import {useAppDispatch} from '../../../hooks/redux';
 import {deleteInvite} from '../../../store/slices/inviteSlice';
+import {IFolder} from '../../../models/Folder';
+import {addFolders} from '../../../store/slices/folderSlice';
 
 interface InviteFieldProps {
   title?: string;
@@ -20,7 +22,7 @@ const InviteField: FC<InviteFieldProps> = ({item, isWithButton}) => {
   const [acceptInviteQuery] = InviteAPI.useAcceptinviteMutation();
   const dispatch = useAppDispatch();
   const acceptInvite = async () => {
-    const response = await acceptInviteQuery({
+    const {data} = await acceptInviteQuery({
       id: user.attributes?.sub!,
       body: {
         customer_role: item.customer_role,
@@ -29,7 +31,8 @@ const InviteField: FC<InviteFieldProps> = ({item, isWithButton}) => {
       },
     });
     dispatch(deleteInvite(item.id));
-    console.log(response);
+    console.log(data);
+    dispatch(addFolders(data));
   };
 
   return (
