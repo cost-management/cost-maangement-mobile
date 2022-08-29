@@ -18,6 +18,7 @@ export type StackParams = {
   signUp: undefined;
   confirm: {
     email: string;
+    password: string;
   };
 };
 
@@ -59,7 +60,13 @@ const AuthRoutes: FC = () => {
             <>
               <Stack.Screen name="signIn" component={SignIn} />
               <Stack.Screen name="signUp" component={SignUp} />
-              <Stack.Screen name="confirm" component={Confirm} />
+              <Stack.Group
+                screenOptions={{
+                  presentation: 'modal',
+                  animation: 'slide_from_bottom',
+                }}>
+                <Stack.Screen name="confirm" component={Confirm} />
+              </Stack.Group>
             </>
           )}
         </Stack.Navigator>

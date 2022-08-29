@@ -13,7 +13,7 @@ const SignUp: FC = () => {
         username: email,
         password: password,
       });
-      navigate('confirm', {email: email});
+      navigate('confirm', {email, password});
     } catch (error) {
       console.log('error signing up:', error);
     }

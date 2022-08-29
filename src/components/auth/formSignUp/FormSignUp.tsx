@@ -34,9 +34,11 @@ const FormSignUp: FC<FormSignUpProps> = ({signUpHandler}) => {
     <View style={style.container}>
       <Formik
         initialValues={initialValues}
-        onSubmit={values => signUpHandler(values.email, values.password)}
+        onSubmit={values => {
+          signUpHandler(values.email, values.password);
+        }}
         validationSchema={SignUpSchema}>
-        {({values, handleChange}) => (
+        {({values, handleChange, handleSubmit}) => (
           <View style={style.contentContainer}>
             <AuthHeader title="Реєстрація" />
             <InputContainer
@@ -70,7 +72,7 @@ const FormSignUp: FC<FormSignUpProps> = ({signUpHandler}) => {
                 secureTextEntry: true,
               }}
             />
-            <SubmitButton title="Зареєструватися" submit={signUpHandler} />
+            <SubmitButton title="Зареєструватися" submit={handleSubmit} />
 
             <TouchableOpacity
               style={style.signInContainer}
