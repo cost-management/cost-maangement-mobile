@@ -1,6 +1,6 @@
 import {Formik} from 'formik';
 import React, {FC, useContext} from 'react';
-import {Text, View, TouchableOpacity} from 'react-native';
+import {Text, View, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
 import {
   FolderType,
   IFolder,
@@ -24,6 +24,9 @@ import style from './style';
 import Picker from '../../ui/picker/Picker';
 import CloseButton from '../../ui/closeButton/CloseButton';
 import {FolderRole} from '../../../models/Folder';
+import {ScrollView} from 'react-native-gesture-handler';
+import {SCREEN_HEIGHT} from '../../../constants/styleConstants';
+import KeyboardAvoid from '../../ui/keyboadAvoid/KeyboadAvoid';
 
 type InitialValues =
   | Omit<
@@ -91,45 +94,47 @@ const CreateCardModal: FC = () => {
   return (
     <Formik initialValues={initialValue} onSubmit={submitHandler}>
       {({handleSubmit, handleChange, values, setFieldValue}) => (
-        <View style={style.container}>
-          <Field
-            style={style.title}
-            value={values.title}
-            onChangeText={handleChange('title')}
-            placeholder="Назва папки"
-          />
-          <Picker
-            currentValue={values.folder_type}
-            items={[FolderType.card, FolderType.cash]}
-            itemHandler={setFieldValue}
-            valueType="folder_type"
-          />
-          <Field
-            style={style.balance}
-            value={values.balance}
-            onChangeText={handleChange('balance')}
-            placeholder="Баланс"
-            keyboardType="number-pad"
-          />
-          <Picker
-            currentValue={values.currency}
-            items={[Currency.uah, Currency.usd]}
-            itemHandler={setFieldValue}
-            valueType="currency"
-          />
-          <View style={style.line} />
-          <CardSkinChanger x={x} setValue={setFieldValue} />
-          <TouchableOpacity onPress={handleSubmit} style={style.submitButton}>
-            <Text>Створити</Text>
-          </TouchableOpacity>
-          <CloseButton
-            styles={style.closeButton}
-            buttonHandler={() => {
-              dispatch(toogleModal());
-              navigate('mainPage');
-            }}
-          />
-        </View>
+        <KeyboardAvoid scorll={style.scroll}>
+          <View style={style.container}>
+            <Field
+              style={style.title}
+              value={values.title}
+              onChangeText={handleChange('title')}
+              placeholder="Назва папки"
+            />
+            <Picker
+              currentValue={values.folder_type}
+              items={[FolderType.card, FolderType.cash]}
+              itemHandler={setFieldValue}
+              valueType="folder_type"
+            />
+            <Field
+              style={style.balance}
+              value={values.balance}
+              onChangeText={handleChange('balance')}
+              placeholder="Баланс"
+              keyboardType="number-pad"
+            />
+            <Picker
+              currentValue={values.currency}
+              items={[Currency.uah, Currency.usd]}
+              itemHandler={setFieldValue}
+              valueType="currency"
+            />
+            <View style={style.line} />
+            <CardSkinChanger x={x} setValue={setFieldValue} />
+            <TouchableOpacity onPress={handleSubmit} style={style.submitButton}>
+              <Text>Створити</Text>
+            </TouchableOpacity>
+            <CloseButton
+              styles={style.closeButton}
+              buttonHandler={() => {
+                dispatch(toogleModal());
+                navigate('mainPage');
+              }}
+            />
+          </View>
+        </KeyboardAvoid>
       )}
     </Formik>
   );
