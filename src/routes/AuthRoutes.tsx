@@ -9,21 +9,16 @@ import {Auth} from 'aws-amplify';
 import {ActivityIndicator, View} from 'react-native';
 import TabRoutes from './TabRoutes';
 import UserProvider from '../contexts/UserProvider';
-import {ICognitoUser} from '../models/Auth';
-import {useAppDispatch} from '../hooks/redux';
-import {refreshFolder} from '../store/slices/folderSlice';
-import {FolderAPI} from '../services/FolderService';
 import useUser from '../hooks/user';
 import useStartApp from '../hooks/startApp';
 
 export type StackParams = {
   app: undefined;
-  signIn: {
-    email: string;
-  };
+  signIn: undefined;
   signUp: undefined;
   confirm: {
     email: string;
+    password: string;
   };
 };
 
@@ -55,16 +50,23 @@ const AuthRoutes: FC = () => {
     <UserProvider value={{user, setUser}}>
       <NavigationContainer>
         <Stack.Navigator
-          screenOptions={({route}) => ({
-            headerShown: route.name === 'app' ? false : true,
-          })}>
+          screenOptions={{
+            headerShown: false,
+            animation: 'slide_from_bottom',
+          }}>
           {user ? (
             <Stack.Screen name="app" component={TabRoutes} />
           ) : (
             <>
               <Stack.Screen name="signIn" component={SignIn} />
               <Stack.Screen name="signUp" component={SignUp} />
-              <Stack.Screen name="confirm" component={Confirm} />
+              <Stack.Group
+                screenOptions={{
+                  presentation: 'modal',
+                  animation: 'slide_from_bottom',
+                }}>
+                <Stack.Screen name="confirm" component={Confirm} />
+              </Stack.Group>
             </>
           )}
         </Stack.Navigator>
