@@ -7,6 +7,7 @@ import Field from '../../ui/Field';
 import {StackParams} from '../../../routes/AuthRoutes';
 import style from './style';
 import InputContainer from '../inputContainer/InputContainer';
+import AuthHeader from '../header/AuthHeader';
 
 interface FormSignInProps {
   handlerSubmit: (email: string, password: string) => void;
@@ -53,9 +54,7 @@ const FormSignIn: FC<FormSignInProps> = ({handlerSubmit}) => {
                 <Text style={style.signUpTitle}>Зареєеструйся</Text>
               </TouchableOpacity>
             </View>
-            <View style={style.header}>
-              <Text style={style.headerTitle}>Вхід</Text>
-            </View>
+            <AuthHeader title="Вхід" />
           </View>
         )}
       </Formik>

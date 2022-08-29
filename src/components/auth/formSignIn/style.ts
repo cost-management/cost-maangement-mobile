@@ -11,11 +11,9 @@ import {
 
 interface Style {
   containerContent: object;
-  header: object;
   submitButtom: object;
   submitTitle: object;
   container: object;
-  headerTitle: object;
   signUpContainer: object;
   signUpTitle: object;
   input: object;
@@ -26,17 +24,6 @@ const style = StyleSheet.create<Style>({
     height: SCREEN_HEIGHT,
     width: SCREEN_WIDTH,
     paddingTop: '30%',
-  },
-  header: {
-    position: 'absolute',
-    backgroundColor: '#6C6C6C',
-    width: SCREEN_WIDTH * 0.6,
-    height: SCREEN_WIDTH * 0.6 * 0.3,
-    borderRadius: 15,
-    top: (-SCREEN_WIDTH * 0.6 * 0.3) / 2,
-    left: SCREEN_WIDTH * 0.2,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   submitButtom: {
     width: '100%',
@@ -59,10 +46,6 @@ const style = StyleSheet.create<Style>({
     paddingHorizontal: PADDING_HORIZONTAL,
     flex: 1,
     paddingTop: 80,
-  },
-  headerTitle: {
-    color: 'white',
-    fontSize: 20,
   },
   signUpContainer: {
     marginTop: 30,
