@@ -31,6 +31,8 @@ const FormSignIn: FC<FormSignInProps> = ({handlerSubmit}) => {
                 placeholder: 'Введіть ваш email',
                 onChangeText: handleChange('email'),
                 style: style.input,
+                autoComplete: 'email',
+                keyboardType: 'email-address',
               }}
               title="Email"
             />
@@ -40,13 +42,15 @@ const FormSignIn: FC<FormSignInProps> = ({handlerSubmit}) => {
                 placeholder: 'Введіть ваш пароль',
                 onChangeText: handleChange('password'),
                 style: style.input,
+                autoComplete: 'password',
+                secureTextEntry: true,
               }}
               title="Пароль"
             />
             <TouchableOpacity>
               <Text>Забули пароль?</Text>
             </TouchableOpacity>
-            <SubmitButton title="Увійти" submit={handlerSubmit} />
+            <SubmitButton title="Увійти" submit={handleSubmit} />
             <View style={style.signUpContainer}>
               <Text>Нема акаунту, </Text>
               <TouchableOpacity onPress={signUpHandler}>

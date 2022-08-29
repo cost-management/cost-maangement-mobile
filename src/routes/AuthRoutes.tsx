@@ -9,10 +9,6 @@ import {Auth} from 'aws-amplify';
 import {ActivityIndicator, View} from 'react-native';
 import TabRoutes from './TabRoutes';
 import UserProvider from '../contexts/UserProvider';
-import {ICognitoUser} from '../models/Auth';
-import {useAppDispatch} from '../hooks/redux';
-import {refreshFolder} from '../store/slices/folderSlice';
-import {FolderAPI} from '../services/FolderService';
 import useUser from '../hooks/user';
 import useStartApp from '../hooks/startApp';
 
@@ -53,9 +49,10 @@ const AuthRoutes: FC = () => {
     <UserProvider value={{user, setUser}}>
       <NavigationContainer>
         <Stack.Navigator
-          screenOptions={({route}) => ({
+          screenOptions={{
             headerShown: false,
-          })}>
+            animation: 'slide_from_bottom',
+          }}>
           {user ? (
             <Stack.Screen name="app" component={TabRoutes} />
           ) : (

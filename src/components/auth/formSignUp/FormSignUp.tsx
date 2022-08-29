@@ -36,7 +36,7 @@ const FormSignUp: FC<FormSignUpProps> = ({signUpHandler}) => {
         initialValues={initialValues}
         onSubmit={values => signUpHandler(values.email, values.password)}
         validationSchema={SignUpSchema}>
-        {({values, handleChange, handleSubmit, errors}) => (
+        {({values, handleChange}) => (
           <View style={style.contentContainer}>
             <AuthHeader title="Реєстрація" />
             <InputContainer
@@ -46,6 +46,8 @@ const FormSignUp: FC<FormSignUpProps> = ({signUpHandler}) => {
                 placeholder: 'Введіть свій Email',
                 onChangeText: handleChange('email'),
                 style: style.input,
+                autoComplete: 'email',
+                keyboardType: 'email-address',
               }}
             />
             <InputContainer
@@ -55,6 +57,7 @@ const FormSignUp: FC<FormSignUpProps> = ({signUpHandler}) => {
                 placeholder: 'Введіть свій пароль',
                 onChangeText: handleChange('password'),
                 style: style.input,
+                secureTextEntry: true,
               }}
             />
             <InputContainer
@@ -64,6 +67,7 @@ const FormSignUp: FC<FormSignUpProps> = ({signUpHandler}) => {
                 placeholder: 'Повторіть свій пароль',
                 onChangeText: handleChange('repeatPassword'),
                 style: style.input,
+                secureTextEntry: true,
               }}
             />
             <SubmitButton title="Зареєструватися" submit={signUpHandler} />
