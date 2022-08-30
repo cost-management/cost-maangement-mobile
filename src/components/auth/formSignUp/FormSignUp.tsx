@@ -75,7 +75,6 @@ const FormSignUp: FC<FormSignUpProps> = ({signUpHandler}) => {
                 }}
               />
               <SubmitButton title="Зареєструватися" submit={handleSubmit} />
-
               <TouchableOpacity
                 style={style.signInContainer}
                 onPress={signInHandler}>

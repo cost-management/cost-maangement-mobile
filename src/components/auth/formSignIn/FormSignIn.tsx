@@ -3,7 +3,6 @@ import {Button, Text, View, TouchableOpacity} from 'react-native';
 import {Formik} from 'formik';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {SignInSchema} from '../../../utils/auth/validation';
-import Field from '../../ui/Field';
 import {StackParams} from '../../../routes/AuthRoutes';
 import style from './style';
 import InputContainer from '../inputContainer/InputContainer';
@@ -22,7 +21,7 @@ const FormSignIn: FC<FormSignInProps> = ({handlerSubmit}) => {
       <Formik
         initialValues={{email: '', password: ''}}
         validationSchema={SignInSchema}
-        onSubmit={values => handlerSubmit(values.email, values.password)}>
+        onSubmit={() => {}}>
         {({handleChange, handleSubmit, values, errors}) => (
           <View style={style.container}>
             <InputContainer
@@ -50,7 +49,15 @@ const FormSignIn: FC<FormSignInProps> = ({handlerSubmit}) => {
             <TouchableOpacity>
               <Text>Забули пароль?</Text>
             </TouchableOpacity>
-            <SubmitButton title="Увійти" submit={handleSubmit} />
+            <SubmitButton
+              title="Увійти"
+              submit={() =>
+                handlerSubmit(
+                  values.email.trimStart().trimEnd(),
+                  values.password.trimStart().trimEnd(),
+                )
+              }
+            />
             <View style={style.signUpContainer}>
               <Text>Нема акаунту, </Text>
               <TouchableOpacity onPress={signUpHandler}>
