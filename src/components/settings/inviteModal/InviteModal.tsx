@@ -14,6 +14,7 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
 } from 'react-native-reanimated';
+import useBackHanlder from '../../../hooks/backHandler';
 
 interface InitialValues {
   email: string;
@@ -23,6 +24,7 @@ interface InitialValues {
 }
 
 const InviteModal: FC = () => {
+  useBackHanlder();
   const dispatch = useAppDispatch();
   const {user} = useContext(UserContext);
   const {navigate} = useNavigation<NavigationProp<SettingsRoutesParams>>();

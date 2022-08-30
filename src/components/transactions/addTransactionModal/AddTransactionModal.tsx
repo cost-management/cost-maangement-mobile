@@ -5,8 +5,8 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import {Formik} from 'formik';
-import React, {FC, useRef, useState} from 'react';
-import {ScrollView, View} from 'react-native';
+import React, {FC, useEffect, useRef, useState} from 'react';
+import {BackHandler, ScrollView, View} from 'react-native';
 import DoubleButton from '../../ui/doubleButton/DoubleButton';
 import {TransactionsRoutesParams} from '../../../routes/TransactionsRoutes';
 import {useAppSelector, useAppDispatch} from '../../../hooks/redux';
@@ -16,6 +16,7 @@ import style from './style';
 import {toogleModal} from '../../../store/slices/categorySlice';
 import {SCREEN_WIDTH} from '../../../constants/styleConstants';
 import Picker from '../../ui/picker/Picker';
+import useBackHanlder from '../../../hooks/backHandler';
 
 interface InitialValues {
   category: string;
@@ -26,8 +27,11 @@ interface InitialValues {
 
 const AddTransactionModal: FC = () => {
   const dispatch = useAppDispatch();
-  const {navigate} = useNavigation<NavigationProp<TransactionsRoutesParams>>();
+  const {navigate, goBack} =
+    useNavigation<NavigationProp<TransactionsRoutesParams>>();
   const {params} = useRoute<RouteProp<TransactionsRoutesParams>>();
+
+  useBackHanlder();
 
   const scroll = useRef<ScrollView>(null);
 
@@ -108,3 +112,6 @@ const AddTransactionModal: FC = () => {
 };
 
 export default AddTransactionModal;
+function backAction(): boolean | null | undefined {
+  throw new Error('Function not implemented.');
+}
