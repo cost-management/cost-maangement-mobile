@@ -10,9 +10,11 @@ const SignIn: FC = () => {
 
   const signInHandler = async (email: string, password: string) => {
     try {
+      console.log(email);
       const user: ICognitoUser = await Auth.signIn(email, password);
       setUser(user);
     } catch (error) {
+      console.log(email);
       console.log('error signing in', error);
     }
   };
