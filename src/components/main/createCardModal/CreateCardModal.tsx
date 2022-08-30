@@ -27,6 +27,7 @@ import {FolderRole} from '../../../models/Folder';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SCREEN_HEIGHT} from '../../../constants/styleConstants';
 import KeyboardAvoid from '../../ui/keyboadAvoid/KeyboadAvoid';
+import useBackHanlder from '../../../hooks/backHandler';
 
 type InitialValues =
   | Omit<
@@ -36,6 +37,7 @@ type InitialValues =
   | {balance: string};
 
 const CreateCardModal: FC = () => {
+  useBackHanlder();
   const dispatch = useAppDispatch();
   const {user} = useContext(UserContext);
   const {navigate} = useNavigation<NavigationProp<MainRoutesParams>>();
