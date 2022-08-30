@@ -7,7 +7,6 @@ import AuthHeader from '../header/AuthHeader';
 import InputContainer from '../inputContainer/InputContainer';
 import SubmitButton from '../buttonSubmit/SubmitButton';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
-import {SignUpParams} from '@aws-amplify/auth';
 import {StackParams} from '../../../routes/AuthRoutes';
 import KeyboardAvoid from '../../ui/keyboadAvoid/KeyboadAvoid';
 import {SCREEN_HEIGHT} from '../../../constants/styleConstants';
