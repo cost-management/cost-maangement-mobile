@@ -1,4 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/dist/query/react';
+import {PostTransaction} from '../models/Transaction';
 const TransactionAPI = createApi({
   reducerPath: 'trasnactionAPI',
   baseQuery: fetchBaseQuery({
@@ -6,7 +7,10 @@ const TransactionAPI = createApi({
   }),
   tagTypes: ['transactions'],
   endpoints: build => ({
-    addTransaction: build.mutation({
+    addTransaction: build.mutation<
+      {id: string},
+      {id: string; body: PostTransaction}
+    >({
       query: ({id, body}) => ({
         url: 'incomes',
         headers: {id},
