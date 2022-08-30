@@ -13,7 +13,6 @@ interface Style {
   line: object;
   submitButton: object;
   closeButton: object;
-  scroll: object;
 }
 
 const style = StyleSheet.create<Style>({
@@ -61,9 +60,6 @@ const style = StyleSheet.create<Style>({
     position: 'absolute',
     top: -40,
     right: 0,
-  },
-  scroll: {
-    height: SCREEN_HEIGHT - 40,
   },
 });
 
