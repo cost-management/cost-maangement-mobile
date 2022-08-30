@@ -14,6 +14,7 @@ const transactionSlice = createSlice({
   initialState,
   reducers: {
     addTransaction: (state, action: PayloadAction<ITransaction>) => {
+      console.log(state.transactions);
       state.transactions = [...state.transactions, action.payload];
     },
   },

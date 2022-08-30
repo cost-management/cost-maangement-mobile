@@ -16,7 +16,7 @@ export interface ITransaction {
   title: string;
   folder_id: string;
   income_category: string;
-  units: number;
-  nanos: number;
+  units: string;
+  nanos: string;
   timezone: number;
 }

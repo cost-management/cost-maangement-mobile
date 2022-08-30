@@ -24,9 +24,6 @@ import style from './style';
 import Picker from '../../ui/picker/Picker';
 import CloseButton from '../../ui/closeButton/CloseButton';
 import {FolderRole} from '../../../models/Folder';
-import {ScrollView} from 'react-native-gesture-handler';
-import {SCREEN_HEIGHT} from '../../../constants/styleConstants';
-import KeyboardAvoid from '../../ui/keyboadAvoid/KeyboadAvoid';
 import useBackHanlder from '../../../hooks/backHandler';
 
 type InitialValues =
