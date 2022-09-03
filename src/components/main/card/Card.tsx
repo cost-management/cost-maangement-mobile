@@ -6,6 +6,8 @@ import {useAppDispatch} from '../../../hooks/redux';
 import {deleteFolder} from '../../../store/slices/folderSlice';
 import {UserContext} from '../../../contexts/UserProvider';
 import {FolderAPI} from '../../../services/FolderService';
+import {useNavigation, NavigationProp} from '@react-navigation/native';
+import {MainRoutesParams} from '../../../routes/MainRoutes';
 
 interface CardProps {
   folder: IFolder;
@@ -14,9 +16,8 @@ interface CardProps {
 const Card: FC<CardProps> = ({folder}) => {
   const dispatch = useAppDispatch();
   const {user} = useContext(UserContext);
-  const folderHanlder = () => {
-    dispatch(deleteFolder(folder.id));
-  };
+  const {navigate} = useNavigation<NavigationProp<MainRoutesParams>>();
+  const folderHanlder = () => navigate('folder', {folder});
 
   const [deleteFolderMutation] = FolderAPI.useDeleteFolderMutation();
 
@@ -25,6 +26,7 @@ const Card: FC<CardProps> = ({folder}) => {
       id: user.attributes?.sub!,
       folderId: folder.id,
     });
+    dispatch(deleteFolder(folder.id));
     dispatch(deleteFolder(folder.id));
     console.log(response);
   };

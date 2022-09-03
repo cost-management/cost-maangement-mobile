@@ -3,15 +3,17 @@ import {Text, View} from 'react-native';
 import Card from '../components/main/card/Card';
 import CircleButton from '../components/ui/circleButton/CircleButton';
 import {IFolder} from '../models/Folder';
+import {useRoute, RouteProp} from '@react-navigation/native';
+import {MainRoutesParams} from '../routes/MainRoutes';
 
-interface FolderProps {
-  folder: IFolder;
-}
+const Folder: FC = () => {
+  const {params} = useRoute<RouteProp<MainRoutesParams>>();
 
-const Folder: FC<FolderProps> = ({folder}) => {
+  const folder = params?.folder!;
+
   return (
     <View>
-      <Card folder={folder} />
+      <Card folder={folder!} />
       <View>
         <Text>{folder.nanos}</Text>
         <CircleButton text="+" buttonHandler={() => {}} />
