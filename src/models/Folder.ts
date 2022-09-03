@@ -51,4 +51,5 @@ export interface PostFolder {
   units: number;
   nanos: number;
   owner_id: string;
+  created_at: string;
 }
