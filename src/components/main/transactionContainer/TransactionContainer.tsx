@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import {Text, View} from 'react-native';
+import style from './style';
 
 interface TransactionContainerProps {
   title: string;
@@ -13,13 +14,13 @@ const TransactionContainer: FC<TransactionContainerProps> = ({
   sum,
 }) => {
   return (
-    <View>
+    <View style={style.container}>
       <View>
-        <Text>{title}</Text>
-        <Text>{category}</Text>
+        <Text style={style.title}>{title}</Text>
+        <Text style={style.category}>{category}</Text>
       </View>
-      <View>
-        <Text>{sum}</Text>
+      <View style={style.sumContainer}>
+        <Text style={style.sum}>{`${sum || 0} грн`}</Text>
       </View>
     </View>
   );

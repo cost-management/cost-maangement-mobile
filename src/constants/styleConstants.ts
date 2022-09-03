@@ -1,7 +1,9 @@
 import {Dimensions} from 'react-native';
 
-export const SCREEN_WIDTH = Dimensions.get('screen').width;
-export const SCREEN_HEIGHT = Dimensions.get('screen').height;
+import ExtraDimensions from 'react-native-extra-dimensions-android';
+
+export const SCREEN_WIDTH = ExtraDimensions.get('REAL_WINDOW_WIDTH');
+export const SCREEN_HEIGHT = ExtraDimensions.get('REAL_WINDOW_HEIGHT');
 export const PADDING_HORIZONTAL = 30;
 export const CARD_WIDTH = 289;
 export const CARD_HEIGHT = 177;

@@ -20,7 +20,7 @@ const MainRoutes: FC = () => {
   return (
     <Stack.Navigator
       screenOptions={({route}) => ({
-        headerShown: route.name === 'mainPage' ? false : true,
+        headerShown: false,
       })}>
       <Stack.Screen name="mainPage" component={Main} />
       <Stack.Screen name="allTransactions" component={AllTransactions} />

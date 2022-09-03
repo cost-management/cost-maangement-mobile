@@ -15,6 +15,7 @@ const style = StyleSheet.create<Style>({
     height: 46,
     justifyContent: 'space-between',
     alignItems: 'center',
+    width: '100%',
   },
   title: {
     color: '#909090',
@@ -28,7 +29,10 @@ const style = StyleSheet.create<Style>({
   sumContainer: {
     backgroundColor: '#919191',
     height: 30,
-    padding: 1,
+    minWidth: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
     borderRadius: BORDER_SMALL_RADIUS,
   },
 });

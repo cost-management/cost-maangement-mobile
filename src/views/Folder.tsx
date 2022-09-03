@@ -1,25 +1,93 @@
 import React, {FC} from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, StyleSheet, ScrollView} from 'react-native';
 import Card from '../components/main/card/Card';
 import CircleButton from '../components/ui/circleButton/CircleButton';
-import {IFolder} from '../models/Folder';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import {MainRoutesParams} from '../routes/MainRoutes';
+import {useAppSelector} from '../hooks/redux';
+import {
+  CARD_WIDTH,
+  CARD_HEIGHT,
+  BORDER_LARGE_RADIUS,
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  PADDING_HORIZONTAL,
+  PADDING_BOTTOM,
+} from '../constants/styleConstants';
+import TransactionContainer from '../components/main/transactionContainer/TransactionContainer';
 
 const Folder: FC = () => {
   const {params} = useRoute<RouteProp<MainRoutesParams>>();
 
   const folder = params?.folder!;
 
+  const {transactions} = useAppSelector(state => state.transactions);
+
+  const currentFolderTransactions = transactions.filter(
+    transaction => transaction.folder_id === folder.id,
+  );
+
   return (
-    <View>
-      <Card folder={folder!} />
-      <View>
-        <Text>{folder.nanos}</Text>
+    <View style={style.container}>
+      <View
+        style={[
+          style.folderContaier,
+          {backgroundColor: folder.skin.toLowerCase()},
+        ]}></View>
+      <View style={style.headerContainer}>
+        <View style={style.titleContainer}>
+          <Text style={style.title}>Транзакції</Text>
+        </View>
         <CircleButton text="+" buttonHandler={() => {}} />
       </View>
+      <ScrollView style={style.scrollView}>
+        {currentFolderTransactions.map(transaction => (
+          <TransactionContainer
+            title={transaction.title}
+            sum={transaction.units}
+            category={transaction.income_category}
+          />
+        ))}
+      </ScrollView>
     </View>
   );
 };
+
+const style = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+    paddingHorizontal: PADDING_HORIZONTAL,
+    paddingBottom: PADDING_BOTTOM,
+    backgroundColor: '#F0F0F0',
+    paddingTop: 20,
+  },
+  folderContaier: {
+    width: CARD_WIDTH,
+    height: CARD_HEIGHT,
+    borderRadius: BORDER_LARGE_RADIUS,
+    marginBottom: 10,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    height: 70,
+    alignItems: 'center',
+  },
+  titleContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    color: '#B6B6B6',
+  },
+  scrollView: {
+    maxHeight: SCREEN_HEIGHT - 30 - 50 - PADDING_BOTTOM - CARD_HEIGHT - 70 - 20,
+    width: '100%',
+  },
+});
 
 export default Folder;
