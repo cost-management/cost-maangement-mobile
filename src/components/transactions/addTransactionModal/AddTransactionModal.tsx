@@ -77,10 +77,11 @@ const AddTransactionModal: FC = () => {
   }: InitialValues) => {
     const [units, nanos] = value.split('.');
     const id = uuidv4();
+    const created_at = new Date(Date.now()).toISOString();
     const transaction: ITransaction = {
       units: units || '0',
       nanos: nanos || '',
-      created_at: Date.now().toString(),
+      created_at,
       timezone: getTimezone(),
       income_category: category,
       title: folderTitle,
@@ -94,9 +95,10 @@ const AddTransactionModal: FC = () => {
       timezone: getTimezone(),
       income_category: category.toUpperCase(),
       title: folderTitle,
-      costumer_id: user.attributes?.sub!,
+      customer_id: user.attributes?.sub!,
       folder_id,
       id,
+      created_at,
     };
     console.log(transactionPost);
     dispatch(addTransaction(transaction));

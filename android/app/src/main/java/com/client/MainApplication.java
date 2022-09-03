@@ -15,12 +15,6 @@ import java.util.List;
 import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
 
 public class MainApplication extends Application implements ReactApplication {
-protected List<ReactPackage> getPackages() {
-    return Arrays.<ReactPackage>asList(
-      new MainReactPackage(),
-      new ExtraDimensionsPackage()  // <--- add here
-    );
-  }
   private final ReactNativeHost mReactNativeHost =
       new ReactNativeHost(this) {
         @Override

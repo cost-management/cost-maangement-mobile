@@ -3,10 +3,11 @@ export interface PostTransaction {
   title: string;
   folder_id: string;
   income_category: string;
-  costumer_id: string;
+  customer_id: string;
   units: number;
   nanos: number;
   timezone: number;
+  created_at: string;
 }
 
 export interface ITransaction {

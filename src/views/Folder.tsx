@@ -15,6 +15,7 @@ import {
   PADDING_BOTTOM,
 } from '../constants/styleConstants';
 import TransactionContainer from '../components/main/transactionContainer/TransactionContainer';
+import ExtraDimensions from 'react-native-extra-dimensions-android';
 
 const Folder: FC = () => {
   const {params} = useRoute<RouteProp<MainRoutesParams>>();
@@ -26,7 +27,9 @@ const Folder: FC = () => {
   const currentFolderTransactions = transactions.filter(
     transaction => transaction.folder_id === folder.id,
   );
-
+  console.log(ExtraDimensions.get('STATUS_BAR_HEIGHT'));
+  console.log(ExtraDimensions.get('SMART_BAR_HEIGHT'));
+  console.log(ExtraDimensions.get('SOFT_MENU_BAR_HEIGHT'));
   return (
     <View style={style.container}>
       <View
@@ -43,7 +46,6 @@ const Folder: FC = () => {
       <ScrollView style={style.scrollView}>
         {currentFolderTransactions.map(transaction => (
           <TransactionContainer
-            title={transaction.title}
             sum={transaction.units}
             category={transaction.income_category}
           />
@@ -85,8 +87,17 @@ const style = StyleSheet.create({
     color: '#B6B6B6',
   },
   scrollView: {
-    maxHeight: SCREEN_HEIGHT - 30 - 50 - PADDING_BOTTOM - CARD_HEIGHT - 70 - 20,
+    maxHeight:
+      SCREEN_HEIGHT -
+      PADDING_BOTTOM -
+      ExtraDimensions.getStatusBarHeight() -
+      20 -
+      70 -
+      10 -
+      CARD_HEIGHT -
+      60,
     width: '100%',
+    padding: 0,
   },
 });
 

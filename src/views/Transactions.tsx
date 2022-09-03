@@ -9,6 +9,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {TransactionsRoutesParams} from '../routes/TransactionsRoutes';
 import {toogleModal} from '../store/slices/categorySlice';
 import {SCREEN_HEIGHT, PADDING_BOTTOM} from '../constants/styleConstants';
+import ExtraDimensions from 'react-native-extra-dimensions-android';
 
 export type CategoryType = 'income' | 'cost';
 
@@ -82,7 +83,8 @@ const style = StyleSheet.create({
       40 -
       20 -
       TRANSACTION_MARGIN * 2 -
-      (20 + TRANSACTION_MARGIN),
+      (20 + TRANSACTION_MARGIN) -
+      ExtraDimensions.get('STATUS_BAR_HEIGHT'),
   },
   headerContainer: {
     height: 150,

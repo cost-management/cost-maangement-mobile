@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import ExtraDimensions from 'react-native-extra-dimensions-android';
 import {
   PADDING_HORIZONTAL,
   PADDING_BOTTOM,
@@ -21,7 +22,7 @@ export const style = StyleSheet.create<Style>({
   },
   button: {
     position: 'absolute',
-    bottom: PADDING_BOTTOM,
+    bottom: PADDING_BOTTOM + ExtraDimensions.get('STATUS_BAR_HEIGHT'),
   },
   scorllView: {
     width: SCREEN_WIDTH,
