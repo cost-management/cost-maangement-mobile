@@ -1,12 +1,23 @@
-import {RouteProp, useRoute} from '@react-navigation/native';
 import React, {FC} from 'react';
 import {Text, View} from 'react-native';
-import SmallCard from '../components/main/smallCard/SmallCard';
-import {MainRoutesParams} from '../routes/MainRoutes';
+import Card from '../components/main/card/Card';
+import CircleButton from '../components/ui/circleButton/CircleButton';
+import {IFolder} from '../models/Folder';
 
-const Folder: FC = () => {
-  const {params} = useRoute<RouteProp<MainRoutesParams>>();
-  return <View></View>;
+interface FolderProps {
+  folder: IFolder;
+}
+
+const Folder: FC<FolderProps> = ({folder}) => {
+  return (
+    <View>
+      <Card folder={folder} />
+      <View>
+        <Text>{folder.nanos}</Text>
+        <CircleButton text="+" buttonHandler={() => {}} />
+      </View>
+    </View>
+  );
 };
 
 export default Folder;
