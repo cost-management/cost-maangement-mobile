@@ -6,7 +6,7 @@ import {
 } from '@react-navigation/native';
 import {Formik} from 'formik';
 import React, {FC, useEffect, useRef, useState} from 'react';
-import {BackHandler, ScrollView, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import DoubleButton from '../../ui/doubleButton/DoubleButton';
 import {TransactionsRoutesParams} from '../../../routes/TransactionsRoutes';
 import {useAppSelector, useAppDispatch} from '../../../hooks/redux';

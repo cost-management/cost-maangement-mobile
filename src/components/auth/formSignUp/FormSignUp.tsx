@@ -1,5 +1,5 @@
 import {Formik} from 'formik';
-import React, {FC} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {SignUpSchema} from '../../../utils/auth/validation';
 import style from './style';
