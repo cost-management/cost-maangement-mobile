@@ -2,9 +2,14 @@ import React, {FC, useContext, useEffect} from 'react';
 import {Text, View, StyleSheet, ScrollView} from 'react-native';
 import Card from '../components/main/card/Card';
 import CircleButton from '../components/ui/circleButton/CircleButton';
-import {useRoute, RouteProp} from '@react-navigation/native';
+import {
+  useRoute,
+  RouteProp,
+  useNavigation,
+  NavigationProp,
+} from '@react-navigation/native';
 import {MainRoutesParams} from '../routes/MainRoutes';
-import {useAppSelector} from '../hooks/redux';
+import {useAppSelector, useAppDispatch} from '../hooks/redux';
 import {
   CARD_WIDTH,
   CARD_HEIGHT,
@@ -18,14 +23,17 @@ import TransactionContainer from '../components/main/transactionContainer/Transa
 import ExtraDimensions from 'react-native-extra-dimensions-android';
 import useTransactions from '../hooks/transactions';
 import {UserContext} from '../contexts/UserProvider';
+import {toogleModal} from '../store/slices/categorySlice';
 
 const Folder: FC = () => {
   const {user} = useContext(UserContext);
-  const {params} = useRoute<RouteProp<MainRoutesParams>>();
+  const {params} = useRoute<RouteProp<MainRoutesParams, 'folder'>>();
+  const {navigate} = useNavigation<NavigationProp<MainRoutesParams>>();
   const {getTransactions} = useTransactions();
   useEffect(() => {
     getTransactions(user.attributes?.sub!, params?.folder.id!);
   }, []);
+  const dispatch = useAppDispatch();
   const folder = params?.folder!;
   const {transactions} = useAppSelector(state => state.transactions);
   const currentFolderTransactions = transactions.find(
@@ -42,7 +50,18 @@ const Folder: FC = () => {
         <View style={style.titleContainer}>
           <Text style={style.title}>Транзакції</Text>
         </View>
-        <CircleButton text="+" buttonHandler={() => {}} />
+        <CircleButton
+          text="+"
+          buttonHandler={() => {
+            dispatch(toogleModal());
+            navigate('addTransaction', {
+              folder_id: folder.id,
+              folderTitle: folder.title,
+              type: 'main',
+              folder,
+            });
+          }}
+        />
       </View>
       <ScrollView style={style.scrollView}>
         {currentFolderTransactions?.transactions.map(transaction => (

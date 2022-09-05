@@ -7,6 +7,7 @@ import {IFolder} from '../models/Folder';
 import Statistics from '../views/Statistics';
 import CreateCardModal from '../components/main/createCardModal/CreateCardModal';
 import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../constants/styleConstants';
+import AddTransactionModal from '../components/transactions/addTransactionModal/AddTransactionModal';
 
 export type MainRoutesParams = {
   mainPage: undefined;
@@ -14,6 +15,12 @@ export type MainRoutesParams = {
   folder: {folder: IFolder};
   statistic: undefined;
   addFolder: undefined;
+  addTransaction: {
+    folder_id: string;
+    folderTitle: string;
+    type: string;
+    folder: IFolder;
+  };
 };
 const Stack = createNativeStackNavigator<MainRoutesParams>();
 const MainRoutes: FC = () => {
@@ -33,6 +40,7 @@ const MainRoutes: FC = () => {
           animation: 'slide_from_bottom',
         }}>
         <Stack.Screen name="addFolder" component={CreateCardModal} />
+        <Stack.Screen name="addTransaction" component={AddTransactionModal} />
       </Stack.Group>
     </Stack.Navigator>
   );

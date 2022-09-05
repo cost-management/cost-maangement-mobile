@@ -16,18 +16,14 @@ import style from './style';
 import {toogleModal} from '../../../store/slices/categorySlice';
 import Picker from '../../ui/picker/Picker';
 import useBackHanlder from '../../../hooks/backHandler';
-import {
-  ITransaction,
-  PostTransaction,
-  TransactionsFolder,
-} from '../../../models/Transaction';
-import {CategoryType} from '../../../views/Transactions';
+import {PostTransaction, TransactionsFolder} from '../../../models/Transaction';
 import getTimezone from '../../../utils/getTimesone';
 import {UserContext} from '../../../contexts/UserProvider';
 //@ts-ignore
 import {v4 as uuidv4} from 'uuid';
 import {addTransaction} from '../../../store/slices/transactionSlice';
 import {TransactionAPI} from '../../../services/TransactionService';
+import {MainRoutesParams} from '../../../routes/MainRoutes';
 interface InitialValues {
   category: string;
   folderTitle: string;
@@ -38,8 +34,11 @@ interface InitialValues {
 
 const AddTransactionModal: FC = () => {
   const dispatch = useAppDispatch();
-  const {navigate} = useNavigation<NavigationProp<TransactionsRoutesParams>>();
-  const {params} = useRoute<RouteProp<TransactionsRoutesParams>>();
+  const transactionNavigate =
+    useNavigation<NavigationProp<TransactionsRoutesParams>>();
+  const mainNavigate = useNavigation<NavigationProp<MainRoutesParams>>();
+  const transactionRoute = useRoute<RouteProp<TransactionsRoutesParams>>();
+  const mainRoute = useRoute<RouteProp<MainRoutesParams, 'addTransaction'>>();
   const [addTransactionMutation] = TransactionAPI.useAddTransactionMutation();
   useBackHanlder();
   const scroll = useRef<ScrollView>(null);
@@ -53,9 +52,11 @@ const AddTransactionModal: FC = () => {
     state => state.categories,
   );
   const [categories, setCategories] = useState(
-    params?.categoryType === 'cost' ? costCategory : incomeCategory,
+    transactionRoute.params?.categoryType !== 'cost' &&
+      mainRoute.params.type !== 'main'
+      ? incomeCategory
+      : costCategory,
   );
-
   const {user} = useContext(UserContext);
 
   const changeFolderId = (
@@ -64,13 +65,12 @@ const AddTransactionModal: FC = () => {
   ) => {
     handleChange('folder_id', foldersId[id]);
   };
-
   const initialValue: InitialValues = {
-    category: params?.category!,
-    folderTitle: foldersTitle[0],
+    category: transactionRoute.params?.category! || categories[0],
+    folderTitle: mainRoute.params.folderTitle || foldersTitle[0],
     value: '',
     selected: false,
-    folder_id: foldersId[0],
+    folder_id: mainRoute.params.folder_id || foldersId[0],
   };
 
   const submitHandler = async ({
@@ -109,7 +109,6 @@ const AddTransactionModal: FC = () => {
         },
       ],
     };
-    console.log(transactionPost);
     dispatch(addTransaction(transactionFolder));
     const response = await addTransactionMutation({
       id: user.attributes?.sub!,
@@ -117,7 +116,11 @@ const AddTransactionModal: FC = () => {
     });
     console.log(response);
     dispatch(toogleModal());
-    navigate('transactionsView');
+    if (mainRoute.params.type) {
+      mainNavigate.navigate('folder', {folder: mainRoute.params.folder});
+    } else {
+      transactionNavigate.navigate('transactionsView');
+    }
   };
 
   return (

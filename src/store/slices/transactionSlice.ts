@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {a} from 'aws-amplify';
-import {ITransaction, TransactionsFolder} from '../../models/Transaction';
+import {TransactionsFolder} from '../../models/Transaction';
 
 interface TransactionState {
   transactions: TransactionsFolder[];
