@@ -32,7 +32,7 @@ const CardContainer: FC = () => {
             },
           ]}>
           {folders.map(folder => (
-            <Card folder={folder} />
+            <Card key={folder.id} folder={folder} />
           ))}
         </View>
       </ScrollView>

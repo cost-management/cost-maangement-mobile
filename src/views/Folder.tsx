@@ -82,6 +82,7 @@ const Folder: FC = () => {
       <ScrollView style={style.scrollView}>
         {currentFolderTransactions?.transactions.map(transaction => (
           <TransactionContainer
+            key={transaction.id}
             units={transaction.units}
             nanos={transaction.nanos}
             category={transaction.income_category}
