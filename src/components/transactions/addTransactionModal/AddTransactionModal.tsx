@@ -16,7 +16,11 @@ import style from './style';
 import {toogleModal} from '../../../store/slices/categorySlice';
 import Picker from '../../ui/picker/Picker';
 import useBackHanlder from '../../../hooks/backHandler';
-import {ITransaction, PostTransaction} from '../../../models/Transaction';
+import {
+  ITransaction,
+  PostTransaction,
+  TransactionsFolder,
+} from '../../../models/Transaction';
 import {CategoryType} from '../../../views/Transactions';
 import getTimezone from '../../../utils/getTimesone';
 import {UserContext} from '../../../contexts/UserProvider';
@@ -78,17 +82,6 @@ const AddTransactionModal: FC = () => {
     const [units, nanos] = value.split('.');
     const id = uuidv4();
     const created_at = new Date(Date.now()).toISOString();
-    const transaction: ITransaction = {
-      units: units || '0',
-      nanos: nanos || '',
-      created_at,
-      timezone: getTimezone(),
-      income_category: category,
-      title: folderTitle,
-      costumer_id: user.attributes?.sub!,
-      folder_id,
-      id,
-    };
     const transactionPost: PostTransaction = {
       units: parseInt(units, 10) || 0,
       nanos: parseInt(nanos, 10) || 0,
@@ -100,8 +93,24 @@ const AddTransactionModal: FC = () => {
       id,
       created_at,
     };
+    const transactionFolder: TransactionsFolder = {
+      folder_id,
+      transactions: [
+        {
+          units: units || '0',
+          nanos: nanos || '',
+          created_at,
+          timezone: getTimezone(),
+          income_category: category,
+          title: folderTitle,
+          costumer_id: user.attributes?.sub!,
+          folder_id,
+          id,
+        },
+      ],
+    };
     console.log(transactionPost);
-    dispatch(addTransaction(transaction));
+    dispatch(addTransaction(transactionFolder));
     const response = await addTransactionMutation({
       id: user.attributes?.sub!,
       body: transactionPost,

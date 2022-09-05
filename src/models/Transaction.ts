@@ -21,3 +21,8 @@ export interface ITransaction {
   nanos: string;
   timezone: number;
 }
+
+export interface TransactionsFolder {
+  folder_id: string;
+  transactions: ITransaction[];
+}

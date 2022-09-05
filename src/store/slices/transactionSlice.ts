@@ -1,8 +1,9 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {ITransaction} from '../../models/Transaction';
+import {a} from 'aws-amplify';
+import {ITransaction, TransactionsFolder} from '../../models/Transaction';
 
 interface TransactionState {
-  transactions: ITransaction[];
+  transactions: TransactionsFolder[];
 }
 
 const initialState: TransactionState = {
@@ -13,17 +14,45 @@ const transactionSlice = createSlice({
   name: 'transaction',
   initialState,
   reducers: {
-    addTransaction: (state, action: PayloadAction<ITransaction>) => {
-      state.transactions = [...state.transactions, action.payload];
+    addTransaction: (state, action: PayloadAction<TransactionsFolder>) => {
+      let isFolder = false;
+      state.transactions = state.transactions.map(transaction => {
+        if (transaction.folder_id === action.payload.folder_id) {
+          isFolder = true;
+          return {
+            ...transaction,
+            transactions: [
+              ...transaction.transactions,
+              action.payload.transactions[0],
+            ],
+          };
+        } else {
+          isFolder = true;
+          return transaction;
+        }
+      });
+      if (!isFolder) {
+        state.transactions = [...state.transactions, action.payload];
+      }
     },
-    deleteTransaction: (state, action: PayloadAction<string>) => {
-      state.transactions = state.transactions.filter(
-        transaction => transaction.id !== action.payload,
-      );
+    refreshTransactions: (state, action: PayloadAction<TransactionsFolder>) => {
+      let isFolder = false;
+      state.transactions = state.transactions.map(transaction => {
+        if (transaction.folder_id === action.payload.folder_id) {
+          isFolder = true;
+          return action.payload;
+        } else {
+          isFolder = true;
+          return transaction;
+        }
+      });
+      if (!isFolder) {
+        state.transactions = [...state.transactions, action.payload];
+      }
     },
   },
 });
 
-export const {addTransaction} = transactionSlice.actions;
+export const {addTransaction, refreshTransactions} = transactionSlice.actions;
 
 export default transactionSlice.reducer;

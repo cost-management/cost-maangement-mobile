@@ -16,6 +16,7 @@ export const TransactionAPI = createApi({
         body,
         method: 'POST',
       }),
+      invalidatesTags: ['transactions'],
     }),
     deleteTransaction: build.mutation<Response, {id: string}>({
       query: ({id}) => ({
@@ -33,6 +34,7 @@ export const TransactionAPI = createApi({
         url: TRANSACTIONURL,
         headers: {id, folder_id},
       }),
+      providesTags: ['transactions'],
     }),
   }),
 });

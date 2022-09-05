@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useContext, useEffect} from 'react';
 import {Text, View, StyleSheet, ScrollView} from 'react-native';
 import Card from '../components/main/card/Card';
 import CircleButton from '../components/ui/circleButton/CircleButton';
@@ -16,20 +16,21 @@ import {
 } from '../constants/styleConstants';
 import TransactionContainer from '../components/main/transactionContainer/TransactionContainer';
 import ExtraDimensions from 'react-native-extra-dimensions-android';
+import useTransactions from '../hooks/transactions';
+import {UserContext} from '../contexts/UserProvider';
 
 const Folder: FC = () => {
+  const {user} = useContext(UserContext);
   const {params} = useRoute<RouteProp<MainRoutesParams>>();
-
+  const {getTransactions} = useTransactions();
+  useEffect(() => {
+    getTransactions(user.attributes?.sub!, params?.folder.id!);
+  }, []);
   const folder = params?.folder!;
-
   const {transactions} = useAppSelector(state => state.transactions);
-
-  const currentFolderTransactions = transactions.filter(
+  const currentFolderTransactions = transactions.find(
     transaction => transaction.folder_id === folder.id,
   );
-  console.log(ExtraDimensions.get('STATUS_BAR_HEIGHT'));
-  console.log(ExtraDimensions.get('SMART_BAR_HEIGHT'));
-  console.log(ExtraDimensions.get('SOFT_MENU_BAR_HEIGHT'));
   return (
     <View style={style.container}>
       <View
@@ -44,7 +45,7 @@ const Folder: FC = () => {
         <CircleButton text="+" buttonHandler={() => {}} />
       </View>
       <ScrollView style={style.scrollView}>
-        {currentFolderTransactions.map(transaction => (
+        {currentFolderTransactions?.transactions.map(transaction => (
           <TransactionContainer
             sum={transaction.units}
             category={transaction.income_category}
