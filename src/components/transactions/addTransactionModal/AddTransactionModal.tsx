@@ -5,7 +5,7 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import {Formik} from 'formik';
-import React, {FC, useRef, useState, useContext} from 'react';
+import React, {FC, useRef, useState, useContext, useEffect} from 'react';
 import {ScrollView, Text, View} from 'react-native';
 import DoubleButton from '../../ui/doubleButton/DoubleButton';
 import {TransactionsRoutesParams} from '../../../routes/TransactionsRoutes';
@@ -24,6 +24,8 @@ import {v4 as uuidv4} from 'uuid';
 import {addTransaction} from '../../../store/slices/transactionSlice';
 import {TransactionAPI} from '../../../services/TransactionService';
 import {MainRoutesParams} from '../../../routes/MainRoutes';
+import {CategoryType} from '../../../views/Transactions';
+import {changeSum} from '../../../store/slices/folderSlice';
 interface InitialValues {
   category: string;
   folderTitle: string;
@@ -34,6 +36,7 @@ interface InitialValues {
 
 const AddTransactionModal: FC = () => {
   const dispatch = useAppDispatch();
+  const [categoryType, setCategoryType] = useState<CategoryType>('cost');
   const transactionNavigate =
     useNavigation<NavigationProp<TransactionsRoutesParams>>();
   const mainNavigate = useNavigation<NavigationProp<MainRoutesParams>>();
@@ -57,6 +60,12 @@ const AddTransactionModal: FC = () => {
       ? incomeCategory
       : costCategory,
   );
+  useEffect(() => {
+    transactionRoute.params?.categoryType !== 'cost' &&
+    mainRoute.params.type !== 'main'
+      ? setCategoryType('income')
+      : setCategoryType('cost');
+  }, []);
   const {user} = useContext(UserContext);
 
   const changeFolderId = (
@@ -83,7 +92,10 @@ const AddTransactionModal: FC = () => {
     const id = uuidv4();
     const created_at = new Date(Date.now()).toISOString();
     const transactionPost: PostTransaction = {
-      units: parseInt(units, 10) || 0,
+      units:
+        (categoryType === 'cost'
+          ? parseInt(units, 10) * -1
+          : parseInt(units, 10)) || 0,
       nanos: parseInt(nanos, 10) || 0,
       timezone: getTimezone(),
       income_category: category.toUpperCase(),
@@ -97,7 +109,7 @@ const AddTransactionModal: FC = () => {
       folder_id,
       transactions: [
         {
-          units: units || '0',
+          units: (categoryType === 'cost' ? `-${units}` : units) || '0',
           nanos: nanos || '',
           created_at,
           timezone: getTimezone(),
@@ -110,6 +122,13 @@ const AddTransactionModal: FC = () => {
       ],
     };
     dispatch(addTransaction(transactionFolder));
+    dispatch(
+      changeSum({
+        nanos,
+        units: categoryType === 'cost' ? `-${units}` : units,
+        folder_id,
+      }),
+    );
     const response = await addTransactionMutation({
       id: user.attributes?.sub!,
       body: transactionPost,
@@ -117,7 +136,7 @@ const AddTransactionModal: FC = () => {
     console.log(response);
     dispatch(toogleModal());
     if (mainRoute.params.type) {
-      mainNavigate.navigate('folder', {folder: mainRoute.params.folder});
+      mainNavigate.navigate('folder', {folder_id: mainRoute.params.folder_id});
     } else {
       transactionNavigate.navigate('transactionsView');
     }
@@ -133,10 +152,12 @@ const AddTransactionModal: FC = () => {
                 container: style.doubleButton,
               }}
               leftButtonHanlder={() => {
+                setCategoryType('cost');
                 setCategories(costCategory);
                 scroll.current?.scrollTo(0);
               }}
               rightButtonHandler={() => {
+                setCategoryType('income');
                 setCategories(incomeCategory);
                 scroll.current?.scrollTo(0);
               }}

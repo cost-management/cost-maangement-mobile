@@ -24,28 +24,47 @@ import ExtraDimensions from 'react-native-extra-dimensions-android';
 import useTransactions from '../hooks/transactions';
 import {UserContext} from '../contexts/UserProvider';
 import {toogleModal} from '../store/slices/categorySlice';
+import {IFolder} from '../models/Folder';
 
 const Folder: FC = () => {
   const {user} = useContext(UserContext);
   const {params} = useRoute<RouteProp<MainRoutesParams, 'folder'>>();
+  const {folders} = useAppSelector(state => state.folders);
+  const currentFolder: IFolder = folders.find(
+    folder => folder.id === params?.folder_id!,
+  );
+  console.log(params);
+  console.log(folders);
+  console.log(currentFolder);
   const {navigate} = useNavigation<NavigationProp<MainRoutesParams>>();
   const {getTransactions} = useTransactions();
   useEffect(() => {
-    getTransactions(user.attributes?.sub!, params?.folder.id!);
+    getTransactions(user.attributes?.sub!, currentFolder.id!);
   }, []);
   const dispatch = useAppDispatch();
-  const folder = params?.folder!;
   const {transactions} = useAppSelector(state => state.transactions);
   const currentFolderTransactions = transactions.find(
-    transaction => transaction.folder_id === folder.id,
+    transaction => transaction.folder_id === currentFolder.id!,
   );
   return (
     <View style={style.container}>
       <View
         style={[
           style.folderContaier,
-          {backgroundColor: folder.skin.toLowerCase()},
-        ]}></View>
+          {backgroundColor: currentFolder.skin.toLowerCase()},
+        ]}>
+        <Text>{currentFolder.title}</Text>
+        <Text>
+          {currentFolder.units}
+          {currentFolder.nanos
+            ? `${
+                parseInt(currentFolder.nanos, 10) < 10
+                  ? `.${currentFolder.nanos}0`
+                  : `.${currentFolder.nanos}`
+              }`
+            : ''}
+        </Text>
+      </View>
       <View style={style.headerContainer}>
         <View style={style.titleContainer}>
           <Text style={style.title}>Транзакції</Text>
@@ -55,10 +74,9 @@ const Folder: FC = () => {
           buttonHandler={() => {
             dispatch(toogleModal());
             navigate('addTransaction', {
-              folder_id: folder.id,
-              folderTitle: folder.title,
+              folder_id: currentFolder.id,
+              folderTitle: currentFolder.title,
               type: 'main',
-              folder,
             });
           }}
         />
@@ -91,6 +109,8 @@ const style = StyleSheet.create({
     height: CARD_HEIGHT,
     borderRadius: BORDER_LARGE_RADIUS,
     marginBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   headerContainer: {
     flexDirection: 'row',

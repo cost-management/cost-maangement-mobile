@@ -17,7 +17,7 @@ const Card: FC<CardProps> = ({folder}) => {
   const dispatch = useAppDispatch();
   const {user} = useContext(UserContext);
   const {navigate} = useNavigation<NavigationProp<MainRoutesParams>>();
-  const folderHanlder = () => navigate('folder', {folder});
+  const folderHanlder = () => navigate('folder', {folder_id: folder.id});
 
   const [deleteFolderMutation] = FolderAPI.useDeleteFolderMutation();
 
@@ -42,7 +42,13 @@ const Card: FC<CardProps> = ({folder}) => {
       <Text style={style.title}>{folder.title}</Text>
       <Text style={style.subTitle}>
         {folder.units}
-        {folder.nanos && `.${folder.nanos}`}
+        {folder.nanos
+          ? `${
+              parseInt(folder.nanos, 10) < 10
+                ? `.${folder.nanos}0`
+                : `.${folder.nanos}`
+            }`
+          : ''}
       </Text>
     </TouchableOpacity>
   );

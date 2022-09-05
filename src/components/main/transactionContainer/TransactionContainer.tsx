@@ -19,7 +19,7 @@ const TransactionContainer: FC<TransactionContainerProps> = ({
 
       <View style={style.sumContainer}>
         <Text style={style.sum}>{`${units || 0}${
-          nanos ? `.${parseInt(nanos, 10) < 10 ? `0${nanos}` : nanos}` : ''
+          nanos ? `.${parseInt(nanos, 10) < 10 ? `${nanos}0` : nanos}` : ''
         } грн`}</Text>
       </View>
     </View>

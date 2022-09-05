@@ -31,7 +31,7 @@ export interface IFolder {
   folder_customer_metadata: FolderCustomerMetaData[];
   folder_type: FolderType;
   id: string;
-  nanos: number;
+  nanos: string;
   skin: Skins;
   title: string;
   units: string;

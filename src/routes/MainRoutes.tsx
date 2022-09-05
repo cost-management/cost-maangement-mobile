@@ -12,14 +12,13 @@ import AddTransactionModal from '../components/transactions/addTransactionModal/
 export type MainRoutesParams = {
   mainPage: undefined;
   allTransactions: undefined;
-  folder: {folder: IFolder};
+  folder: {folder_id: string};
   statistic: undefined;
   addFolder: undefined;
   addTransaction: {
     folder_id: string;
     folderTitle: string;
     type: string;
-    folder: IFolder;
   };
 };
 const Stack = createNativeStackNavigator<MainRoutesParams>();
