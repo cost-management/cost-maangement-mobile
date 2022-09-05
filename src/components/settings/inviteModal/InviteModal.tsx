@@ -51,17 +51,15 @@ const InviteModal: FC = () => {
   };
 
   const submit = async (values: InitialValues) => {
-    if (values.email !== user.attributes?.email) {
-      const {response} = await addInvites({
-        id: user.attributes?.sub!,
-        body: {
-          invited_customer_email: values.email,
-          folder_id: values.folder_id,
-          customer_role: values.role,
-        },
-      });
-      console.log(response);
-    }
+    const response = await addInvites({
+      id: user.attributes?.sub!,
+      body: {
+        invited_customer_email: values.email,
+        folder_id: values.folder_id,
+        customer_role: values.role,
+      },
+    });
+    console.log(response);
   };
 
   const extraFunction = (changer: any, id: any) => {

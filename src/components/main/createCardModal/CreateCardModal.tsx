@@ -60,6 +60,7 @@ const CreateCardModal: FC = () => {
       id,
       owner_id: user.attributes?.sub!,
       skin,
+      created_at: new Date(Date.now()).toISOString(),
     };
     const folder: IFolder = {
       title,
@@ -67,7 +68,7 @@ const CreateCardModal: FC = () => {
       folder_type,
       nanos: nanos || '0',
       units: units || '0',
-      created_at: Date.now().toString(),
+      created_at: new Date(Date.now()).toISOString(),
       id,
       skin,
       folder_customer_metadata: [

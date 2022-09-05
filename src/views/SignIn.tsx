@@ -4,7 +4,6 @@ import React, {FC, useContext, useEffect, useState} from 'react';
 
 import FormSignIn from '../components/auth/formSignIn/FormSignIn';
 import {UserContext} from '../contexts/UserProvider';
-import messaging from '@react-native-firebase/messaging';
 import useNotification from '../hooks/notification';
 const SignIn: FC = () => {
   const {user, setUser} = useContext(UserContext);
