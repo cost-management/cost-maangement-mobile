@@ -32,10 +32,7 @@ const Folder: FC = () => {
   const {folders} = useAppSelector(state => state.folders);
   const currentFolder: IFolder = folders.find(
     folder => folder.id === params?.folder_id!,
-  );
-  console.log(params);
-  console.log(folders);
-  console.log(currentFolder);
+  )!;
   const {navigate} = useNavigation<NavigationProp<MainRoutesParams>>();
   const {getTransactions} = useTransactions();
   useEffect(() => {
@@ -58,7 +55,8 @@ const Folder: FC = () => {
           {currentFolder.units}
           {currentFolder.nanos
             ? `${
-                parseInt(currentFolder.nanos, 10) < 10
+                parseInt(currentFolder.nanos, 10) < 10 &&
+                currentFolder.nanos !== '00'
                   ? `.${currentFolder.nanos}0`
                   : `.${currentFolder.nanos}`
               }`

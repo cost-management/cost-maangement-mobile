@@ -98,7 +98,7 @@ const AddTransactionModal: FC = () => {
           : parseInt(units, 10)) || 0,
       nanos: parseInt(nanos, 10) || 0,
       timezone: getTimezone(),
-      income_category: category.toUpperCase(),
+      income_category: category,
       title: folderTitle,
       customer_id: user.attributes?.sub!,
       folder_id,
@@ -152,11 +152,13 @@ const AddTransactionModal: FC = () => {
                 container: style.doubleButton,
               }}
               leftButtonHanlder={() => {
+                setFieldValue('category', costCategory[0]);
                 setCategoryType('cost');
                 setCategories(costCategory);
                 scroll.current?.scrollTo(0);
               }}
               rightButtonHandler={() => {
+                setFieldValue('category', incomeCategory[0]);
                 setCategoryType('income');
                 setCategories(incomeCategory);
                 scroll.current?.scrollTo(0);
