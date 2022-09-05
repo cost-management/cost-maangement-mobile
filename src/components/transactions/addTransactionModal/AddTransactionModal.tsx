@@ -90,6 +90,13 @@ const AddTransactionModal: FC = () => {
   }: InitialValues) => {
     const [units, nanos] = value.split('.');
     const id = uuidv4();
+    if (mainRoute.params.type) {
+      mainNavigate.navigate('folder', {folder_id: mainRoute.params.folder_id});
+    } else {
+      transactionNavigate.navigate('transactionsView');
+    }
+    dispatch(toogleModal());
+
     const created_at = new Date(Date.now()).toISOString();
     const transactionPost: PostTransaction = {
       units:
@@ -133,13 +140,7 @@ const AddTransactionModal: FC = () => {
       id: user.attributes?.sub!,
       body: transactionPost,
     });
-    console.log(response);
-    dispatch(toogleModal());
-    if (mainRoute.params.type) {
-      mainNavigate.navigate('folder', {folder_id: mainRoute.params.folder_id});
-    } else {
-      transactionNavigate.navigate('transactionsView');
-    }
+    console.log(transactionPost);
   };
 
   return (

@@ -18,7 +18,7 @@ const TransactionContainer: FC<TransactionContainerProps> = ({
       <Text style={style.title}>{category}</Text>
 
       <View style={style.sumContainer}>
-        <Text style={style.sum}>{`${units || 0}${
+        <Text style={style.sum}>{`${units === '-' ? '-0' : units}${
           nanos ? `.${parseInt(nanos, 10) < 10 ? `${nanos}0` : nanos}` : ''
         } грн`}</Text>
       </View>

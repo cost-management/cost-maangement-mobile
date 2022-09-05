@@ -35,8 +35,11 @@ const folderSlice = createSlice({
       if (nanos < 10) {
         nanos *= 10;
       }
+      let isLessThanZero = true;
       let units: any = parseInt(action.payload.units, 10) || 0;
-      const isLessThanZero = units < 0;
+      if (action.payload.units === '-0' || units < 0) {
+        isLessThanZero = true;
+      } else isLessThanZero = false;
 
       state.folders = state.folders.map(folder => {
         if (folder.id !== action.payload.folder_id) {
@@ -58,7 +61,7 @@ const folderSlice = createSlice({
           } else {
             if (nanos !== 0) {
               nanos -= currentNanos;
-              if (nanos > 0) {
+              if (nanos >= 0) {
                 units--;
                 nanos = 100 - nanos;
               }
