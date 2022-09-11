@@ -40,6 +40,7 @@ export interface ICognitoUser {
     phone_number: string;
     phone_number_verified: boolean;
     sub: string;
+    'custom:token'?: string;
   };
   authenticationFlowType: string;
   client: {
