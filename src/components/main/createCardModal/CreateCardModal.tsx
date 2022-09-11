@@ -29,9 +29,8 @@ import useBackHanlder from '../../../hooks/backHandler';
 type InitialValues =
   | Omit<
       IFolder,
-      'id' | 'owner_id' | 'nanos' | 'folder_customer_metadata' | 'craeted_at'
-    >
-  | {balance: string};
+      'id' | 'owner_id' | 'nanos' | 'folder_customer_metadata' | 'created_at'
+    > & {amount: string};
 
 const CreateCardModal: FC = () => {
   useBackHanlder();
@@ -43,10 +42,9 @@ const CreateCardModal: FC = () => {
     currency,
     title,
     folder_type,
-    balance,
+    amount,
     skin,
-  }) => {
-    const [units, nanos] = balance.split('.');
+  }: InitialValues) => {
     const id = uuidv4();
     const created_at = new Date(Date.now()).toISOString();
 
@@ -54,10 +52,8 @@ const CreateCardModal: FC = () => {
       title,
       currency,
       folder_type,
-      nanos: parseInt(nanos, 10) || 0,
-      units: parseInt(units, 10) || 0,
+      amount: parseInt(amount, 10) || 0,
       id,
-      owner_id: user.attributes?.sub!,
       skin,
       created_at,
     };
@@ -65,8 +61,7 @@ const CreateCardModal: FC = () => {
       title,
       currency,
       folder_type,
-      nanos: nanos || '0',
-      units: units || '0',
+      amount,
       created_at,
       id,
       skin,
@@ -88,7 +83,7 @@ const CreateCardModal: FC = () => {
     title: '',
     currency: Currency.uah,
     folder_type: FolderType.cash,
-    balance: '',
+    amount: '',
     skin: Skins.green,
   };
 
@@ -111,8 +106,8 @@ const CreateCardModal: FC = () => {
           />
           <Field
             style={style.balance}
-            value={values.balance}
-            onChangeText={handleChange('balance')}
+            value={values.amount}
+            onChangeText={handleChange('amount')}
             placeholder="Баланс"
             keyboardType="number-pad"
           />

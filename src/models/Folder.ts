@@ -31,10 +31,9 @@ export interface IFolder {
   folder_customer_metadata: FolderCustomerMetaData[];
   folder_type: FolderType;
   id: string;
-  nanos: string;
   skin: Skins;
   title: string;
-  units: string;
+  amount: string;
 }
 
 export interface FolderCustomerMetaData {
@@ -48,8 +47,6 @@ export interface PostFolder {
   folder_type: FolderType;
   currency: Currency;
   skin: Skins;
-  units: number;
-  nanos: number;
-  owner_id: string;
+  amount: number;
   created_at: string;
 }
