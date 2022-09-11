@@ -14,7 +14,6 @@ export const InviteAPI = createApi({
     }),
     addInvite: build.mutation<{id: string}, {id: string; body: PostInvite}>({
       query: ({id, body}) => {
-        console.log(body);
         return {
           url: 'invites',
           method: 'POST',

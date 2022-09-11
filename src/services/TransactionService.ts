@@ -10,12 +10,14 @@ export const TransactionAPI = createApi({
   tagTypes: ['transactions'],
   endpoints: build => ({
     addTransaction: build.mutation<Response, RequestBody<PostTransaction>>({
-      query: ({id, body}) => ({
-        url: TRANSACTIONURL,
-        headers: {id},
-        body,
-        method: 'POST',
-      }),
+      query: ({id, body}) => {
+        return {
+          url: TRANSACTIONURL,
+          headers: {id},
+          body,
+          method: 'POST',
+        };
+      },
       invalidatesTags: ['transactions'],
     }),
     deleteTransaction: build.mutation<Response, {id: string}>({

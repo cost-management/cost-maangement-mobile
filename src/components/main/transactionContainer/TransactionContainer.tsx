@@ -4,23 +4,19 @@ import style from './style';
 
 interface TransactionContainerProps {
   category: string;
-  units: string;
-  nanos: string;
+  amount: string;
 }
 
 const TransactionContainer: FC<TransactionContainerProps> = ({
   category,
-  units,
-  nanos,
+  amount,
 }) => {
   return (
     <View style={style.container}>
       <Text style={style.title}>{category}</Text>
 
       <View style={style.sumContainer}>
-        <Text style={style.sum}>{`${units === '-' ? '-0' : units}${
-          nanos ? `.${parseInt(nanos, 10) < 10 ? `${nanos}0` : nanos}` : ''
-        } грн`}</Text>
+        <Text style={style.sum}>{`${amount} грн`}</Text>
       </View>
     </View>
   );

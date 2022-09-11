@@ -43,6 +43,13 @@ const Folder: FC = () => {
   const currentFolderTransactions = transactions.find(
     transaction => transaction.folder_id === currentFolder.id!,
   );
+  const viewAmount = (amount: string) => {
+    if (amount.includes('.')) {
+      return amount;
+    } else {
+      return `${amount}.00`;
+    }
+  };
   return (
     <View style={style.container}>
       <View
@@ -51,17 +58,7 @@ const Folder: FC = () => {
           {backgroundColor: currentFolder.skin.toLowerCase()},
         ]}>
         <Text>{currentFolder.title}</Text>
-        <Text>
-          {currentFolder.units}
-          {currentFolder.nanos
-            ? `${
-                parseInt(currentFolder.nanos, 10) < 10 &&
-                currentFolder.nanos !== '00'
-                  ? `.${currentFolder.nanos}0`
-                  : `.${currentFolder.nanos}`
-              }`
-            : ''}
-        </Text>
+        <Text>{viewAmount(currentFolder.amount)}</Text>
       </View>
       <View style={style.headerContainer}>
         <View style={style.titleContainer}>
@@ -83,8 +80,7 @@ const Folder: FC = () => {
         {currentFolderTransactions?.transactions.map(transaction => (
           <TransactionContainer
             key={transaction.id}
-            units={transaction.units}
-            nanos={transaction.nanos}
+            amount={transaction.amount}
             category={transaction.income_category}
           />
         ))}

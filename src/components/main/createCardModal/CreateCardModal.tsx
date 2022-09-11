@@ -61,7 +61,7 @@ const CreateCardModal: FC = () => {
       title,
       currency,
       folder_type,
-      amount,
+      amount: amount || '0.00',
       created_at,
       id,
       skin,

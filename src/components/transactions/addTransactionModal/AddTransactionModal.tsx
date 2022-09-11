@@ -29,7 +29,7 @@ import {changeSum} from '../../../store/slices/folderSlice';
 interface InitialValues {
   category: string;
   folderTitle: string;
-  value: string;
+  amount: string;
   selected: boolean;
   folder_id: string;
 }
@@ -77,7 +77,7 @@ const AddTransactionModal: FC = () => {
   const initialValue: InitialValues = {
     category: transactionRoute.params?.category! || categories[0],
     folderTitle: mainRoute.params.folderTitle || foldersTitle[0],
-    value: '',
+    amount: '',
     selected: false,
     folder_id: mainRoute.params.folder_id || foldersId[0],
   };
@@ -85,10 +85,9 @@ const AddTransactionModal: FC = () => {
   const submitHandler = async ({
     category,
     folderTitle,
-    value,
+    amount,
     folder_id,
   }: InitialValues) => {
-    const [units, nanos] = value.split('.');
     const id = uuidv4();
     if (mainRoute.params.type) {
       mainNavigate.navigate('folder', {folder_id: mainRoute.params.folder_id});
@@ -99,11 +98,10 @@ const AddTransactionModal: FC = () => {
 
     const created_at = new Date(Date.now()).toISOString();
     const transactionPost: PostTransaction = {
-      units:
+      amount:
         (categoryType === 'cost'
-          ? parseInt(units, 10) * -1
-          : parseInt(units, 10)) || 0,
-      nanos: parseInt(nanos, 10) || 0,
+          ? parseFloat(amount) * -1
+          : parseFloat(amount)) || 0,
       timezone: getTimezone(),
       income_category: category,
       title: folderTitle,
@@ -116,8 +114,7 @@ const AddTransactionModal: FC = () => {
       folder_id,
       transactions: [
         {
-          units: (categoryType === 'cost' ? `-${units}` : units) || '0',
-          nanos: nanos || '',
+          amount: (categoryType === 'cost' ? `-${amount}` : amount) || '0',
           created_at,
           timezone: getTimezone(),
           income_category: category,
@@ -129,18 +126,18 @@ const AddTransactionModal: FC = () => {
       ],
     };
     dispatch(addTransaction(transactionFolder));
-    dispatch(
-      changeSum({
-        nanos,
-        units: categoryType === 'cost' ? `-${units}` : units,
-        folder_id,
-      }),
-    );
     const response = await addTransactionMutation({
       id: user.attributes?.sub!,
       body: transactionPost,
     });
-    console.log(transactionPost);
+    console.log(response);
+
+    dispatch(
+      changeSum({
+        amount: (categoryType === 'cost' ? `-${amount}` : amount) || '0',
+        folder_id,
+      }),
+    );
   };
 
   return (
@@ -181,7 +178,7 @@ const AddTransactionModal: FC = () => {
                 />
               ))}
             </ScrollView>
-            <Keyboad value={values.value} setValue={setFieldValue} />
+            <Keyboad value={values.amount} setValue={setFieldValue} />
             <DoubleButton
               leftButtonText="*"
               rightButtonText=""

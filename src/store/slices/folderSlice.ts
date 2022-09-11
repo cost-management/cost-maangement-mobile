@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {IFolder} from '../../models/Folder';
+import calcCurrency from '../../utils/calcCurrency';
 
 interface IFolderState {
   folders: IFolder[];
@@ -29,49 +30,18 @@ const folderSlice = createSlice({
     },
     changeSum: (
       state,
-      action: PayloadAction<{nanos: string; units: string; folder_id: string}>,
+      action: PayloadAction<{amount: string; folder_id: string}>,
     ) => {
-      let nanos: any = parseInt(action.payload.nanos, 10) || 0;
-      if (nanos < 10) {
-        nanos *= 10;
-      }
-      let isLessThanZero = true;
-      let units: any = parseInt(action.payload.units, 10) || 0;
-      if (action.payload.units === '-0' || units < 0) {
-        isLessThanZero = true;
-      } else isLessThanZero = false;
-
+      const amount = calcCurrency(
+        action.payload.amount,
+        state.folders.find(folder => folder.id === action.payload.folder_id)
+          ?.amount!,
+      );
       state.folders = state.folders.map(folder => {
-        if (folder.id !== action.payload.folder_id) {
-          return folder;
+        if (folder.id === action.payload.folder_id) {
+          return {...folder, amount};
         } else {
-          const currentNanos =
-            parseInt(folder?.nanos!, 10) < 10
-              ? parseInt(folder?.nanos!, 10) * 10
-              : parseInt(folder?.nanos!, 10);
-          if (!isLessThanZero) {
-            nanos += currentNanos;
-
-            if (nanos >= 100) {
-              units++;
-              nanos -= 100;
-            }
-
-            units += parseInt(folder?.units!, 10);
-          } else {
-            if (nanos !== 0) {
-              nanos -= currentNanos;
-              if (nanos >= 0) {
-                units--;
-                nanos = 100 - nanos;
-              }
-            }
-            units += parseInt(folder?.units!, 10);
-          }
-          nanos.toFixed(2);
-          nanos = nanos < 10 ? `0${nanos}` : nanos.toString();
-          units = units.toString();
-          return {...folder, nanos, units: units};
+          return folder;
         }
       });
     },

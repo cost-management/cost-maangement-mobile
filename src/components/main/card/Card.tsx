@@ -27,8 +27,15 @@ const Card: FC<CardProps> = ({folder}) => {
       folderId: folder.id,
     });
     dispatch(deleteFolder(folder.id));
-    dispatch(deleteFolder(folder.id));
     console.log(response);
+  };
+
+  const viewAmount = (amount: string) => {
+    if (amount.includes('.')) {
+      return amount;
+    } else {
+      return `${amount}.00`;
+    }
   };
 
   return (
@@ -40,16 +47,7 @@ const Card: FC<CardProps> = ({folder}) => {
         {backgroundColor: folder.skin.toLocaleLowerCase()},
       ]}>
       <Text style={style.title}>{folder.title}</Text>
-      <Text style={style.subTitle}>
-        {folder.units}
-        {folder.nanos
-          ? `${
-              parseInt(folder.nanos, 10) < 10
-                ? `.${folder.nanos}0`
-                : `.${folder.nanos}`
-            }`
-          : ''}
-      </Text>
+      <Text style={style.subTitle}>{viewAmount(folder.amount)}</Text>
     </TouchableOpacity>
   );
 };

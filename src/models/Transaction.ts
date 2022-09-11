@@ -4,8 +4,7 @@ export interface PostTransaction {
   folder_id: string;
   income_category: string;
   customer_id: string;
-  units: number;
-  nanos: number;
+  amount: number;
   timezone: number;
   created_at: string;
 }
@@ -17,8 +16,7 @@ export interface ITransaction {
   title: string;
   folder_id: string;
   income_category: string;
-  units: string;
-  nanos: string;
+  amount: string;
   timezone: number;
 }
 

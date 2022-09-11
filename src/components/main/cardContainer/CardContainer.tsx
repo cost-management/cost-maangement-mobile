@@ -22,19 +22,23 @@ const CardContainer: FC = () => {
   return (
     <View style={style.container}>
       <ScrollView>
-        <View
-          style={[
-            style.scorllView,
-            {
-              height:
-                Math.ceil(folders.length / 2) * SMALL_CARD_HEIGHT +
-                Math.ceil(folders.length / 2) * 10,
-            },
-          ]}>
-          {folders.map(folder => (
-            <Card key={folder.id} folder={folder} />
-          ))}
-        </View>
+        {folders ? (
+          <View
+            style={[
+              style.scorllView,
+              {
+                height:
+                  Math.ceil(folders.length / 2) * SMALL_CARD_HEIGHT +
+                  Math.ceil(folders.length / 2) * 10,
+              },
+            ]}>
+            {folders.map(folder => (
+              <Card key={folder.id} folder={folder} />
+            ))}
+          </View>
+        ) : (
+          <></>
+        )}
       </ScrollView>
       <View style={style.button}>
         <CircleButton radius={60} text="+" buttonHandler={addHandler} />
