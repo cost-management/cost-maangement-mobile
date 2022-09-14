@@ -8,10 +8,14 @@ import {UserContext} from '../../../contexts/UserProvider';
 import {FolderAPI} from '../../../services/FolderService';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {MainRoutesParams} from '../../../routes/MainRoutes';
+import Animated, {FadeOut, Layout, ZoomIn} from 'react-native-reanimated';
 
 interface CardProps {
   folder: IFolder;
 }
+
+const AnimatedTouchableOpacity =
+  Animated.createAnimatedComponent(TouchableOpacity);
 
 const Card: FC<CardProps> = ({folder}) => {
   const dispatch = useAppDispatch();
@@ -39,7 +43,10 @@ const Card: FC<CardProps> = ({folder}) => {
   };
 
   return (
-    <TouchableOpacity
+    <AnimatedTouchableOpacity
+      layout={Layout.springify()}
+      entering={ZoomIn}
+      exiting={FadeOut}
       onPress={folderHanlder}
       onLongPress={folderLongHanlder}
       style={[
@@ -48,7 +55,7 @@ const Card: FC<CardProps> = ({folder}) => {
       ]}>
       <Text style={style.title}>{folder.title}</Text>
       <Text style={style.subTitle}>{viewAmount(folder.amount)}</Text>
-    </TouchableOpacity>
+    </AnimatedTouchableOpacity>
   );
 };
 

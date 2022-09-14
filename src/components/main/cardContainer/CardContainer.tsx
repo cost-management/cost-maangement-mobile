@@ -12,7 +12,6 @@ import {
   SMALL_CARD_HEIGHT,
   PADDING_BOTTOM,
 } from '../../../constants/styleConstants';
-import Animated from 'react-native-reanimated';
 
 const CardContainer: FC = () => {
   const {folders} = useAppSelector(state => state.folders);
@@ -38,11 +37,11 @@ const CardContainer: FC = () => {
             25,
         }}>
         {folders ? (
-          <Animated.View style={style.foldersContainer}>
+          <View style={style.foldersContainer}>
             {folders.map(folder => (
               <Card key={folder.id} folder={folder} />
             ))}
-          </Animated.View>
+          </View>
         ) : (
           <></>
         )}
