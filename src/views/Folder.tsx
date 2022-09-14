@@ -1,6 +1,5 @@
-import React, {FC, useContext, useEffect} from 'react';
-import {Text, View, StyleSheet, ScrollView} from 'react-native';
-import Card from '../components/main/card/Card';
+import React, {FC, useContext, useEffect, useRef} from 'react';
+import {Text, View, StyleSheet} from 'react-native';
 import CircleButton from '../components/ui/circleButton/CircleButton';
 import {
   useRoute,
@@ -25,6 +24,8 @@ import useTransactions from '../hooks/transactions';
 import {UserContext} from '../contexts/UserProvider';
 import {toogleModal} from '../store/slices/categorySlice';
 import {IFolder} from '../models/Folder';
+import Animated from 'react-native-reanimated';
+import {endSwipe} from '../store/slices/swipableTransactionSlice';
 
 const Folder: FC = () => {
   const {user} = useContext(UserContext);
@@ -40,9 +41,19 @@ const Folder: FC = () => {
   }, []);
   const dispatch = useAppDispatch();
   const {transactions} = useAppSelector(state => state.transactions);
+  const {swipableTransaction} = useAppSelector(
+    state => state.swipableTransaction,
+  );
   const currentFolderTransactions = transactions.find(
     transaction => transaction.folder_id === currentFolder.id!,
   );
+  const scrollBegin = () => {
+    if (swipableTransaction) {
+      swipableTransaction.current?.close();
+      dispatch(endSwipe());
+    }
+  };
+  const ref = useRef(null);
   const viewAmount = (amount: string) => {
     if (amount.includes('.')) {
       return amount;
@@ -76,15 +87,21 @@ const Folder: FC = () => {
           }}
         />
       </View>
-      <ScrollView style={style.scrollView}>
+      <Animated.ScrollView
+        onScrollBeginDrag={scrollBegin}
+        scrollEventThrottle={16}
+        style={style.scrollView}>
         {currentFolderTransactions?.transactions.map(transaction => (
           <TransactionContainer
             key={transaction.id}
             amount={transaction.amount}
+            folder_id={transaction.folder_id}
+            transaction_id={transaction.id}
             category={transaction.income_category}
+            transactionLength={currentFolderTransactions?.transactions.length}
           />
         ))}
-      </ScrollView>
+      </Animated.ScrollView>
     </View>
   );
 };

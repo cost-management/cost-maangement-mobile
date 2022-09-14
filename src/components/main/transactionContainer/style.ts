@@ -1,5 +1,9 @@
 import {StyleSheet} from 'react-native';
-import {BORDER_SMALL_RADIUS} from '../../../constants/styleConstants';
+import {PADDING_HORIZONTAL} from '../../../constants/styleConstants';
+import {
+  BORDER_SMALL_RADIUS,
+  SCREEN_WIDTH,
+} from '../../../constants/styleConstants';
 
 interface Style {
   container: object;
@@ -7,6 +11,8 @@ interface Style {
   category: object;
   sum: object;
   sumContainer: object;
+  contentContainer: object;
+  delete: object;
 }
 
 const style = StyleSheet.create<Style>({
@@ -34,6 +40,16 @@ const style = StyleSheet.create<Style>({
     alignItems: 'center',
     padding: 5,
     borderRadius: BORDER_SMALL_RADIUS,
+  },
+  contentContainer: {
+    width: SCREEN_WIDTH - 2 * PADDING_HORIZONTAL,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  delete: {
+    marginLeft: 20,
+    width: 80,
   },
 });
 

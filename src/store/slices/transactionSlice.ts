@@ -49,9 +49,27 @@ const transactionSlice = createSlice({
         state.transactions = [...state.transactions, action.payload];
       }
     },
+    deleteTransaction: (
+      state,
+      action: PayloadAction<{folder_id: string; transaction_id: string}>,
+    ) => {
+      state.transactions = state.transactions.map(transaction => {
+        if (transaction.folder_id !== action.payload.folder_id) {
+          return transaction;
+        } else {
+          return {
+            ...transaction,
+            transactions: transaction.transactions.filter(
+              transaction => transaction.id !== action.payload.transaction_id,
+            ),
+          };
+        }
+      });
+    },
   },
 });
 
-export const {addTransaction, refreshTransactions} = transactionSlice.actions;
+export const {addTransaction, refreshTransactions, deleteTransaction} =
+  transactionSlice.actions;
 
 export default transactionSlice.reducer;

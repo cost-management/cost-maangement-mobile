@@ -6,6 +6,7 @@ import {InviteAPI} from '../services/InviteService';
 import inviteSlice from './slices/inviteSlice';
 import transactionSlice from './slices/transactionSlice';
 import {TransactionAPI} from '../services/TransactionService';
+import swipableTransactionSlice from './slices/swipableTransactionSlice';
 
 const rootReducer = {
   [FolderAPI.reducerPath]: FolderAPI.reducer,
@@ -15,12 +16,13 @@ const rootReducer = {
   categories: categorySlice,
   invites: inviteSlice,
   transactions: transactionSlice,
+  swipableTransaction: swipableTransactionSlice,
 };
 
 export const store = configureStore({
   reducer: rootReducer,
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware()
+    getDefaultMiddleware({serializableCheck: false})
       .concat(FolderAPI.middleware)
       .concat(InviteAPI.middleware)
       .concat(TransactionAPI.middleware),
