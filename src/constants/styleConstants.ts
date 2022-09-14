@@ -3,7 +3,7 @@ import {Dimensions} from 'react-native';
 import ExtraDimensions from 'react-native-extra-dimensions-android';
 
 export const SCREEN_WIDTH = ExtraDimensions.get('REAL_WINDOW_WIDTH');
-export const SCREEN_HEIGHT = ExtraDimensions.get('REAL_WINDOW_HEIGHT');
+export const SCREEN_HEIGHT = Dimensions.get('screen').height;
 export const PADDING_HORIZONTAL = 30;
 export const CARD_WIDTH = 289;
 export const CARD_HEIGHT = 177;
@@ -15,7 +15,8 @@ export const TRANSACTION_WIDTH =
   Math.floor((SCREEN_WIDTH - PADDING_HORIZONTAL * 2) / 3) -
   TRANSACTION_MARGIN * 2;
 export const TRANSACTION_HEIGHT = TRANSACTION_WIDTH;
-export const PADDING_BOTTOM = 70;
+export const PADDING_BOTTOM = 70 + ExtraDimensions.get('SOFT_MENU_BAR_HEIGHT');
+export const PADDING_TOP = ExtraDimensions.get('STATUS_BAR_HEIGHT');
 export const MODAL_TRANSLATE_Y = 0.07 * SCREEN_HEIGHT;
 export const BORDER_LARGE_RADIUS = 30;
 export const BORDER_SMALL_RADIUS = 10;

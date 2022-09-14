@@ -1,13 +1,18 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {View, ScrollView} from 'react-native';
 import {style} from './style';
-import CircleButton from '../../ui/circleButton/CircleButton';
 import {useAppSelector, useAppDispatch} from '../../../hooks/redux';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {MainRoutesParams} from '../../../routes/MainRoutes';
 import {toogleModal} from '../../../store/slices/categorySlice';
 import Card from '../card/Card';
-import {SMALL_CARD_HEIGHT} from '../../../constants/styleConstants';
+import AddButton from '../addButton/AddButton';
+import {PADDING_TOP} from '../../../constants/styleConstants';
+import {
+  SMALL_CARD_HEIGHT,
+  PADDING_BOTTOM,
+} from '../../../constants/styleConstants';
+import Animated from 'react-native-reanimated';
 
 const CardContainer: FC = () => {
   const {folders} = useAppSelector(state => state.folders);
@@ -21,27 +26,29 @@ const CardContainer: FC = () => {
 
   return (
     <View style={style.container}>
-      <ScrollView>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={style.scorllView}
+        contentContainerStyle={{
+          height:
+            SMALL_CARD_HEIGHT * Math.ceil(folders.length / 2) +
+            Math.ceil(folders.length / 2) * 2 * 5 +
+            PADDING_BOTTOM +
+            PADDING_TOP +
+            25,
+        }}>
         {folders ? (
-          <View
-            style={[
-              style.scorllView,
-              {
-                height:
-                  Math.ceil(folders.length / 2) * SMALL_CARD_HEIGHT +
-                  Math.ceil(folders.length / 2) * 10,
-              },
-            ]}>
+          <Animated.View style={style.foldersContainer}>
             {folders.map(folder => (
               <Card key={folder.id} folder={folder} />
             ))}
-          </View>
+          </Animated.View>
         ) : (
           <></>
         )}
       </ScrollView>
       <View style={style.button}>
-        <CircleButton radius={60} text="+" buttonHandler={addHandler} />
+        <AddButton buttonHanlder={addHandler} />
       </View>
     </View>
   );

@@ -1,4 +1,6 @@
 import {StyleSheet} from 'react-native';
+import {SCREEN_HEIGHT} from '../../../constants/styleConstants';
+import ExtraDimensions from 'react-native-extra-dimensions-android';
 import {
   SCREEN_WIDTH,
   PADDING_HORIZONTAL,
@@ -16,7 +18,7 @@ interface Style {
 export const style = StyleSheet.create<Style>({
   container: {
     width: SCREEN_WIDTH,
-    height: '20%',
+    height: SCREEN_HEIGHT * 0.2,
     paddingHorizontal: PADDING_HORIZONTAL,
     flexDirection: 'row',
     alignItems: 'flex-end',
