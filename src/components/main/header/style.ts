@@ -2,12 +2,15 @@ import {StyleSheet} from 'react-native';
 import {
   SCREEN_WIDTH,
   PADDING_HORIZONTAL,
+  COLORS,
 } from '../../../constants/styleConstants';
 
 interface Style {
   container: object;
-  costs: object;
+  balanceContainer: object;
   buttonsContainer: object;
+  title: object;
+  balance: object;
 }
 
 export const style = StyleSheet.create<Style>({
@@ -16,14 +19,24 @@ export const style = StyleSheet.create<Style>({
     height: '20%',
     paddingHorizontal: PADDING_HORIZONTAL,
     flexDirection: 'row',
+    alignItems: 'flex-end',
+    paddingBottom: 10,
   },
-  costs: {
+  balanceContainer: {
     width: '70%',
-    backgroundColor: 'grey',
   },
   buttonsContainer: {
+    alignSelf: 'center',
     width: '30%',
     justifyContent: 'space-around',
     alignItems: 'center',
+  },
+  title: {
+    fontSize: 20,
+    color: COLORS.black,
+  },
+  balance: {
+    fontSize: 18,
+    marginTop: 10,
   },
 });
