@@ -38,5 +38,8 @@ export const style = StyleSheet.create<Style>({
   balance: {
     fontSize: 18,
     marginTop: 10,
+    color: 'red',
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'dashed',
   },
 });
