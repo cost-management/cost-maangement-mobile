@@ -99,6 +99,7 @@ const Folder: FC = () => {
             transaction_id={transaction.id}
             category={transaction.income_category}
             transactionLength={currentFolderTransactions?.transactions.length}
+            date={transaction.created_at}
           />
         ))}
       </Animated.ScrollView>

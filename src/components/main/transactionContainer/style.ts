@@ -13,6 +13,8 @@ interface Style {
   sumContainer: object;
   contentContainer: object;
   delete: object;
+  titleContainer: object;
+  subTitle: object;
 }
 
 const style = StyleSheet.create<Style>({
@@ -50,6 +52,13 @@ const style = StyleSheet.create<Style>({
   delete: {
     marginLeft: 20,
     width: 80,
+  },
+  titleContainer: {
+    justifyContent: 'space-between',
+  },
+  subTitle: {
+    color: 'red',
+    fontSize: 12,
   },
 });
 

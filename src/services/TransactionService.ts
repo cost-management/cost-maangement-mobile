@@ -20,8 +20,8 @@ export const TransactionAPI = createApi({
       },
       invalidatesTags: ['transactions'],
     }),
-    deleteTransaction: build.mutation<Response, {id: string}>({
-      query: ({id}) => ({
+    deleteTransaction: build.mutation<Response, string>({
+      query: id => ({
         url: TRANSACTIONURL,
         headers: {id},
         body: id,

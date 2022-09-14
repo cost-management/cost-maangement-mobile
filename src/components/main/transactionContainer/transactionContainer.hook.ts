@@ -8,12 +8,16 @@ import {
 } from '../../../constants/styleConstants';
 import {swipe} from '../../../store/slices/swipableTransactionSlice';
 import {Ref} from 'react';
+import {TransactionAPI} from '../../../services/TransactionService';
 
 const useTransactionContainer = () => {
   const dispatch = useAppDispatch();
-
+  const [deleteTransactionMutatuion] =
+    TransactionAPI.useDeleteTransactionMutation();
   const deleteHandler = async (folder_id: string, transaction_id: string) => {
     dispatch(deleteTransaction({folder_id, transaction_id}));
+    const response = await deleteTransactionMutatuion(transaction_id);
+    console.log(response);
   };
 
   const {swipableTransaction} = useAppSelector(
@@ -43,8 +47,8 @@ const useTransactionContainer = () => {
   };
 
   const swipableHandler = (ref: Ref<Swipeable>) => {
-    if (swipableTransaction) {
-      swipableTransaction.current?.close();
+    if (swipableTransaction && swipableTransaction !== ref) {
+      swipableTransaction?.current?.close();
     }
     dispatch(swipe(ref));
   };
