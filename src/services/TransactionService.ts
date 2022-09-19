@@ -24,7 +24,7 @@ export const TransactionAPI = createApi({
       query: id => ({
         url: TRANSACTIONURL,
         headers: {id},
-        body: id,
+        body: {id},
         method: 'DELETE',
       }),
     }),

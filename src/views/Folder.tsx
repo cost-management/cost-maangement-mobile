@@ -1,14 +1,6 @@
-import React, {FC, useContext, useEffect, useRef} from 'react';
+import React, {FC, useRef} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import CircleButton from '../components/ui/circleButton/CircleButton';
-import {
-  useRoute,
-  RouteProp,
-  useNavigation,
-  NavigationProp,
-} from '@react-navigation/native';
-import {MainRoutesParams} from '../routes/MainRoutes';
-import {useAppSelector, useAppDispatch} from '../hooks/redux';
 import {
   CARD_WIDTH,
   CARD_HEIGHT,
@@ -20,56 +12,31 @@ import {
 } from '../constants/styleConstants';
 import TransactionContainer from '../components/main/transactionContainer/TransactionContainer';
 import ExtraDimensions from 'react-native-extra-dimensions-android';
-import useTransactions from '../hooks/transactions';
-import {UserContext} from '../contexts/UserProvider';
 import {toogleModal} from '../store/slices/categorySlice';
-import {IFolder} from '../models/Folder';
 import Animated from 'react-native-reanimated';
-import {endSwipe} from '../store/slices/swipableTransactionSlice';
+import useFolder from '../hooks/folder.hook';
 
 const Folder: FC = () => {
-  const {user} = useContext(UserContext);
-  const {params} = useRoute<RouteProp<MainRoutesParams, 'folder'>>();
-  const {folders} = useAppSelector(state => state.folders);
-  const currentFolder: IFolder = folders.find(
-    folder => folder.id === params?.folder_id!,
-  )!;
-  const {navigate} = useNavigation<NavigationProp<MainRoutesParams>>();
-  const {getTransactions} = useTransactions();
-  useEffect(() => {
-    getTransactions(user.attributes?.sub!, currentFolder.id!);
-  }, []);
-  const dispatch = useAppDispatch();
-  const {transactions} = useAppSelector(state => state.transactions);
-  const {swipableTransaction} = useAppSelector(
-    state => state.swipableTransaction,
-  );
-  const currentFolderTransactions = transactions.find(
-    transaction => transaction.folder_id === currentFolder.id!,
-  );
-  const scrollBegin = () => {
-    if (swipableTransaction) {
-      swipableTransaction.current?.close();
-      dispatch(endSwipe());
-    }
-  };
   const ref = useRef(null);
-  const viewAmount = (amount: string) => {
-    if (amount.includes('.')) {
-      return amount;
-    } else {
-      return `${amount}.00`;
-    }
-  };
+
+  const {
+    viewAmount,
+    scrollBegin,
+    currentFolderTransactions,
+    navigate,
+    currentFolder,
+    dispatch,
+  } = useFolder();
+
   return (
     <View style={style.container}>
       <View
         style={[
           style.folderContaier,
-          {backgroundColor: currentFolder.skin.toLowerCase()},
+          {backgroundColor: currentFolder?.skin.toLowerCase()},
         ]}>
-        <Text>{currentFolder.title}</Text>
-        <Text>{viewAmount(currentFolder.amount)}</Text>
+        <Text>{currentFolder?.title}</Text>
+        <Text>{viewAmount(currentFolder?.amount!)}</Text>
       </View>
       <View style={style.headerContainer}>
         <View style={style.titleContainer}>
@@ -80,8 +47,8 @@ const Folder: FC = () => {
           buttonHandler={() => {
             dispatch(toogleModal());
             navigate('addTransaction', {
-              folder_id: currentFolder.id,
-              folderTitle: currentFolder.title,
+              folder_id: currentFolder?.id!,
+              folderTitle: currentFolder?.title!,
               type: 'main',
             });
           }}
@@ -91,7 +58,7 @@ const Folder: FC = () => {
         onScrollBeginDrag={scrollBegin}
         scrollEventThrottle={16}
         style={style.scrollView}>
-        {currentFolderTransactions?.transactions.map(transaction => (
+        {currentFolderTransactions?.transactions?.map(transaction => (
           <TransactionContainer
             key={transaction.id}
             amount={transaction.amount}

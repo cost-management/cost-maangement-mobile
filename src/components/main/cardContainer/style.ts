@@ -27,7 +27,7 @@ export const style = StyleSheet.create<Style>({
   },
   button: {
     position: 'absolute',
-    bottom: 70 + PADDING_BOTTOM + PADDING_TOP,
+    bottom: 50 + PADDING_BOTTOM + PADDING_TOP,
   },
   scorllView: {
     maxHeight: SCREEN_HEIGHT * 0.8 - PADDING_BOTTOM,

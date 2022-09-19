@@ -36,9 +36,11 @@ const transactionSlice = createSlice({
     },
     refreshTransactions: (state, action: PayloadAction<TransactionsFolder>) => {
       let isFolder = false;
+      let isTransactionInFolder = false;
       state.transactions = state.transactions.map(transaction => {
         if (transaction.folder_id === action.payload.folder_id) {
           isFolder = true;
+          isTransactionInFolder = true;
           return action.payload;
         } else {
           isFolder = true;
@@ -46,6 +48,8 @@ const transactionSlice = createSlice({
         }
       });
       if (!isFolder) {
+        state.transactions = [...state.transactions, action.payload];
+      } else if (!isTransactionInFolder) {
         state.transactions = [...state.transactions, action.payload];
       }
     },

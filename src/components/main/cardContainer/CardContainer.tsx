@@ -34,7 +34,7 @@ const CardContainer: FC = () => {
             Math.ceil(folders.length / 2) * 2 * 5 +
             PADDING_BOTTOM +
             PADDING_TOP +
-            25,
+            5,
         }}>
         {folders ? (
           <View style={style.foldersContainer}>
