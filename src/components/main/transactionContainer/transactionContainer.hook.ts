@@ -9,13 +9,21 @@ import {
 import {swipe} from '../../../store/slices/swipableTransactionSlice';
 import {Ref} from 'react';
 import {TransactionAPI} from '../../../services/TransactionService';
+import {changeSum} from '../../../store/slices/folderSlice';
 
 const useTransactionContainer = () => {
   const dispatch = useAppDispatch();
   const [deleteTransactionMutatuion] =
     TransactionAPI.useDeleteTransactionMutation();
-  const deleteHandler = async (folder_id: string, transaction_id: string) => {
+  const deleteHandler = async (
+    folder_id: string,
+    transaction_id: string,
+    amount: string,
+  ) => {
     dispatch(deleteTransaction({folder_id, transaction_id}));
+    dispatch(
+      changeSum({amount: (parseFloat(amount) * -1).toString(), folder_id}),
+    );
     const response = await deleteTransactionMutatuion(transaction_id);
     console.log(response);
   };

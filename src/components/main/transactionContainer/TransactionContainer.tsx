@@ -37,7 +37,7 @@ const TransactionContainer: FC<TransactionContainerProps> = ({
           <TransactionRightButton
             dragX={dragX}
             deleteHandler={() => {
-              deleteHandler(folder_id, transaction_id);
+              deleteHandler(folder_id, transaction_id, amount);
             }}
             ref={ref}
           />
