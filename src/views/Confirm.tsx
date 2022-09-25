@@ -27,15 +27,18 @@ import SubmitButton from '../components/auth/buttonSubmit/SubmitButton';
 import {BORDER_LARGE_RADIUS} from '../constants/styleConstants';
 import {UserContext} from '../contexts/UserProvider';
 import {ICognitoUser} from '../models/Auth';
+import useNotification from '../hooks/notification';
 
 const Confirm: FC = () => {
   const {value, onChangeText} = useInput();
   const {setUser} = useContext(UserContext);
   const {navigate} = useNavigation<NavigationProp<StackParams, 'confirm'>>();
+  const {signIn} = useNotification();
   const {params} = useRoute<RouteProp<StackParams, 'confirm'>>();
   const signInHandler = async (email: string, password: string) => {
     try {
       const user: ICognitoUser = await Auth.signIn(email, password);
+      await signIn(user);
       setUser(user);
     } catch (error) {
       console.log('error signing in', error);

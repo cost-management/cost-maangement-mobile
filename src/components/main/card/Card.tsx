@@ -6,17 +6,22 @@ import {useAppDispatch} from '../../../hooks/redux';
 import {deleteFolder} from '../../../store/slices/folderSlice';
 import {UserContext} from '../../../contexts/UserProvider';
 import {FolderAPI} from '../../../services/FolderService';
+import {useNavigation, NavigationProp} from '@react-navigation/native';
+import {MainRoutesParams} from '../../../routes/MainRoutes';
+import Animated, {FadeOut, Layout, ZoomIn} from 'react-native-reanimated';
 
 interface CardProps {
   folder: IFolder;
 }
 
+const AnimatedTouchableOpacity =
+  Animated.createAnimatedComponent(TouchableOpacity);
+
 const Card: FC<CardProps> = ({folder}) => {
   const dispatch = useAppDispatch();
   const {user} = useContext(UserContext);
-  const folderHanlder = () => {
-    dispatch(deleteFolder(folder.id));
-  };
+  const {navigate} = useNavigation<NavigationProp<MainRoutesParams>>();
+  const folderHanlder = () => navigate('folder', {folder_id: folder.id});
 
   const [deleteFolderMutation] = FolderAPI.useDeleteFolderMutation();
 
@@ -29,8 +34,19 @@ const Card: FC<CardProps> = ({folder}) => {
     console.log(response);
   };
 
+  const viewAmount = (amount: string) => {
+    if (amount.includes('.')) {
+      return amount;
+    } else {
+      return `${amount}.00`;
+    }
+  };
+
   return (
-    <TouchableOpacity
+    <AnimatedTouchableOpacity
+      layout={Layout.springify()}
+      entering={ZoomIn}
+      exiting={FadeOut}
       onPress={folderHanlder}
       onLongPress={folderLongHanlder}
       style={[
@@ -38,11 +54,8 @@ const Card: FC<CardProps> = ({folder}) => {
         {backgroundColor: folder.skin.toLocaleLowerCase()},
       ]}>
       <Text style={style.title}>{folder.title}</Text>
-      <Text style={style.subTitle}>
-        {folder.units}
-        {folder.nanos && `.${folder.nanos}`}
-      </Text>
-    </TouchableOpacity>
+      <Text style={style.subTitle}>{viewAmount(folder.amount)}</Text>
+    </AnimatedTouchableOpacity>
   );
 };
 

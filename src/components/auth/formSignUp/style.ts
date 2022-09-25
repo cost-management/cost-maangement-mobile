@@ -18,6 +18,7 @@ const style = StyleSheet.create<Style>({
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
     paddingTop: '30%',
+    overflow: 'scroll',
   },
   contentContainer: {
     width: '100%',

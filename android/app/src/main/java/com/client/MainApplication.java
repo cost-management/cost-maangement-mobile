@@ -12,9 +12,9 @@ import com.facebook.soloader.SoLoader;
 import com.client.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
 
 public class MainApplication extends Application implements ReactApplication {
-
   private final ReactNativeHost mReactNativeHost =
       new ReactNativeHost(this) {
         @Override

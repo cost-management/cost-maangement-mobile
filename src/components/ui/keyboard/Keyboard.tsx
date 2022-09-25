@@ -10,7 +10,7 @@ interface KeyboadProps {
 
 const Keyboad: FC<KeyboadProps> = ({value: currentValue, setValue}) => {
   const numberHandler = (value: string) => {
-    setValue('value', currentValue + value);
+    setValue('amount', currentValue + value);
   };
 
   const dotHandler = () => {
@@ -18,12 +18,12 @@ const Keyboad: FC<KeyboadProps> = ({value: currentValue, setValue}) => {
       currentValue[currentValue.length - 1] !== '.' &&
       !currentValue.includes('.')
     ) {
-      setValue('value', currentValue + '.');
+      setValue('amount', currentValue + '.');
     }
   };
 
   const erase = () => {
-    setValue('value', currentValue.slice(0, -1));
+    setValue('amount', currentValue.slice(0, -1));
   };
 
   return (

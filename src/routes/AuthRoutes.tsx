@@ -4,13 +4,13 @@ import React, {FC, useEffect} from 'react';
 import Confirm from '../views/Confirm';
 import SignIn from '../views/SignIn';
 import SignUp from '../views/SignUp';
-import {useState} from 'react';
-import {Auth} from 'aws-amplify';
 import {ActivityIndicator, View} from 'react-native';
 import TabRoutes from './TabRoutes';
 import UserProvider from '../contexts/UserProvider';
 import useUser from '../hooks/user';
 import useStartApp from '../hooks/startApp';
+import useNotification from '../hooks/notification';
+import messaging from '@react-native-firebase/messaging';
 
 export type StackParams = {
   app: undefined;
@@ -27,14 +27,20 @@ const AuthRoutes: FC = () => {
 
   const {user, setUser, checkUser} = useUser();
   const {getInvites, getFolders} = useStartApp();
+  const {getPush, createChanel} = useNotification();
   useEffect(() => {
     checkUser();
+    createChanel();
   }, []);
 
   useEffect(() => {
     if (user != undefined) {
       getInvites(user.attributes?.sub!);
       getFolders(user.attributes?.sub!);
+      messaging().onMessage(message => getPush(message, user));
+      messaging().setBackgroundMessageHandler(message =>
+        getPush(message, user),
+      );
     }
   }, [user]);
 

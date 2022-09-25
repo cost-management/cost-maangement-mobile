@@ -15,14 +15,17 @@ import awsconfig from './src/aws-exports';
 import Navigation from './src/views/Navigation';
 import {Provider} from 'react-redux';
 import {store} from './src/store/store';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 Amplify.configure(awsconfig);
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <Navigation />
-    </Provider>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <Provider store={store}>
+        <Navigation />
+      </Provider>
+    </GestureHandlerRootView>
   );
 };
 

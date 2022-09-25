@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
 import CardContainer from '../components/main/cardContainer/CardContainer';
 import MainHeader from '../components/main/header/MainHeader';
+import {PADDING_TOP} from '../constants/styleConstants';
 import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
@@ -20,7 +21,6 @@ const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
-    paddingBottom: PADDING_BOTTOM,
   },
 });
 export default Main;
