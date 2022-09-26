@@ -20,9 +20,18 @@ export enum FolderType {
 }
 
 export enum Skins {
-  blue = 'BLUE',
-  green = 'GREEN',
-  red = 'RED',
+  skin1 = 'skin1',
+}
+export enum Colors {
+  dark = '#3D424A',
+  grey = '#C0C0BE',
+  green = '#BFC3AB',
+  yellow = '#FFDF5F',
+  orange = '#FEAE49',
+  red = '#FF3027',
+  pink = '#F2AFDF',
+  purpure = '#A69BE9',
+  blue = '#87A1FF',
 }
 
 export interface IFolder {
@@ -34,6 +43,7 @@ export interface IFolder {
   skin: Skins;
   title: string;
   amount: string;
+  color: Colors;
 }
 
 export interface FolderCustomerMetaData {
